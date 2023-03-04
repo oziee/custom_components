@@ -29,7 +29,7 @@ void SeplosComponent::loop() {
 
 }
 
-void fetchSerial (){
+void fetchSerial(){
   int bytes_read = 0 ;
   bool be = false;
   uint8_t buffer[76];
