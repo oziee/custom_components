@@ -33,7 +33,7 @@ class SeplosComponent : public uart::UARTDevice, public Component, public text_s
   uint32_t last_transmission_{0};
   unsigned long startMillis = 0;  //some global variables available anywhere in the program
   unsigned long currentMillis = 0;
-  unsigned long period = 0;
+  unsigned long period = 60000;
 };
 
 }  // namespace seplos

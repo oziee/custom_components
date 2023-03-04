@@ -14,8 +14,8 @@ void SeplosComponent::dump_config() {
 
 void SeplosComponent::setup() {
   //this->set_update_interval(60000);
-  startMillis = millis();
-  this->period = 0;
+  startMillis = millis()+80000;
+  //this->period = 0;
 }
 
 void SeplosComponent::loop() {
@@ -27,7 +27,6 @@ void SeplosComponent::loop() {
   {
     ESP_LOGW(TAG, "loop start");
     if(available() > 1){
-      this->period = 60000;
       ESP_LOGW(TAG, "transmission availabe.. go fetch it!.");
       fetchSerial();
     }
