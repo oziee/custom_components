@@ -26,6 +26,7 @@ class SeplosComponent : public uart::UARTDevice, public Component, public text_s
 
 
   int state_{0};
+  bool firstgo = true;
   std::string label_;
   std::string value_;
   uint32_t last_transmission_{0};
