@@ -30,8 +30,8 @@ class SeplosComponent : public uart::UARTDevice, public Component, public text_s
   std::string label_;
   std::string value_;
   uint32_t last_transmission_{0};
-  unsigned long startMillis{0};  //some global variables available anywhere in the program
-  unsigned long currentMillis{0};
+  unsigned long startMillis = 0;  //some global variables available anywhere in the program
+  unsigned long currentMillis =;
   const unsigned long period = 60000;
 };
 
