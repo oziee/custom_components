@@ -22,8 +22,9 @@ void SeplosComponent::loop() {
 
   if (currentMillis - startMillis >= period)  //test whether the period has elapsed
   {
-    ESP_LOGW(TAG, "transmission availabe.");
+    ESP_LOGW(TAG, "loop start");
     if(available() > 1){
+      ESP_LOGW(TAG, "transmission availabe.. go fetch it!.");
       fetchSerial();
     }
     startMillis = currentMillis;
