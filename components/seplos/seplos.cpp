@@ -13,7 +13,7 @@ void SeplosComponent::dump_config() {
 }
 
 void SeplosComponent::setup() {
-  this->set_update_interval(60000);
+  //this->set_update_interval(60000);
   startMillis = millis();
 }
 
