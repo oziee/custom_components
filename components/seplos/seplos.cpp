@@ -63,7 +63,7 @@ void SeplosComponent::handle_value_() {
   value = atoi(value_.c_str());
 
   if (charger_text_sensor_ != nullptr)
-    charger_text_sensor_->publish_state("greg");
+    charger_text_sensor_->publish_state(value);
 
 }
 
