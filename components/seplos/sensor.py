@@ -21,8 +21,8 @@ async def to_code(config):
 
     
     if CONF_CHARGER_TEXT in config:
-        conf = config[CONF_CHARGER_TEXT]
-        sens = cg.new_Pvariable(conf[CONF_ID])
-        await text_sensor.register_text_sensor(sens, conf)
+        sens = await text_sensor.new_sensor(config[CONF_CHARGER_TEXT])
         cg.add(seplos.set_charger_text_sensor(sens))
+
+    
 
