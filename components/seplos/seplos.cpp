@@ -27,7 +27,7 @@ void SeplosComponent::loop() {
   {
     ESP_LOGW(TAG, "loop start");
     if(available() > 1){
-      period = 60000;
+      //period = 60000;
       ESP_LOGW(TAG, "transmission availabe.. go fetch it!.");
       fetchSerial();
     }
