@@ -20,6 +20,7 @@ void SeplosComponent::setup() {
 void SeplosComponent::loop() {
   currentMillis = millis();
   //if ((currentMillis - startMillis >= period) || (firstgo==true))
+  ESP_LOGW(TAG, "no loop for you");
 
   if (currentMillis - startMillis >= period)  //test whether the period has elapsed
   {
