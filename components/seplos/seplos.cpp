@@ -11,9 +11,11 @@ void SeplosComponent::dump_config() {
   LOG_TEXT_SENSOR("  ", "Charger Text", charger_text_sensor_);
   check_uart_settings(9600);
 }
-void SeplosComponent::start() {
+
+void SeplosComponent::setup() {
   startMillis = millis();
 }
+
 void SeplosComponent::loop() {
   currentMillis = millis();
 
@@ -29,7 +31,7 @@ void SeplosComponent::loop() {
 
 }
 
-void fetchSerial(){
+void SeplosComponent::fetchSerial(){
   int bytes_read = 0 ;
   bool be = false;
   uint8_t buffer[76];

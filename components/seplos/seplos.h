@@ -14,7 +14,7 @@ class SeplosComponent : public uart::UARTDevice, public Component {
   
   void dump_config() override;
   void loop() override;
-  void start() override;
+  void setup() override;
 
   float get_setup_priority() const { return setup_priority::DATA; }
 
@@ -29,8 +29,8 @@ class SeplosComponent : public uart::UARTDevice, public Component {
   std::string label_;
   std::string value_;
   uint32_t last_transmission_{0};
-  unsigned long startMillis;  //some global variables available anywhere in the program
-  unsigned long currentMillis;
+  unsigned long startMillis{0};  //some global variables available anywhere in the program
+  unsigned long currentMillis{0};
   const unsigned long period = 60000;
 };
 
