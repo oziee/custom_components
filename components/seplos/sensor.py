@@ -13,7 +13,7 @@ CONF_CHARGER_TEXT = "charger_text"
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(CONF_SEPLOS_ID): cv.use_id(SeplosComponent),
-    cv.Optional(CONF_CHARGER_TEXT): text_sensor.TEXT_SENSOR_SCHEMA.extend({cv.GenerateID(): cv.declare_id(text_sensor.TextSensor)}),
+    #cv.Optional(CONF_CHARGER_TEXT): text_sensor.TEXT_SENSOR_SCHEMA.extend({cv.GenerateID(): cv.declare_id(text_sensor.TextSensor)}),
 })
 
 async def to_code(config):
@@ -25,4 +25,3 @@ async def to_code(config):
         sens = cg.new_Pvariable(conf[CONF_ID])
         await text_sensor.register_text_sensor(sens, conf)
         cg.add(seplos.set_charger_text_sensor(sens))
-
