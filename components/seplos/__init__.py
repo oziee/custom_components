@@ -13,10 +13,12 @@ CONF_SEPLOS_ID = "seplos_id"
 
 CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(SeplosComponent),
-    cv.Optional(CONF_THE_TEXT): text_sensor.text_sensor_schema(text_sensor.TextSensor),
+    #cv.Optional(CONF_THE_TEXT): text_sensor.text_sensor_schema(text_sensor.TextSensor),
 })
 
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)
+
+
