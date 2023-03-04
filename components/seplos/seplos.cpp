@@ -15,7 +15,7 @@ void SeplosComponent::dump_config() {
 void SeplosComponent::setup() {
   //this->set_update_interval(60000);
   startMillis = millis();
-  period = 0;
+  this->period = 0;
 }
 
 void SeplosComponent::loop() {
