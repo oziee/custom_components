@@ -13,14 +13,15 @@ void SeplosComponent::dump_config() {
 }
 
 void SeplosComponent::setup() {
+  this->set_update_interval(60000);
   startMillis = millis();
 }
 
 void SeplosComponent::loop() {
   currentMillis = millis();
+  //if ((currentMillis - startMillis >= period) || (firstgo==true))
 
-
-  if ((currentMillis - startMillis >= period) || (firstgo==true))  //test whether the period has elapsed
+  if (currentMillis - startMillis >= period)  //test whether the period has elapsed
   {
     ESP_LOGW(TAG, "loop start");
     if(available() > 1){
