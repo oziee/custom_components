@@ -8,7 +8,7 @@
 namespace esphome {
 namespace seplos {
 
-class SeplosComponent : public uart::UARTDevice, public Component, public text_sensor::TextSensor, public CustomAPIDevice {
+class SeplosComponent : public uart::UARTDevice, public Component, public text_sensor::TextSensor, public api::CustomAPIDevice {
  public:
   void set_charger_text_sensor(text_sensor::TextSensor *charger_text_sensor) { charger_text_sensor_ = charger_text_sensor; }
   
