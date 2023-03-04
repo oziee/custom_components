@@ -15,12 +15,13 @@ void SeplosComponent::dump_config() {
 void SeplosComponent::setup() {
   //this->set_update_interval(60000);
   startMillis = millis();
+  period = 0;
 }
 
 void SeplosComponent::loop() {
   currentMillis = millis();
   //if ((currentMillis - startMillis >= period) || (firstgo==true))
-  ESP_LOGW(TAG, "no loop for you: %d %d %d",currentMillis,startMillis,period);
+  //ESP_LOGW(TAG, "no loop for you: %d %d %d",currentMillis,startMillis,period);
 
   if (currentMillis - startMillis >= period)  //test whether the period has elapsed
   {
@@ -29,9 +30,12 @@ void SeplosComponent::loop() {
       ESP_LOGW(TAG, "transmission availabe.. go fetch it!.");
       fetchSerial();
     }
+    else {
+      period = 60000;
+    }
     startMillis = currentMillis;
     firstgo = false;
-    period = 60000;
+    
   }
     
 
