@@ -26,6 +26,7 @@ void SeplosComponent::loop() {
     if(available() > 1){
       fetchSerial();
     }
+    startMillis = currentMillis;
   }
     
 
