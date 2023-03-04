@@ -43,6 +43,8 @@ void SeplosComponent::fetchSerial(){
 
   ESP_LOGW(TAG, "fetching data.");
 
+  value_.clear();
+
   while (bytes_read < 76)
   {
     if (available() > 0)
