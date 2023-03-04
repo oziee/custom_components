@@ -23,7 +23,7 @@ void SeplosComponent::loop() {
   //if ((currentMillis - startMillis >= period) || (firstgo==true))
   ESP_LOGW(TAG, "no loop for you: %d %d %d",currentMillis,startMillis,period);
 
-  if (currentMillis - startMillis >= period)  //test whether the period has elapsed
+  if ((currentMillis - startMillis >= period) && (api.connected))  //test whether the period has elapsed
   {
     ESP_LOGW(TAG, "loop start");
     if(available() > 1){
