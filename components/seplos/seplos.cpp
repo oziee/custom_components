@@ -59,11 +59,11 @@ void SeplosComponent::fetchSerial(){
 }
 
 void SeplosComponent::handle_value_() {
-  int value;
-  value = atoi(value_.c_str());
+  // int value;
+  // value = atoi(value_.c_str());
 
   if (charger_text_sensor_ != nullptr)
-    charger_text_sensor_->publish_state(value);
+    charger_text_sensor_->publish_state(value_.c_str());
 
 }
 
