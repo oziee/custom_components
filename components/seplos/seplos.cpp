@@ -38,10 +38,13 @@ void SeplosComponent::fetchSerial(){
   uint8_t buffer[76];
   char tmp[16];
 
+  ESP_LOGW(TAG, "fetching data.");
+
   while (bytes_read < 76)
   {
     if (available() > 0)
     {
+      ESP_LOGW(TAG, "reading data.");
       uint8_t RXX = read();
       //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
       if(RXX == 0x55) {
@@ -55,6 +58,7 @@ void SeplosComponent::fetchSerial(){
       }
     }
   }
+  ESP_LOGW(TAG, "handling data.");
   handle_value_();
 }
 
