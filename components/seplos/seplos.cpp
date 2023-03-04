@@ -30,6 +30,7 @@ void SeplosComponent::loop() {
     }
     startMillis = currentMillis;
     firstgo = false;
+    period = 60000;
   }
     
 
