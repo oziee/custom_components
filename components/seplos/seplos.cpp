@@ -21,17 +21,15 @@ void SeplosComponent::setup() {
 void SeplosComponent::loop() {
   currentMillis = millis();
   //if ((currentMillis - startMillis >= period) || (firstgo==true))
-  //ESP_LOGW(TAG, "no loop for you: %d %d %d",currentMillis,startMillis,period);
+  ESP_LOGW(TAG, "no loop for you: %d %d %d",currentMillis,startMillis,period);
 
   if (currentMillis - startMillis >= period)  //test whether the period has elapsed
   {
     ESP_LOGW(TAG, "loop start");
     if(available() > 1){
+      period = 60000;
       ESP_LOGW(TAG, "transmission availabe.. go fetch it!.");
       fetchSerial();
-    }
-    else {
-      period = 60000;
     }
     startMillis = currentMillis;
     firstgo = false;
