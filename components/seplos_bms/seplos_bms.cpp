@@ -105,7 +105,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //NUMBER OF CELLS IN THE PACK
         if (this->cells_number_) {
-          this->cells_number_->publish_state(encode_uint16(it[4]));
+          this->cells_number_->publish_state(it[3]);
         }
 
         //Cell voltages
