@@ -95,12 +95,12 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   while ((it = std::find(it, data.end(), SEPLOS_START_BYTE)) != data.end()) {
     if (data.end() - it >= SEPLOS_FRAME_SIZE && it[0] == SEPLOS_START_BYTE && it[1] == 0x46 && it[75] == SEPLOS_END_BYTE) {
       ESP_LOGD("TAG", "advance 1");
-      for (int i = 0; i < 76; i++) {
-        ESP_LOGD("TAG", "data %d", it[i]);
-      }
+      // for (int i = 0; i < 76; i++) {
+      //   ESP_LOGD("TAG", "data %d", it[i]);
+      // }
 
-      ESP_LOGD("TAG", "data 73", it[73]);
-      ESP_LOGD("TAG", "data 74", it[74]);
+      // ESP_LOGD("TAG", "data 73", it[73]);
+      // ESP_LOGD("TAG", "data 74", it[74]);
 
       unsigned short value1 = (int)encode_uint16(it[73], it[74]));
 
