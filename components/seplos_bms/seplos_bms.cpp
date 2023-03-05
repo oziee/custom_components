@@ -17,13 +17,8 @@ static const uint16_t SEPLOS_CURRENT_OFFSET = 30000;
 
 Crc16 crc;
 
+boolean Bin[] = {0,0,0,0,0,0,0,0};
 
-// static const uint8_t SEPLOS_REQUEST_MIN_MAX_VOLTAGE = 0x91;
-// static const uint8_t SEPLOS_REQUEST_MIN_MAX_TEMPERATURE = 0x92;
-// static const uint8_t SEPLOS_REQUEST_MOS = 0x93;
-// static const uint8_t SEPLOS_REQUEST_STATUS = 0x94;
-// static const uint8_t SEPLOS_REQUEST_CELL_VOLTAGE = 0x95;
-// static const uint8_t SEPLOS_REQUEST_TEMPERATURE = 0x96;
 
 void SeplosBmsComponent::setup() {}
 
@@ -86,36 +81,64 @@ void SeplosBmsComponent::update() {
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
 
+void SeplosBmsComponent::convertDecToBin(int Dec, boolean Bin[]) {
+  for(int i = 7 ; i >= 0 ; i--) {
+    if(pow(2, i)<=Dec) {
+      Dec = Dec - pow(2, i);
+      Bin[8-(i+1)] = 1;
+    } else {
+    }
+  }
+}
+
 void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   auto it = data.begin();
 
-  ESP_LOGD("TAG", "decoding data");
-
-
   while ((it = std::find(it, data.end(), SEPLOS_START_BYTE)) != data.end()) {
     if (data.end() - it >= SEPLOS_FRAME_SIZE && it[0] == SEPLOS_START_BYTE && it[1] == 0x46 && it[75] == SEPLOS_END_BYTE) {
-      ESP_LOGD("TAG", "advance 1");
-      // for (int i = 0; i < 76; i++) {
-      //   ESP_LOGD("TAG", "data %d", it[i]);
-      // }
-
-      // ESP_LOGD("TAG", "data 73", it[73]);
-      // ESP_LOGD("TAG", "data 74", it[74]);
 
       unsigned short value1 = (int)encode_uint16(it[73], it[74]);
-
       unsigned short value2 = crc.XModemCrc(data.data(),1,72);
       if (value1 == value2) {
         ESP_LOGD("TAG", "CRCCHeck GOOD!!");
+        if (this->status_text_sensor_ != nullptr) {
+          convertDecToBin(it[62],Bin);
+          if (Bin[7] == 1) {
+            this->status_text_sensor_->publish_state("Discharging");
+          }
+          if (Bin[6] == 1) {
+            this->status_text_sensor_->publish_state("Charging");
+          }
+          if (Bin[5] == 1) {
+            this->status_text_sensor_->publish_state("Float Charge");
+          }
+          if (Bin[4] == 1) {
+            this->status_text_sensor_->publish_state("Preserved bits");
+          }
+          if (Bin[3] == 1) {
+            this->status_text_sensor_->publish_state("Standby");
+          }
+          if (Bin[2] == 1) {
+            this->status_text_sensor_->publish_state("Poweed off");
+          }
+          if (Bin[1] == 1) {
+            this->status_text_sensor_->publish_state("Preserved bits");
+          }
+          if (Bin[0] == 1) {
+            this->status_text_sensor_->publish_state("Preserved bits");
+          }
+          
       }
       else {
         ESP_LOGD("TAG", "CRCCHeck FAILED!!!");
       }
 
-      //std::advance(it, SEPLOS_FRAME_SIZE);
+
       break;
-    } else {
-      ESP_LOGD("TAG", "Data is not valid with 55 46 ..... 170");
+    } 
+    else 
+    {
+      ESP_LOGD("TAG", "Data is not valid.. no 55 46 ..... 170");
       break;
     }
   }
