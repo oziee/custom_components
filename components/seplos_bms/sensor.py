@@ -131,8 +131,8 @@ CONFIG_SCHEMA = cv.All(
             ),
             cv.Optional(CONF_BATTERY_LEVEL): sensor.sensor_schema(
                 unit_of_measurement=UNIT_PERCENT,
-                icon=ICON_PERCENT,
-                accuracy_decimals=1,
+                icon="mdi:battery-plus-variant",
+                accuracy_decimals=0,
                 device_class=DEVICE_CLASS_BATTERY,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),

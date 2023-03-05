@@ -236,13 +236,20 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
          //remaining pack capacity
+        float rc = (float) encode_uint16(it[53], it[54])  / 100;
         if (this->remaining_capacity_) { 
-          this->remaining_capacity_->publish_state((float) encode_uint16(it[53], it[54])  / 100);
+          this->remaining_capacity_->publish_state(rc);
         }
 
         //total pack capacity
+        float tc = (float) encode_uint16(it[56], it[57])  / 100
         if (this->pack_capacity_) { 
-          this->pack_capacity_->publish_state((float) encode_uint16(it[56], it[57])  / 100);
+          this->pack_capacity_->publish_state(tc);
+        }
+
+        // pack SOC
+        if (this->battery_level_sensor_) { 
+          this->battery_level_sensor_->publish_state((rc*100)/tc);
         }
 
         
