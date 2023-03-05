@@ -74,7 +74,7 @@ void SeplosBmsComponent::update() {
   // auto it = get_seplos_data.begin();
   // it = get_seplos_data.insert(it, 0x20);
 
-  std::array<uint8_t> get_seplos_data;
+  std::array<uint8_t,76> get_seplos_data;
   int available_data = this->available();
   ESP_LOGW(TAG, "reading avalible size: %d", available_data);
   if (available_data >= SEPLOS_FRAME_SIZE) {
