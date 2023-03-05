@@ -7,6 +7,7 @@
 #include "esphome/components/uart/uart.h"
 
 #include <vector>
+#include <array>
 
 namespace esphome {
 namespace seplos_bms {
@@ -75,7 +76,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
 
  protected:
   void request_data_(uint8_t data_id);
-  void decode_data_(std::vector<uint8_t> data);
+  void decode_data_(std::array<uint8_t> data);
 
   uint8_t addr_;
 
