@@ -77,17 +77,19 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
   //while ((it = std::find(it, data.end(), 0xA5)) != data.end()) { //0xA5 i belive to to start byte
   while ((it = std::find(it, data.end(), SEPLOS_START_BYTE)) != data.end()) {
-    for(int i = 0; i < 76; i++)
-    {
-      ESP_LOGD("TAG", "it %d: %d",i,it[i]);
-    } 
+    // for(int i = 0; i < 76; i++)
+    // {
+    //   ESP_LOGD("TAG", "it %d: %d",i,it[i]);
+    // } 
 
     if (data.end() - it >= SEPLOS_FRAME_SIZE && it[0] == SEPLOS_START_BYTE && it[1] == 0x46 && it[75] == 0xaa) { //end byte?
       ESP_LOGD("TAG", "advance 1");
-      std::advance(it, SEPLOS_FRAME_SIZE);
+      //std::advance(it, SEPLOS_FRAME_SIZE);
+      break;
     } else {
-      ESP_LOGD("TAG", "advance 2");
-      std::advance(it, 1);
+      ESP_LOGD("TAG", "too many items");
+      //std::advance(it, 1);
+      break;
     }
   }
 
