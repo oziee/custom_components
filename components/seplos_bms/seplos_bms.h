@@ -38,8 +38,14 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   }
   void set_remaining_capacity_sensor(sensor::Sensor *remaining_capacity) { remaining_capacity_ = remaining_capacity; }
   void set_cells_number_sensor(sensor::Sensor *cells_number) { cells_number_ = cells_number; }
+  
   void set_temperature_1_sensor(sensor::Sensor *temperature_1_sensor) { temperature_1_sensor_ = temperature_1_sensor; }
   void set_temperature_2_sensor(sensor::Sensor *temperature_2_sensor) { temperature_2_sensor_ = temperature_2_sensor; }
+  void set_temperature_3_sensor(sensor::Sensor *temperature_3_sensor) { temperature_3_sensor_ = temperature_3_sensor; }
+  void set_temperature_4_sensor(sensor::Sensor *temperature_4_sensor) { temperature_4_sensor_ = temperature_4_sensor; }
+  void set_temperature_amb_sensor(sensor::Sensor *temperature_amb_sensor) { temperature_amb_sensor_ = temperature_amb_sensor; }
+  void set_temperature_bms_sensor(sensor::Sensor *temperature_bms_sensor) { temperature_bms_sensor_ = temperature_bms_sensor; }
+
   void set_cell_01_voltage_sensor(sensor::Sensor *cell_01_voltage) { cell_01_voltage_ = cell_01_voltage; }
   void set_cell_02_voltage_sensor(sensor::Sensor *cell_02_voltage) { cell_02_voltage_ = cell_02_voltage; }
   void set_cell_03_voltage_sensor(sensor::Sensor *cell_03_voltage) { cell_03_voltage_ = cell_03_voltage; }
@@ -104,6 +110,10 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   sensor::Sensor *cells_number_{nullptr};
   sensor::Sensor *temperature_1_sensor_{nullptr};
   sensor::Sensor *temperature_2_sensor_{nullptr};
+  sensor::Sensor *temperature_3_sensor_{nullptr};
+  sensor::Sensor *temperature_4_sensor_{nullptr};
+  sensor::Sensor *temperature_amb_sensor_{nullptr};
+  sensor::Sensor *temperature_bms_sensor_{nullptr};
   sensor::Sensor *cell_01_voltage_{nullptr};
   sensor::Sensor *cell_02_voltage_{nullptr};
   sensor::Sensor *cell_03_voltage_{nullptr};

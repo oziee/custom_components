@@ -198,8 +198,28 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         if (this->cell_deviation_) {
           this->cell_deviation_->publish_state((float) (max_cell_voltage-min_cell_voltage) / 1000);
         }
+
+        //temps
+        if (this->temperature_1_sensor_) { 
+          this->temperature_1_sensor_->publish_state((float) (encode_uint16(it[37], it[38]) - 2731) / 10);
+        }
+        if (this->temperature_2_sensor_) { 
+          this->temperature_2_sensor_->publish_state((float) (encode_uint16(it[39], it[40]) - 2731) / 10);
+        }
+        if (this->temperature_3_sensor_) { 
+          this->temperature_3_sensor_->publish_state((float) (encode_uint16(it[41], it[42]) - 2731) / 10);
+        }
+        if (this->temperature_4_sensor_) { 
+          this->temperature_4_sensor_->publish_state((float) (encode_uint16(it[43], it[44]) - 2731) / 10);
+        }
+        if (this->temperature_amb_sensor_) { 
+          this->temperature_amb_sensor_->publish_state((float) (encode_uint16(it[45], it[46]) - 2731) / 10);
+        }
+        if (this->temperature_bms_sensor_) { 
+          this->temperature_bms_sensor_->publish_state((float) (encode_uint16(it[47], it[48]) - 2731) / 10);
+        }
         
-        
+        //current operation of the unit.. charging, discharging.. nothing, off etc
         if (this->status_text_sensor_ != nullptr) {
           convertDecToBin(it[62],Bin);
           if (Bin[7] == 1) {

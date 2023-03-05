@@ -5,8 +5,6 @@ from esphome.const import (
     CONF_VOLTAGE,
     CONF_CURRENT,
     CONF_BATTERY_LEVEL,
-    CONF_MAX_TEMPERATURE,
-    CONF_MIN_TEMPERATURE,
     DEVICE_CLASS_VOLTAGE,
     DEVICE_CLASS_CURRENT,
     DEVICE_CLASS_BATTERY,
@@ -30,13 +28,15 @@ CONF_MAX_CELL_VOLTAGE = "max_cell_voltage"
 CONF_MAX_CELL_VOLTAGE_NUMBER = "max_cell_voltage_number"
 CONF_MIN_CELL_VOLTAGE = "min_cell_voltage"
 CONF_MIN_CELL_VOLTAGE_NUMBER = "min_cell_voltage_number"
-CONF_MAX_TEMPERATURE_PROBE_NUMBER = "max_temperature_probe_number"
-CONF_MIN_TEMPERATURE_PROBE_NUMBER = "min_temperature_probe_number"
 CONF_CELLS_NUMBER = "cells_number"
 
 CONF_REMAINING_CAPACITY = "remaining_capacity"
 CONF_TEMPERATURE_1 = "temperature_1"
 CONF_TEMPERATURE_2 = "temperature_2"
+CONF_TEMPERATURE_3 = "temperature_3"
+CONF_TEMPERATURE_4 = "temperature_4"
+CONF_TEMPERATURE_AMB = "temperature_amb"
+CONF_TEMPERATURE_BMS = "temperature_bms"
 
 CONF_CELL_01_VOLTAGE = "cell_01_voltage"
 CONF_CELL_02_VOLTAGE = "cell_02_voltage"
@@ -71,14 +71,15 @@ TYPES = [
     CONF_MAX_CELL_VOLTAGE_NUMBER,
     CONF_MIN_CELL_VOLTAGE,
     CONF_MIN_CELL_VOLTAGE_NUMBER,
-    CONF_MAX_TEMPERATURE,
-    CONF_MAX_TEMPERATURE_PROBE_NUMBER,
-    CONF_MIN_TEMPERATURE,
-    CONF_MIN_TEMPERATURE_PROBE_NUMBER,
+
     CONF_CELLS_NUMBER,
     CONF_REMAINING_CAPACITY,
     CONF_TEMPERATURE_1,
     CONF_TEMPERATURE_2,
+    CONF_TEMPERATURE_3,
+    CONF_TEMPERATURE_4,
+    CONF_TEMPERATURE_AMB,
+    CONF_TEMPERATURE_BMS,
     CONF_CELL_01_VOLTAGE,
     CONF_CELL_02_VOLTAGE,
     CONF_CELL_03_VOLTAGE,
@@ -153,28 +154,6 @@ CONFIG_SCHEMA = cv.All(
                 icon=ICON_COUNTER,
                 accuracy_decimals=0,
             ),
-            cv.Optional(CONF_MAX_TEMPERATURE): sensor.sensor_schema(
-                unit_of_measurement=UNIT_CELSIUS,
-                icon=ICON_THERMOMETER_CHEVRON_UP,
-                accuracy_decimals=0,
-                device_class=DEVICE_CLASS_TEMPERATURE,
-                state_class=STATE_CLASS_MEASUREMENT,
-            ),
-            cv.Optional(CONF_MAX_TEMPERATURE_PROBE_NUMBER): sensor.sensor_schema(
-                icon=ICON_COUNTER,
-                accuracy_decimals=0,
-            ),
-            cv.Optional(CONF_MIN_TEMPERATURE): sensor.sensor_schema(
-                unit_of_measurement=UNIT_CELSIUS,
-                icon=ICON_THERMOMETER_CHEVRON_DOWN,
-                accuracy_decimals=0,
-                device_class=DEVICE_CLASS_TEMPERATURE,
-                state_class=STATE_CLASS_MEASUREMENT,
-            ),
-            cv.Optional(CONF_MIN_TEMPERATURE_PROBE_NUMBER): sensor.sensor_schema(
-                icon=ICON_COUNTER,
-                accuracy_decimals=0,
-            ),
             cv.Optional(CONF_REMAINING_CAPACITY): sensor.sensor_schema(
                 unit_of_measurement=UNIT_AMPERE_HOUR,
                 icon=ICON_GAUGE,
@@ -195,6 +174,34 @@ CONFIG_SCHEMA = cv.All(
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
             cv.Optional(CONF_TEMPERATURE_2): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_TEMPERATURE_3): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_TEMPERATURE_4): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_TEMPERATURE_AMB): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_TEMPERATURE_BMS): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
                 icon=ICON_THERMOMETER,
                 accuracy_decimals=0,
