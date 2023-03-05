@@ -78,7 +78,7 @@ void SeplosBmsComponent::update() {
   int available_data = this->available();
   ESP_LOGW(TAG, "reading avalible size: %d", available_data);
   if (available_data >= SEPLOS_FRAME_SIZE) {
-    get_seplos_data.resize(available_data);
+    //get_seplos_data.resize(available_data);
     this->read_array(get_seplos_data.data(), available_data);
     this->decode_data_(get_seplos_data);
   }
@@ -87,7 +87,7 @@ void SeplosBmsComponent::update() {
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
 
-void SeplosBmsComponent::decode_data_(std::array<uint8_t> data) {
+void SeplosBmsComponent::decode_data_(std::array<uint8_t,76> data) {
   auto it = data.begin();
 
   ESP_LOGD("TAG", "decoding data");
