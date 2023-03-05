@@ -17,7 +17,7 @@ static const uint16_t SEPLOS_CURRENT_OFFSET = 30000;
 
 Crc16 crc;
 
-boolean Bin[] = {0,0,0,0,0,0,0,0};
+bool Bin[] = {0,0,0,0,0,0,0,0};
 
 
 void SeplosBmsComponent::setup() {}
@@ -81,7 +81,7 @@ void SeplosBmsComponent::update() {
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
 
-void SeplosBmsComponent::convertDecToBin(int Dec, boolean Bin[]) {
+void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
   for(int i = 7 ; i >= 0 ; i--) {
     if(pow(2, i)<=Dec) {
       Dec = Dec - pow(2, i);
