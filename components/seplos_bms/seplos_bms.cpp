@@ -15,7 +15,7 @@ static const uint8_t SEPLOS_END_BYTE = 0xaa;
 static const uint8_t SEPLOS_TEMPERATURE_OFFSET = 40;
 static const uint16_t SEPLOS_CURRENT_OFFSET = 30000;
 
-CRC16 crc;
+Crc16 crc;
 
 
 // static const uint8_t SEPLOS_REQUEST_MIN_MAX_VOLTAGE = 0x91;
