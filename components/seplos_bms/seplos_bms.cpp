@@ -101,7 +101,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
     ESP_LOGD("TAG", "not equal to end");
     ESP_LOGD("TAG", "it: %d", it);
     ESP_LOGD("TAG", "it: %d", it[1]);
-    if (data.end() - it >= SEPLOS_FRAME_SIZE && it[1] == 0xaa) { //end byte?
+    if (data.end() - it >= SEPLOS_FRAME_SIZE && it[1] == 0x46) { //end byte?
       ESP_LOGD("TAG", "advance 1");
       std::advance(it, SEPLOS_FRAME_SIZE);
     } else {
