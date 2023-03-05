@@ -11,8 +11,8 @@ static const uint8_t SEPLOS_FRAME_SIZE = 76; //13
 static const uint8_t SEPLOS_TEMPERATURE_OFFSET = 40;
 static const uint16_t SEPLOS_CURRENT_OFFSET = 30000;
 
-// static const uint8_t SEPLOS_REQUEST_BATTERY_LEVEL = 0x90;
-// static const uint8_t SEPLOS_REQUEST_MIN_MAX_VOLTAGE = 0x91;
+static const uint8_t SEPLOS_START_BYTE = 0x55;
+static const uint8_t SEPLOS_REQUEST_MIN_MAX_VOLTAGE = 0x91;
 // static const uint8_t SEPLOS_REQUEST_MIN_MAX_TEMPERATURE = 0x92;
 // static const uint8_t SEPLOS_REQUEST_MOS = 0x93;
 // static const uint8_t SEPLOS_REQUEST_STATUS = 0x94;
@@ -43,28 +43,7 @@ void SeplosBmsComponent::update() {
     this->read_array(get_seplos_data.data(), available_data);
     this->decode_data_(get_seplos_data);
   }
-  // int bytes_read = 0 ;
-  // bool be = false;
-  // uint8_t buffer[76];
-  // char tmp[16];
-  // while (bytes_read < 76)
-  // {
-  //   if (available() > 0)
-  //   {
-  //     ESP_LOGW(TAG, "reading data.");
-  //     uint8_t RXX = read();
-  //     //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
-  //     if(RXX == 0x55) {
-  //       be = true;
-  //     }
-  //     if (be==true) {
-  //       buffer[bytes_read] = RXX;
-  //       sprintf(tmp, "%.2X",buffer[bytes_read]);
-  //       value_ = value_ + tmp;
-  //       bytes_read ++;
-  //     }
-  //   }
-  // }
+
 }
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
@@ -97,11 +76,8 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   ESP_LOGD("TAG", "decoding data");
 
   //while ((it = std::find(it, data.end(), 0xA5)) != data.end()) { //0xA5 i belive to to start byte
-  while ((it = std::find(it, data.end(), 0x55)) != data.end()) {
-    ESP_LOGD("TAG", "not equal to end");
-    ESP_LOGD("TAG", "it: %d", it);
-    ESP_LOGD("TAG", "it: %d", it[1]);
-    if (data.end() - it >= SEPLOS_FRAME_SIZE && it[1] == 0x46) { //end byte?
+  while ((it = std::find(it, data.end(), SEPLOS_START_BYTE)) != data.end()) {
+    if (data.end() - it >= SEPLOS_FRAME_SIZE && it[1] == 0x46 && it[76] == 0xaa) { //end byte?
       ESP_LOGD("TAG", "advance 1");
       std::advance(it, SEPLOS_FRAME_SIZE);
     } else {
