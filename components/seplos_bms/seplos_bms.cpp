@@ -1,6 +1,7 @@
 #include "seplos_bms.h"
 #include "esphome/core/log.h"
 #include <vector>
+#include <array>
 #include "Crc16.h"
 
 namespace esphome {
@@ -73,7 +74,7 @@ void SeplosBmsComponent::update() {
   // auto it = get_seplos_data.begin();
   // it = get_seplos_data.insert(it, 0x20);
 
-  std::vector<uint8_t> get_seplos_data;
+  std::array<uint8_t> get_seplos_data;
   int available_data = this->available();
   ESP_LOGW(TAG, "reading avalible size: %d", available_data);
   if (available_data >= SEPLOS_FRAME_SIZE) {
@@ -86,7 +87,7 @@ void SeplosBmsComponent::update() {
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
 
-void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
+void SeplosBmsComponent::decode_data_(std::array<uint8_t> data) {
   auto it = data.begin();
 
   ESP_LOGD("TAG", "decoding data");
