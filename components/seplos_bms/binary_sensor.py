@@ -10,7 +10,7 @@ from esphome.const import (
 CONF_CHARGING_MOS_ENABLED = "charging_mos_enabled"
 CONF_DISCHARGING_MOS_ENABLED = "discharging_mos_enabled"
 CONF_CURRENT_LIMITING_ENABLED = "current_limiting_enabled"
-CONF_HEATING_ENABLED = "heating_enalbed"
+CONF_HEATING_ENABLED = "heating_enabled"
 
 
 TYPES = [
