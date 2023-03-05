@@ -1,7 +1,7 @@
 #include "seplos_bms.h"
 #include "esphome/core/log.h"
 #include <vector>
-//#include "Crc16.h"
+#include <Crc16.h>
 
 namespace esphome {
 namespace seplos_bms {
