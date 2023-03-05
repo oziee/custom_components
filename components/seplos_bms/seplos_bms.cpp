@@ -82,7 +82,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
       ESP_LOGD("TAG", "it %d: %d",i,it[i]);
     } 
 
-    if (data.end() - it >= SEPLOS_FRAME_SIZE && it[1] == 0x46 && it[76] == 0xaa) { //end byte?
+    if (data.end() - it >= SEPLOS_FRAME_SIZE && it[0] == SEPLOS_START_BYTE && it[1] == 0x46 && it[75] == 0xaa) { //end byte?
       ESP_LOGD("TAG", "advance 1");
       std::advance(it, SEPLOS_FRAME_SIZE);
     } else {
