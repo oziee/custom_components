@@ -8,20 +8,20 @@ from . import seplos_ns, SeplosComponent, CONF_SEPLOS_ID
 
 
 # text sensors
-CONF_CHARGER_TEXT = "charger_text"
+CONF_STATUS_TEXT = "status_text"
 
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(CONF_SEPLOS_ID): cv.use_id(SeplosComponent),
-    cv.Optional(CONF_CHARGER_TEXT): text_sensor.TEXT_SENSOR_SCHEMA.extend({cv.GenerateID(): cv.declare_id(text_sensor.TextSensor)}),
+    cv.Optional(CONF_STATUS_TEXT): text_sensor.TEXT_SENSOR_SCHEMA.extend({cv.GenerateID(): cv.declare_id(text_sensor.TextSensor)}),
 })
 
 async def to_code(config):
     seplos = await cg.get_variable(config[CONF_SEPLOS_ID])
 
     
-    if CONF_CHARGER_TEXT in config:
-        conf = config[CONF_CHARGER_TEXT]
+    if CONF_STATUS_TEXT in config:
+        conf = config[CONF_STATUS_TEXT]
         sens = cg.new_Pvariable(conf[CONF_ID])
         await text_sensor.register_text_sensor(sens, conf)
         cg.add(seplos.set_charger_text_sensor(sens))
