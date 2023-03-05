@@ -246,6 +246,9 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         ESP_LOGD("TAG", "Status dec: %d", it[62]);
         if (this->status_text_sensor_ != nullptr) {
           convertDecToBin(it[62],Bin);
+          for (int z=0; z<8; z++) {
+            ESP_LOGD("TAG", "Status Bin: %d - %d", z, Bin[z]);
+          }
           if (Bin[7] == 1) {
             this->status_text_sensor_->publish_state("Discharging");
           }
