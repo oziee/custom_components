@@ -21,7 +21,7 @@ bool Bin[] = {0,0,0,0,0,0,0,0};
 
 
 void SeplosBmsComponent::setup() {
-  update();
+  //update();
 }
 
 void SeplosBmsComponent::dump_config() {

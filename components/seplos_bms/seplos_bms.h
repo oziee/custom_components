@@ -99,7 +99,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   void set_uv_cell_protect_binary_sensor(binary_sensor::BinarySensor *uv_cell_protect) {uv_cell_protect_ = uv_cell_protect;}
   void set_ov_pack_warning_binary_sensor(binary_sensor::BinarySensor *ov_pack_warning) {ov_pack_warning_ = ov_pack_warning;}
   void set_ov_pack_protect_binary_sensor(binary_sensor::BinarySensor *ov_pack_protect) {ov_pack_protect_ = ov_pack_protect;}
-  void set_uv_pack_warning_binary_sensor(binary_sensor::BinarySensor *uv_pack_warning) {seuv_pack_warning_n_ = uv_pack_warning;}
+  void set_uv_pack_warning_binary_sensor(binary_sensor::BinarySensor *uv_pack_warning) {uv_pack_warning_ = uv_pack_warning;}
   void set_uv_pack_protect_binary_sensor(binary_sensor::BinarySensor *uv_pack_protect) {uv_pack_protect_ = uv_pack_protect;}
 
   //warning 3 - temps
