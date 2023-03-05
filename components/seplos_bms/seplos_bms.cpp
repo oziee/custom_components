@@ -218,6 +218,29 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         if (this->temperature_bms_sensor_) { 
           this->temperature_bms_sensor_->publish_state((float) (encode_uint16(it[47], it[48]) - 2731) / 10);
         }
+
+        //current
+        if (this->current_sensor_) { 
+          this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 10);
+        }
+
+        //total volt of pack
+        if (this->voltage_sensor_) { 
+          this->voltage_sensor_->publish_state((float) encode_uint16(it[51], it[52])  / 100);
+        }
+
+         //remaining pack capacity
+        if (this->remaining_capacity_) { 
+          this->remaining_capacity_->publish_state((float) encode_uint16(it[53], it[54])  / 100);
+        }
+
+        //total pack capacity
+        if (this->pack_capacity_) { 
+          this->pack_capacity_->publish_state((float) encode_uint16(it[56], it[57])  / 100);
+        }
+
+        
+
         
         //current operation of the unit.. charging, discharging.. nothing, off etc
         if (this->status_text_sensor_ != nullptr) {

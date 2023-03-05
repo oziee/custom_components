@@ -30,7 +30,9 @@ CONF_MIN_CELL_VOLTAGE = "min_cell_voltage"
 CONF_MIN_CELL_VOLTAGE_NUMBER = "min_cell_voltage_number"
 CONF_CELLS_NUMBER = "cells_number"
 
+CONF_PACK_CAPACITY = "pack_capacity"
 CONF_REMAINING_CAPACITY = "remaining_capacity"
+
 CONF_TEMPERATURE_1 = "temperature_1"
 CONF_TEMPERATURE_2 = "temperature_2"
 CONF_TEMPERATURE_3 = "temperature_3"
@@ -55,6 +57,7 @@ CONF_CELL_14_VOLTAGE = "cell_14_voltage"
 CONF_CELL_15_VOLTAGE = "cell_15_voltage"
 CONF_CELL_16_VOLTAGE = "cell_16_voltage"
 CONF_CELL_DEVIATION = "cell_deviation"
+
 ICON_CURRENT_DC = "mdi:current-dc"
 ICON_BATTERY_OUTLINE = "mdi:battery-outline"
 ICON_THERMOMETER_CHEVRON_UP = "mdi:thermometer-chevron-up"

@@ -16,7 +16,7 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.GenerateID(CONF_BMS_SEPLOS_ID): cv.use_id(SeplosBmsComponent),
             cv.Optional(CONF_BMS_STATUS): text_sensor.text_sensor_schema(
-                icon="mdi:car-battery"
+                icon="mdi:dip-switch"
             ),
         }
     ).extend(cv.COMPONENT_SCHEMA)
