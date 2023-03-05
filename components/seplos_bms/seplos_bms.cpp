@@ -243,6 +243,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         
         //current operation of the unit.. charging, discharging.. nothing, off etc
+        ESP_LOGD("TAG", "Status dec: %d", it[62]);
         if (this->status_text_sensor_ != nullptr) {
           convertDecToBin(it[62],Bin);
           if (Bin[7] == 1) {
