@@ -102,7 +102,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
       // ESP_LOGD("TAG", "data 73", it[73]);
       // ESP_LOGD("TAG", "data 74", it[74]);
 
-      unsigned short value1 = (int)encode_uint16(it[73], it[74]));
+      unsigned short value1 = (int)encode_uint16(it[73], it[74]);
 
       unsigned short value2 = crc.XModemCrc(data.data(),1,72);
       if (value1 == value2) {
