@@ -77,7 +77,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
   //while ((it = std::find(it, data.end(), 0xA5)) != data.end()) { //0xA5 i belive to to start byte
   while ((it = std::find(it, data.end(), SEPLOS_START_BYTE)) != data.end()) {
-    for(i = 0; i < LIMIT - 76; i++)
+    for(int i = 0; i < LIMIT - 76; i++)
     {
       ESP_LOGD("TAG", "it %d: %d",i,it[i]);
     } 
