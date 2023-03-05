@@ -194,6 +194,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         if (this->min_cell_voltage_number_) {
           this->min_cell_voltage_number_->publish_state(min_voltage_cell);
         }
+
+        if (this->cell_deviation_) {
+          this->cell_deviation_->publish_state((float) (max_cell_voltage-min_cell_voltage) / 1000);
+        }
         
         
         if (this->status_text_sensor_ != nullptr) {
@@ -222,6 +226,49 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           if (Bin[0] == 1) {
             this->status_text_sensor_->publish_state("Preserved bits");
           }
+        }
+
+        //system status switches
+        convertDecToBin(it[66],Bin);
+        //discharging enabled
+        if (Bin[7] == 1) {
+          if (this->discharging_mos_enabled_ != nullptr) 
+            this->discharging_mos_enabled_->publish_state(1);
+        }
+        else
+        {
+          if (this->discharging_mos_enabled_ != nullptr) 
+            this->discharging_mos_enabled_->publish_state(0);
+        }
+        //charging enabled
+        if (Bin[6] == 1) {
+          if (this->charging_mos_enabled_ != nullptr) 
+            this->charging_mos_enabled_->publish_state(1);
+        }
+        else
+        {
+          if (this->charging_mos_enabled_ != nullptr) 
+            this->charging_mos_enabled_->publish_state(0);
+        }
+        //current limiting
+        if (Bin[5] == 1) {
+          if (this->current_limiting_enabled_ != nullptr) 
+            this->current_limiting_enabled_->publish_state(1);
+        }
+        else
+        {
+          if (this->current_limiting_enabled_ != nullptr) 
+            this->current_limiting_enabled_->publish_state(0);
+        }
+        //heating enabled
+        if (Bin[4] == 1) {
+          if (this->heating_enabled_ != nullptr) 
+            this->heating_enabled_->publish_state(1);
+        }
+        else
+        {
+          if (this->heating_enabled_ != nullptr) 
+            this->heating_enabled_->publish_state(0);
         }
           
       }
