@@ -82,6 +82,66 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
     heating_enabled_ = heating_enabled;
   }
 
+  //failure warnings
+  void set_voltage_sensor_failure_binary_sensor(binary_sensor::BinarySensor *voltage_sensor_failure) {voltage_sensor_failure_ = voltage_sensor_failure;}
+  void set_temp_sensor_failure_binary_sensor(binary_sensor::BinarySensor *temp_sensor_failure) {temp_sensor_failure_ = temp_sensor_failure;}
+  void set_current_sensor_failure_binary_sensor(binary_sensor::BinarySensor *current_sensor_failure) {current_sensor_failure_ = current_sensor_failure;}
+  void set_button_failure_binary_sensor(binary_sensor::BinarySensor *button_failure) {button_failure_ = button_failure;}
+  void set_voltage_difference_failure_binary_sensor(binary_sensor::BinarySensor *voltage_difference_failure) {voltage_difference_failure_ = voltage_difference_failure;}
+  void set_charge_switch_failure_binary_sensor(binary_sensor::BinarySensor *charge_switch_failure) {charge_switch_failure_ = charge_switch_failure;}
+  void set_discharge_switch_failure_binary_sensor(binary_sensor::BinarySensor *discharge_switch_failure) {discharge_switch_failure_ = discharge_switch_failure;}
+  void set_current_limiting_failure_binary_sensor(binary_sensor::BinarySensor *current_limiting_failure) {current_limiting_failure_ = current_limiting_failure;}
+
+  //warning 2 - voltages
+  void set_ov_cell_warning_binary_sensor(binary_sensor::BinarySensor *ov_cell_warning) {ov_cell_warning_ = ov_cell_warning;}
+  void set_ov_cell_protect_binary_sensor(binary_sensor::BinarySensor *ov_cell_protect) {ov_cell_protect_ = ov_cell_protect;}
+  void set_uv_cell_warning_binary_sensor(binary_sensor::BinarySensor *uv_cell_warning) {uv_cell_warning_ = uv_cell_warning;}
+  void set_uv_cell_protect_binary_sensor(binary_sensor::BinarySensor *uv_cell_protect) {uv_cell_protect_ = uv_cell_protect;}
+  void set_ov_pack_warning_binary_sensor(binary_sensor::BinarySensor *ov_pack_warning) {ov_pack_warning_ = ov_pack_warning;}
+  void set_ov_pack_protect_binary_sensor(binary_sensor::BinarySensor *ov_pack_protect) {ov_pack_protect_ = ov_pack_protect;}
+  void set_uv_pack_warning_binary_sensor(binary_sensor::BinarySensor *uv_pack_warning) {seuv_pack_warning_n_ = uv_pack_warning;}
+  void set_uv_pack_protect_binary_sensor(binary_sensor::BinarySensor *uv_pack_protect) {uv_pack_protect_ = uv_pack_protect;}
+
+  //warning 3 - temps
+  void set_ot_charge_warning_binary_sensor(binary_sensor::BinarySensor *ot_charge_warning) {ot_charge_warning_ = ot_charge_warning;}
+  void set_ot_charge_protect_binary_sensor(binary_sensor::BinarySensor *ot_charge_protect) {ot_charge_protect_ = ot_charge_protect;}
+  void set_ut_charge_warning_binary_sensor(binary_sensor::BinarySensor *ut_charge_warning) {ut_charge_warning_ = ut_charge_warning;}
+  void set_ut_charge_protect_binary_sensor(binary_sensor::BinarySensor *ut_charge_protect) {ut_charge_protect_ = ut_charge_protect;}
+  void set_ot_discharge_warning_binary_sensor(binary_sensor::BinarySensor *ot_discharge_warning) {ot_discharge_warning_ = ot_discharge_warning;}
+  void set_ot_discharge_protect_binary_sensor(binary_sensor::BinarySensor *ot_discharge_protect) {ot_discharge_protect_ = ot_discharge_protect;}
+  void set_ut_discharge_warning_binary_sensor(binary_sensor::BinarySensor *ut_discharge_warning) {ut_discharge_warning_ = ut_discharge_warning;}
+  void set_ut_discharge_protect_binary_sensor(binary_sensor::BinarySensor *ut_discharge_protect) {ut_discharge_protect_ = ut_discharge_protect;}
+
+  //warning 4 - temps amb and bms
+  void set_ot_amb_warning_binary_sensor(binary_sensor::BinarySensor *ot_amb_warning) {ot_amb_warning_ = ot_amb_warning;}
+  void set_ot_amb_protect_binary_sensor(binary_sensor::BinarySensor *ot_amb_protect) {ot_amb_protect_ = ot_amb_protect;}
+  void set_ut_amb_warning_binary_sensor(binary_sensor::BinarySensor *ut_amb_warning) {ut_amb_warning_ = ut_amb_warning;}
+  void set_ut_amb_protect_binary_sensor(binary_sensor::BinarySensor *ut_amb_protect) {ut_amb_protect_ = ut_amb_protect;}
+  void set_ot_bms_warning_binary_sensor(binary_sensor::BinarySensor *ot_bms_warning) {ot_bms_warning_ = ot_bms_warning;}
+  void set_ot_bms_protect_binary_sensor(binary_sensor::BinarySensor *ot_bms_protect) {ot_bms_protect_ = ot_bms_protect;}
+  void set_ut_heating_binary_sensor(binary_sensor::BinarySensor *ut_heating) {ut_heating_ = ut_heating;}
+  //void set_??_binary_sensor(binary_sensor::BinarySensor *sen) {sen_ = sen;} //Preserved bits
+
+  //warning 5 - currents
+  void set_oc_charge_warning_binary_sensor(binary_sensor::BinarySensor *oc_charge_warning) {oc_charge_warning_ = oc_charge_warning;}
+  void set_oc_charge_protect_binary_sensor(binary_sensor::BinarySensor *oc_charge_protect) {oc_charge_protect_ = oc_charge_protect;}
+  void set_oc_discharge_warning_binary_sensor(binary_sensor::BinarySensor *oc_discharge_warning) {oc_discharge_warning_ = oc_discharge_warning;}
+  void set_oc_discharge_protect_binary_sensor(binary_sensor::BinarySensor *oc_discharge_protect) {oc_discharge_protect_ = oc_discharge_protect;}
+  void set_oc_transient_protect_binary_sensor(binary_sensor::BinarySensor *oc_transient_protect) {oc_transient_protect_ = oc_transient_protect;}
+  void set_sc_output_current_protect_binary_sensor(binary_sensor::BinarySensor *sc_output_current_protect) {sc_output_current_protect_ = sc_output_current_protect;}
+  void set_oc_transient_lock_binary_sensor(binary_sensor::BinarySensor *oc_transient_lock) {oc_transient_lock_ = oc_transient_lock;}
+  void set_sc_output_current_lock_binary_sensor(binary_sensor::BinarySensor *sc_output_current_lock) {sc_output_current_lock_ = sc_output_current_lock;}
+
+  //warning 6 - random
+  void set_ov_charge_protect_binary_sensor(binary_sensor::BinarySensor *ov_charge_protect) {ov_charge_protect_ = ov_charge_protect;}
+  void set_power_supply_waiting_binary_sensor(binary_sensor::BinarySensor *power_supply_waiting) {power_supply_waiting_ = power_supply_waiting;}
+  void set_remaining_capacity_warning_binary_sensor(binary_sensor::BinarySensor *remaining_capacity_warning) {remaining_capacity_warning_ = remaining_capacity_warning;}
+  void set_remaining_capacity_protect_binary_sensor(binary_sensor::BinarySensor *remaining_capacity_protect) {remaining_capacity_protect_ = remaining_capacity_protect;}
+  void set_uv_cell_stop_charging_warning_binary_sensor(binary_sensor::BinarySensor *uv_cell_stop_charging_warning) {uv_cell_stop_charging_warning_ = uv_cell_stop_charging_warning;}
+  void set_reverse_polarity_protect_binary_sensor(binary_sensor::BinarySensor *reverse_polarity_protect) {reverse_polarity_protect_ = reverse_polarity_protect;}
+  void set_output_connection_failure_binary_sensor(binary_sensor::BinarySensor *output_connection_failure) {output_connection_failure_ = output_connection_failure;}
+  void set_internal_bit_binary_sensor(binary_sensor::BinarySensor *internal_bit) {internal_bit_ = internal_bit;} //dont know??
+
 
   void setup() override;
   void dump_config() override;
@@ -142,7 +202,71 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   binary_sensor::BinarySensor *discharging_mos_enabled_{nullptr};
   binary_sensor::BinarySensor *current_limiting_enabled_{nullptr};
   binary_sensor::BinarySensor *heating_enabled_{nullptr};
-};
+  //4-7 Preserved bits
+
+  //warning 1 - failures
+  binary_sensor::BinarySensor *voltage_sensor_failure_{nullptr};
+  binary_sensor::BinarySensor *temp_sensor_failure_{nullptr};
+  binary_sensor::BinarySensor *current_sensor_failure_{nullptr};
+  binary_sensor::BinarySensor *button_failure_{nullptr};
+  binary_sensor::BinarySensor *voltage_difference_failure_{nullptr};
+  binary_sensor::BinarySensor *charge_switch_failure_{nullptr};
+  binary_sensor::BinarySensor *discharge_switch_failure_{nullptr};
+  binary_sensor::BinarySensor *current_limiting_failure_{nullptr};
+
+  //warning 2 - voltages
+  binary_sensor::BinarySensor *ov_cell_warning_{nullptr};
+  binary_sensor::BinarySensor *ov_cell_protect_{nullptr};
+  binary_sensor::BinarySensor *uv_cell_warning_{nullptr};
+  binary_sensor::BinarySensor *uv_cell_protect_{nullptr};
+  binary_sensor::BinarySensor *ov_pack_warning_{nullptr};
+  binary_sensor::BinarySensor *ov_pack_protect_{nullptr};
+  binary_sensor::BinarySensor *uv_pack_warning_{nullptr};
+  binary_sensor::BinarySensor *uv_pack_protect_{nullptr};
+
+  //warning 3 - temps
+  binary_sensor::BinarySensor *ot_charge_warning_{nullptr};
+  binary_sensor::BinarySensor *ot_charge_protect_{nullptr};
+  binary_sensor::BinarySensor *ut_charge_warning_{nullptr};
+  binary_sensor::BinarySensor *ut_charge_protect_{nullptr};
+  binary_sensor::BinarySensor *ot_discharge_warning_{nullptr};
+  binary_sensor::BinarySensor *ot_discharge_protect_{nullptr};
+  binary_sensor::BinarySensor *ut_discharge_warning_{nullptr};
+  binary_sensor::BinarySensor *ut_discharge_protect_{nullptr};
+
+  //warning 4 - temps amb and bms
+  binary_sensor::BinarySensor *ot_amb_warning_{nullptr};
+  binary_sensor::BinarySensor *ot_amb_protect_{nullptr};
+  binary_sensor::BinarySensor *ut_amb_warning_{nullptr};
+  binary_sensor::BinarySensor *ut_amb_protect_{nullptr};
+  binary_sensor::BinarySensor *ot_bms_warning_{nullptr};
+  binary_sensor::BinarySensor *ot_bms_protect_{nullptr};
+  binary_sensor::BinarySensor *ut_heating_{nullptr};
+  //binary_sensor::BinarySensor *ut_discharge_protect_{nullptr}; //Preserved bits
+  
+  //warning 5 - currents
+  binary_sensor::BinarySensor *oc_charge_warning_{nullptr};
+  binary_sensor::BinarySensor *oc_charge_protect_{nullptr};
+  binary_sensor::BinarySensor *oc_discharge_warning_{nullptr};
+  binary_sensor::BinarySensor *oc_discharge_protect_{nullptr};
+  binary_sensor::BinarySensor *oc_transient_protect_{nullptr};
+  binary_sensor::BinarySensor *sc_output_current_protect_{nullptr};
+  binary_sensor::BinarySensor *oc_transient_lock_{nullptr};
+  binary_sensor::BinarySensor *sc_output_current_lock_{nullptr};
+
+  //warning 6 - random
+  binary_sensor::BinarySensor *ov_charge_protect_{nullptr};
+  binary_sensor::BinarySensor *power_supply_waiting_{nullptr};
+  binary_sensor::BinarySensor *remaining_capacity_warning_{nullptr};
+  binary_sensor::BinarySensor *remaining_capacity_protect_{nullptr};
+  binary_sensor::BinarySensor *uv_cell_stop_charging_warning_{nullptr};
+  binary_sensor::BinarySensor *reverse_polarity_protect_{nullptr};
+  binary_sensor::BinarySensor *output_connection_failure_{nullptr};
+  binary_sensor::BinarySensor *internal_bit_{nullptr}; //dont know??
+
+
+
+
 
 }  // namespace seplos_bms
 }  // namespace esphome
