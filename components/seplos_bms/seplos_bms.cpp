@@ -15,6 +15,8 @@ static const uint8_t SEPLOS_END_BYTE = 0xaa;
 static const uint8_t SEPLOS_TEMPERATURE_OFFSET = 40;
 static const uint16_t SEPLOS_CURRENT_OFFSET = 30000;
 
+CRC16 crc;
+
 
 // static const uint8_t SEPLOS_REQUEST_MIN_MAX_VOLTAGE = 0x91;
 // static const uint8_t SEPLOS_REQUEST_MIN_MAX_TEMPERATURE = 0x92;
@@ -101,6 +103,8 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
       ESP_LOGD("TAG", "data 74", it[74]);
 
       ESP_LOGD("TAG", "CRC %f", (float)encode_uint16(it[73], it[74]));
+
+      ESP_LOGD("TAG", "CRCCHeck %d",crc.XModemCrc(data,1,72));
 
       //std::advance(it, SEPLOS_FRAME_SIZE);
       break;
