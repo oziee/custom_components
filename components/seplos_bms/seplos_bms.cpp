@@ -252,6 +252,11 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           this->battery_level_sensor_->publish_state((rc*100)/tc);
         }
 
+        // pack charge cycle counter
+        if (this->cycle_counter_) { 
+          this->cycle_counter_->publish_state((float) encode_uint16(it[58], it[59]));
+        }
+
         
 
         resetBin();

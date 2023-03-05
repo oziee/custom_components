@@ -32,6 +32,7 @@ CONF_CELLS_NUMBER = "cells_number"
 
 CONF_PACK_CAPACITY = "pack_capacity"
 CONF_REMAINING_CAPACITY = "remaining_capacity"
+CONF_CYCLE_COUNTER = "cycle_counter"
 
 CONF_TEMPERATURE_1 = "temperature_1"
 CONF_TEMPERATURE_2 = "temperature_2"
@@ -70,6 +71,7 @@ TYPES = [
     CONF_VOLTAGE,
     CONF_CURRENT,
     CONF_BATTERY_LEVEL,
+    CONF_CYCLE_COUNTER,
     CONF_MAX_CELL_VOLTAGE,
     CONF_MAX_CELL_VOLTAGE_NUMBER,
     CONF_MIN_CELL_VOLTAGE,
@@ -144,6 +146,10 @@ CONFIG_SCHEMA = cv.All(
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
             cv.Optional(CONF_MAX_CELL_VOLTAGE_NUMBER): sensor.sensor_schema(
+                icon=ICON_COUNTER,
+                accuracy_decimals=0,
+            ),
+            cv.Optional(CONF_CYCLE_COUNTER): sensor.sensor_schema(
                 icon=ICON_COUNTER,
                 accuracy_decimals=0,
             ),
