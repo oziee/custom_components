@@ -127,6 +127,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           if (Bin[0] == 1) {
             this->status_text_sensor_->publish_state("Preserved bits");
           }
+        }
           
       }
       else {
