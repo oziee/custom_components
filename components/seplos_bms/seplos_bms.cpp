@@ -242,7 +242,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //total pack capacity
-        float tc = (float) encode_uint16(it[56], it[57])  / 100
+        float tc = (float) encode_uint16(it[56], it[57])  / 100;
         if (this->pack_capacity_) { 
           this->pack_capacity_->publish_state(tc);
         }
