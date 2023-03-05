@@ -241,7 +241,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         
 
-        
+        Bin[] = {0,0,0,0,0,0,0,0};
         //current operation of the unit.. charging, discharging.. nothing, off etc
         ESP_LOGD("TAG", "Status dec: %d", it[62]);
         if (this->status_text_sensor_ != nullptr) {
@@ -276,6 +276,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //system status switches
+        Bin[] = {0,0,0,0,0,0,0,0};
         convertDecToBin(it[63],Bin);
         //discharging enabled
         if (Bin[7] == 1) {
