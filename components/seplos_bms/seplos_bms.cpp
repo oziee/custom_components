@@ -20,7 +20,9 @@ Crc16 crc;
 bool Bin[] = {0,0,0,0,0,0,0,0};
 
 
-void SeplosBmsComponent::setup() {}
+void SeplosBmsComponent::setup() {
+  update();
+}
 
 void SeplosBmsComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "Seplos BMS:");
@@ -28,13 +30,6 @@ void SeplosBmsComponent::dump_config() {
 }
 
 void SeplosBmsComponent::update() {
-  // this->request_data_(SEPLOS_REQUEST_BATTERY_LEVEL);
-  // this->request_data_(SEPLOS_REQUEST_MIN_MAX_VOLTAGE);
-  // this->request_data_(SEPLOS_REQUEST_MIN_MAX_TEMPERATURE);
-  // this->request_data_(SEPLOS_REQUEST_MOS);
-  // this->request_data_(SEPLOS_REQUEST_STATUS);
-  // this->request_data_(SEPLOS_REQUEST_CELL_VOLTAGE);
-  // this->request_data_(SEPLOS_REQUEST_TEMPERATURE);
 
   // int bytes_read = 0 ;
   // bool be = false;
