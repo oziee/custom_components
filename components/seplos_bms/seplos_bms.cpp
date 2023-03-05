@@ -97,6 +97,9 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         ESP_LOGD("TAG", "data %d", it[i]);
       }
 
+      ESP_LOGD("TAG", "data 73", it[73]);
+      ESP_LOGD("TAG", "data 74", it[74]);
+
       ESP_LOGD("TAG", "CRC %f", (float)encode_uint16(it[73], it[74]));
 
       //std::advance(it, SEPLOS_FRAME_SIZE);
