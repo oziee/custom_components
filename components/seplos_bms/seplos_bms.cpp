@@ -229,7 +229,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //system status switches
-        convertDecToBin(it[66],Bin);
+        convertDecToBin(it[63],Bin);
         //discharging enabled
         if (Bin[7] == 1) {
           if (this->discharging_mos_enabled_ != nullptr) 
