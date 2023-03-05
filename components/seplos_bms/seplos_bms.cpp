@@ -105,7 +105,7 @@ void SeplosBmsComponent::decode_data_(std::array<uint8_t,76> data) {
 
       ESP_LOGD("TAG", "CRC %f", (float)encode_uint16(it[73], it[74]));
 
-      unsigned short value = crc.XModemCrc((uint8_t)data,1,72);
+      unsigned short value = crc.XModemCrc(data,1,72);
       ESP_LOGD("TAG", "CRCCHeck %d",value);
 
       //std::advance(it, SEPLOS_FRAME_SIZE);
