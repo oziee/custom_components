@@ -54,6 +54,7 @@ CONF_CELL_13_VOLTAGE = "cell_13_voltage"
 CONF_CELL_14_VOLTAGE = "cell_14_voltage"
 CONF_CELL_15_VOLTAGE = "cell_15_voltage"
 CONF_CELL_16_VOLTAGE = "cell_16_voltage"
+CONF_CELL_DEVIATION = "cell_deviation"
 ICON_CURRENT_DC = "mdi:current-dc"
 ICON_BATTERY_OUTLINE = "mdi:battery-outline"
 ICON_THERMOMETER_CHEVRON_UP = "mdi:thermometer-chevron-up"
@@ -94,6 +95,7 @@ TYPES = [
     CONF_CELL_14_VOLTAGE,
     CONF_CELL_15_VOLTAGE,
     CONF_CELL_16_VOLTAGE,
+    CONF_CELL_DEVIATION,
 ]
 
 CELL_VOLTAGE_SCHEMA = sensor.sensor_schema(
@@ -215,6 +217,13 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_CELL_14_VOLTAGE): CELL_VOLTAGE_SCHEMA,
             cv.Optional(CONF_CELL_15_VOLTAGE): CELL_VOLTAGE_SCHEMA,
             cv.Optional(CONF_CELL_16_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_DEVIATION): sensor.sensor_schema(
+                unit_of_measurement=UNIT_VOLT,
+                icon="mdi:battery-low",
+                accuracy_decimals=3,
+                device_class=DEVICE_CLASS_VOLTAGE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
         }
     ).extend(cv.COMPONENT_SCHEMA)
 )

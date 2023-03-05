@@ -56,6 +56,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   void set_cell_14_voltage_sensor(sensor::Sensor *cell_14_voltage) { cell_14_voltage_ = cell_14_voltage; }
   void set_cell_15_voltage_sensor(sensor::Sensor *cell_15_voltage) { cell_15_voltage_ = cell_15_voltage; }
   void set_cell_16_voltage_sensor(sensor::Sensor *cell_16_voltage) { cell_16_voltage_ = cell_16_voltage; }
+  void set_cell_deviation_sensor(sensor::Sensor *cell_deviation) { cell_deviation_ = cell_deviation; }
 
   // TEXT_SENSORS
   void set_bms_status_text_sensor(text_sensor::TextSensor *status_text_sensor) { status_text_sensor_ = status_text_sensor; }
@@ -119,6 +120,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   sensor::Sensor *cell_14_voltage_{nullptr};
   sensor::Sensor *cell_15_voltage_{nullptr};
   sensor::Sensor *cell_16_voltage_{nullptr};
+  sensor::Sensor *cell_deviation_{nullptr};
 
   text_sensor::TextSensor *status_text_sensor_{nullptr};
 
