@@ -76,7 +76,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
 
  protected:
   void request_data_(uint8_t data_id);
-  void decode_data_(std::array<uint8_t> data);
+  void decode_data_(std::array<uint8_t,76> data);
 
   uint8_t addr_;
 
