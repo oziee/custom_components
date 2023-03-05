@@ -40,15 +40,15 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   void set_cells_number_sensor(sensor::Sensor *cells_number) { cells_number_ = cells_number; }
   void set_temperature_1_sensor(sensor::Sensor *temperature_1_sensor) { temperature_1_sensor_ = temperature_1_sensor; }
   void set_temperature_2_sensor(sensor::Sensor *temperature_2_sensor) { temperature_2_sensor_ = temperature_2_sensor; }
-  void set_cell_1_voltage_sensor(sensor::Sensor *cell_1_voltage) { cell_1_voltage_ = cell_1_voltage; }
-  void set_cell_2_voltage_sensor(sensor::Sensor *cell_2_voltage) { cell_2_voltage_ = cell_2_voltage; }
-  void set_cell_3_voltage_sensor(sensor::Sensor *cell_3_voltage) { cell_3_voltage_ = cell_3_voltage; }
-  void set_cell_4_voltage_sensor(sensor::Sensor *cell_4_voltage) { cell_4_voltage_ = cell_4_voltage; }
-  void set_cell_5_voltage_sensor(sensor::Sensor *cell_5_voltage) { cell_5_voltage_ = cell_5_voltage; }
-  void set_cell_6_voltage_sensor(sensor::Sensor *cell_6_voltage) { cell_6_voltage_ = cell_6_voltage; }
-  void set_cell_7_voltage_sensor(sensor::Sensor *cell_7_voltage) { cell_7_voltage_ = cell_7_voltage; }
-  void set_cell_8_voltage_sensor(sensor::Sensor *cell_8_voltage) { cell_8_voltage_ = cell_8_voltage; }
-  void set_cell_9_voltage_sensor(sensor::Sensor *cell_9_voltage) { cell_9_voltage_ = cell_9_voltage; }
+  void set_cell_01_voltage_sensor(sensor::Sensor *cell_01_voltage) { cell_01_voltage_ = cell_01_voltage; }
+  void set_cell_02_voltage_sensor(sensor::Sensor *cell_02_voltage) { cell_02_voltage_ = cell_02_voltage; }
+  void set_cell_03_voltage_sensor(sensor::Sensor *cell_03_voltage) { cell_03_voltage_ = cell_03_voltage; }
+  void set_cell_04_voltage_sensor(sensor::Sensor *cell_04_voltage) { cell_04_voltage_ = cell_04_voltage; }
+  void set_cell_05_voltage_sensor(sensor::Sensor *cell_05_voltage) { cell_05_voltage_ = cell_05_voltage; }
+  void set_cell_06_voltage_sensor(sensor::Sensor *cell_06_voltage) { cell_06_voltage_ = cell_06_voltage; }
+  void set_cell_07_voltage_sensor(sensor::Sensor *cell_07_voltage) { cell_07_voltage_ = cell_07_voltage; }
+  void set_cell_08_voltage_sensor(sensor::Sensor *cell_08_voltage) { cell_08_voltage_ = cell_08_voltage; }
+  void set_cell_09_voltage_sensor(sensor::Sensor *cell_09_voltage) { cell_09_voltage_ = cell_09_voltage; }
   void set_cell_10_voltage_sensor(sensor::Sensor *cell_10_voltage) { cell_10_voltage_ = cell_10_voltage; }
   void set_cell_11_voltage_sensor(sensor::Sensor *cell_11_voltage) { cell_11_voltage_ = cell_11_voltage; }
   void set_cell_12_voltage_sensor(sensor::Sensor *cell_12_voltage) { cell_12_voltage_ = cell_12_voltage; }
@@ -96,15 +96,15 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   sensor::Sensor *cells_number_{nullptr};
   sensor::Sensor *temperature_1_sensor_{nullptr};
   sensor::Sensor *temperature_2_sensor_{nullptr};
-  sensor::Sensor *cell_1_voltage_{nullptr};
-  sensor::Sensor *cell_2_voltage_{nullptr};
-  sensor::Sensor *cell_3_voltage_{nullptr};
-  sensor::Sensor *cell_4_voltage_{nullptr};
-  sensor::Sensor *cell_5_voltage_{nullptr};
-  sensor::Sensor *cell_6_voltage_{nullptr};
-  sensor::Sensor *cell_7_voltage_{nullptr};
-  sensor::Sensor *cell_8_voltage_{nullptr};
-  sensor::Sensor *cell_9_voltage_{nullptr};
+  sensor::Sensor *cell_01_voltage_{nullptr};
+  sensor::Sensor *cell_02_voltage_{nullptr};
+  sensor::Sensor *cell_03_voltage_{nullptr};
+  sensor::Sensor *cell_04_voltage_{nullptr};
+  sensor::Sensor *cell_05_voltage_{nullptr};
+  sensor::Sensor *cell_06_voltage_{nullptr};
+  sensor::Sensor *cell_07_voltage_{nullptr};
+  sensor::Sensor *cell_08_voltage_{nullptr};
+  sensor::Sensor *cell_09_voltage_{nullptr};
   sensor::Sensor *cell_10_voltage_{nullptr};
   sensor::Sensor *cell_11_voltage_{nullptr};
   sensor::Sensor *cell_12_voltage_{nullptr};

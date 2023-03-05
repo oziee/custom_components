@@ -21,6 +21,8 @@ from esphome.const import (
     ICON_COUNTER,
     ICON_THERMOMETER,
     ICON_GAUGE,
+    ENTITY_CATEGORY_DIAGNOSTIC,
+    ENTITY_CATEGORY_CONFIG,
 )
 from . import SeplosBmsComponent, CONF_BMS_SEPLOS_ID
 
@@ -36,15 +38,15 @@ CONF_REMAINING_CAPACITY = "remaining_capacity"
 CONF_TEMPERATURE_1 = "temperature_1"
 CONF_TEMPERATURE_2 = "temperature_2"
 
-CONF_CELL_1_VOLTAGE = "cell_1_voltage"
-CONF_CELL_2_VOLTAGE = "cell_2_voltage"
-CONF_CELL_3_VOLTAGE = "cell_3_voltage"
-CONF_CELL_4_VOLTAGE = "cell_4_voltage"
-CONF_CELL_5_VOLTAGE = "cell_5_voltage"
-CONF_CELL_6_VOLTAGE = "cell_6_voltage"
-CONF_CELL_7_VOLTAGE = "cell_7_voltage"
-CONF_CELL_8_VOLTAGE = "cell_8_voltage"
-CONF_CELL_9_VOLTAGE = "cell_9_voltage"
+CONF_CELL_01_VOLTAGE = "cell_01_voltage"
+CONF_CELL_02_VOLTAGE = "cell_02_voltage"
+CONF_CELL_03_VOLTAGE = "cell_03_voltage"
+CONF_CELL_04_VOLTAGE = "cell_04_voltage"
+CONF_CELL_05_VOLTAGE = "cell_05_voltage"
+CONF_CELL_06_VOLTAGE = "cell_06_voltage"
+CONF_CELL_07_VOLTAGE = "cell_07_voltage"
+CONF_CELL_08_VOLTAGE = "cell_08_voltage"
+CONF_CELL_09_VOLTAGE = "cell_09_voltage"
 CONF_CELL_10_VOLTAGE = "cell_10_voltage"
 CONF_CELL_11_VOLTAGE = "cell_11_voltage"
 CONF_CELL_12_VOLTAGE = "cell_12_voltage"
@@ -76,15 +78,15 @@ TYPES = [
     CONF_REMAINING_CAPACITY,
     CONF_TEMPERATURE_1,
     CONF_TEMPERATURE_2,
-    CONF_CELL_1_VOLTAGE,
-    CONF_CELL_2_VOLTAGE,
-    CONF_CELL_3_VOLTAGE,
-    CONF_CELL_4_VOLTAGE,
-    CONF_CELL_5_VOLTAGE,
-    CONF_CELL_6_VOLTAGE,
-    CONF_CELL_7_VOLTAGE,
-    CONF_CELL_8_VOLTAGE,
-    CONF_CELL_9_VOLTAGE,
+    CONF_CELL_01_VOLTAGE,
+    CONF_CELL_02_VOLTAGE,
+    CONF_CELL_03_VOLTAGE,
+    CONF_CELL_04_VOLTAGE,
+    CONF_CELL_05_VOLTAGE,
+    CONF_CELL_06_VOLTAGE,
+    CONF_CELL_07_VOLTAGE,
+    CONF_CELL_08_VOLTAGE,
+    CONF_CELL_09_VOLTAGE,
     CONF_CELL_10_VOLTAGE,
     CONF_CELL_11_VOLTAGE,
     CONF_CELL_12_VOLTAGE,
@@ -181,6 +183,7 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_CELLS_NUMBER): sensor.sensor_schema(
                 icon=ICON_COUNTER,
                 accuracy_decimals=0,
+                entity_category=ENTITY_CATEGORY_CONFIG,
             ),
             cv.Optional(CONF_TEMPERATURE_1): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
@@ -196,15 +199,15 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
-            cv.Optional(CONF_CELL_1_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_2_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_3_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_4_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_5_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_6_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_7_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_8_VOLTAGE): CELL_VOLTAGE_SCHEMA,
-            cv.Optional(CONF_CELL_9_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_01_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_02_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_03_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_04_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_05_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_06_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_07_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_08_VOLTAGE): CELL_VOLTAGE_SCHEMA,
+            cv.Optional(CONF_CELL_09_VOLTAGE): CELL_VOLTAGE_SCHEMA,
             cv.Optional(CONF_CELL_10_VOLTAGE): CELL_VOLTAGE_SCHEMA,
             cv.Optional(CONF_CELL_11_VOLTAGE): CELL_VOLTAGE_SCHEMA,
             cv.Optional(CONF_CELL_12_VOLTAGE): CELL_VOLTAGE_SCHEMA,
