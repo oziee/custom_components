@@ -91,6 +91,12 @@ void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
   }
 }
 
+void resetBin() {
+  for (int z=0; z<8; z++) {
+    Bin[z]=0;
+  }
+}
+
 void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   auto it = data.begin();
 
@@ -241,7 +247,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         
 
-        Bin = {0,0,0,0,0,0,0,0};
+        resetBin();
         //current operation of the unit.. charging, discharging.. nothing, off etc
         ESP_LOGD("TAG", "Status dec: %d", it[62]);
         if (this->status_text_sensor_ != nullptr) {
@@ -276,7 +282,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //system status switches
-        Bin = {0,0,0,0,0,0,0,0};
+        resetBin();
         convertDecToBin(it[63],Bin);
         //discharging enabled
         if (Bin[7] == 1) {
