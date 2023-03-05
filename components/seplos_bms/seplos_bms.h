@@ -58,7 +58,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   void set_cell_16_voltage_sensor(sensor::Sensor *cell_16_voltage) { cell_16_voltage_ = cell_16_voltage; }
 
   // TEXT_SENSORS
-  void set_status_text_sensor(text_sensor::TextSensor *status_text_sensor) { status_text_sensor_ = status_text_sensor; }
+  void set_bms_status_text_sensor(text_sensor::TextSensor *status_text_sensor) { status_text_sensor_ = status_text_sensor; }
   // BINARY_SENSORS
   void set_charging_mos_enabled_binary_sensor(binary_sensor::BinarySensor *charging_mos_enabled) {
     charging_mos_enabled_ = charging_mos_enabled;
