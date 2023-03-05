@@ -1,7 +1,6 @@
 #include "seplos_bms.h"
 #include "esphome/core/log.h"
 #include <vector>
-#include <array>
 #include "Crc16.h"
 
 namespace esphome {
@@ -74,11 +73,11 @@ void SeplosBmsComponent::update() {
   // auto it = get_seplos_data.begin();
   // it = get_seplos_data.insert(it, 0x20);
 
-  std::array<uint8_t,76> get_seplos_data;
+  std::vector<uint8_t> get_seplos_data;
   int available_data = this->available();
   ESP_LOGW(TAG, "reading avalible size: %d", available_data);
   if (available_data >= SEPLOS_FRAME_SIZE) {
-    //get_seplos_data.resize(available_data);
+    get_seplos_data.resize(available_data);
     this->read_array(get_seplos_data.data(), available_data);
     this->decode_data_(get_seplos_data);
   }
@@ -87,7 +86,7 @@ void SeplosBmsComponent::update() {
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
 
-void SeplosBmsComponent::decode_data_(std::array<uint8_t,76> data) {
+void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   auto it = data.begin();
 
   ESP_LOGD("TAG", "decoding data");
@@ -105,7 +104,7 @@ void SeplosBmsComponent::decode_data_(std::array<uint8_t,76> data) {
 
       ESP_LOGD("TAG", "CRC %f", (float)encode_uint16(it[73], it[74]));
 
-      unsigned short value = crc.XModemCrc(data,1,72);
+      unsigned short value = crc.XModemCrc((uint8_t *)data,1,72);
       ESP_LOGD("TAG", "CRCCHeck %d",value);
 
       //std::advance(it, SEPLOS_FRAME_SIZE);
