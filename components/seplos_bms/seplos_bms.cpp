@@ -109,6 +109,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         uint8_t looper = 0;
         
         //CELLS 8,72 
+        float ivt[20];
         for (int i = 4; i < 35; i += 2) {
           float cell_voltage = (float) encode_uint16(it[i], it[i+1]);
           if (cell_voltage < min_cell_voltage) {
@@ -119,76 +120,61 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
             max_cell_voltage = cell_voltage;
             max_voltage_cell = looper+1;
           }
+          ivt[looper] = cell_voltage;
           ESP_LOGV("TAG", "Cells: %d is: %f", looper+1, cell_voltage);
-          switch (looper) {
-            case 0:
-              if (this->cell_1_voltage_) {
-                this->cell_1_voltage_->publish_state((float) cell_voltage/ 1000);
-              }
-            case 1:
-              if (this->cell_2_voltage_) {
-                this->cell_2_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 2:
-              if (this->cell_3_voltage_) {
-                this->cell_3_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 3:
-              if (this->cell_4_voltage_) {
-                this->cell_4_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 4:
-              if (this->cell_5_voltage_) {
-                this->cell_5_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 5:
-              if (this->cell_6_voltage_) {
-                this->cell_6_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 6:
-              if (this->cell_7_voltage_) {
-                this->cell_7_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 7:
-              if (this->cell_8_voltage_) {
-                this->cell_8_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 8:
-              if (this->cell_9_voltage_) {
-                this->cell_9_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 9:
-              if (this->cell_10_voltage_) {
-                this->cell_10_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 10:
-              if (this->cell_11_voltage_) {
-                this->cell_11_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 11:
-              if (this->cell_12_voltage_) {
-                this->cell_12_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 12:
-              if (this->cell_13_voltage_) {
-                this->cell_13_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 13:
-              if (this->cell_14_voltage_) {
-                this->cell_14_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 14:
-              if (this->cell_15_voltage_) {
-                this->cell_15_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-            case 15:
-              if (this->cell_16_voltage_) {
-                this->cell_16_voltage_->publish_state((float) cell_voltage / 1000);
-              }
-          }
           looper = looper + 1;
         }
-
+          
+          
+        if (this->cell_1_voltage_) {
+          this->cell_1_voltage_->publish_state((float) cell_voltage/ 1000);
+        }
+        if (this->cell_2_voltage_) {
+          this->cell_2_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_3_voltage_) {
+          this->cell_3_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_4_voltage_) {
+          this->cell_4_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_5_voltage_) {
+          this->cell_5_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_6_voltage_) {
+          this->cell_6_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_7_voltage_) {
+          this->cell_7_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_8_voltage_) {
+          this->cell_8_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_9_voltage_) {
+          this->cell_9_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_10_voltage_) {
+          this->cell_10_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_11_voltage_) {
+          this->cell_11_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_12_voltage_) {
+          this->cell_12_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_13_voltage_) {
+          this->cell_13_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_14_voltage_) {
+          this->cell_14_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_15_voltage_) {
+          this->cell_15_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+        if (this->cell_16_voltage_) {
+          this->cell_16_voltage_->publish_state((float) cell_voltage / 1000);
+        }
+          
         if (this->max_cell_voltage_) {
           this->max_cell_voltage_->publish_state((float) max_cell_voltage / 1000);
         }
