@@ -37,11 +37,34 @@ void SeplosBmsComponent::update() {
 
   std::vector<uint8_t> get_seplos_data;
   int available_data = this->available();
+  ESP_LOGW(TAG, "reading avalible size: %d", available_data);
   if (available_data >= SEPLOS_FRAME_SIZE) {
     get_seplos_data.resize(available_data);
     this->read_array(get_seplos_data.data(), available_data);
     this->decode_data_(get_seplos_data);
   }
+  // int bytes_read = 0 ;
+  // bool be = false;
+  // uint8_t buffer[76];
+  // char tmp[16];
+  // while (bytes_read < 76)
+  // {
+  //   if (available() > 0)
+  //   {
+  //     ESP_LOGW(TAG, "reading data.");
+  //     uint8_t RXX = read();
+  //     //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
+  //     if(RXX == 0x55) {
+  //       be = true;
+  //     }
+  //     if (be==true) {
+  //       buffer[bytes_read] = RXX;
+  //       sprintf(tmp, "%.2X",buffer[bytes_read]);
+  //       value_ = value_ + tmp;
+  //       bytes_read ++;
+  //     }
+  //   }
+  // }
 }
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
@@ -76,177 +99,16 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   //while ((it = std::find(it, data.end(), 0xA5)) != data.end()) { //0xA5 i belive to to start byte
   while ((it = std::find(it, data.end(), 0x55)) != data.end()) {
     if (data.end() - it >= SEPLOS_FRAME_SIZE && it[1] == 0xaa) { //end byte?
-      // uint8_t checksum;
-      // int sum = 0;
-      // for (int i = 0; i < 12; i++) {
-      //   sum += it[i];
-      // }
-      // checksum = sum;
-      ESP_LOGD("TAG", "data is %s", data);
-
-      // if (checksum == it[12]) {
-      //   switch (it[2]) {
-      //     case SEPLOS_REQUEST_BATTERY_LEVEL:
-      //       if (this->voltage_sensor_) {
-      //         this->voltage_sensor_->publish_state((float) encode_uint16(it[4], it[5]) / 10);
-      //       }
-      //       if (this->current_sensor_) {
-      //         this->current_sensor_->publish_state(((float) (encode_uint16(it[8], it[9]) - SEPLOS_CURRENT_OFFSET) / 10));
-      //       }
-      //       if (this->battery_level_sensor_) {
-      //         this->battery_level_sensor_->publish_state((float) encode_uint16(it[10], it[11]) / 10);
-      //       }
-      //       break;
-
-      //     case SEPLOS_REQUEST_MIN_MAX_VOLTAGE:
-      //       if (this->max_cell_voltage_) {
-      //         this->max_cell_voltage_->publish_state((float) encode_uint16(it[4], it[5]) / 1000);
-      //       }
-      //       if (this->max_cell_voltage_number_) {
-      //         this->max_cell_voltage_number_->publish_state(it[6]);
-      //       }
-      //       if (this->min_cell_voltage_) {
-      //         this->min_cell_voltage_->publish_state((float) encode_uint16(it[7], it[8]) / 1000);
-      //       }
-      //       if (this->min_cell_voltage_number_) {
-      //         this->min_cell_voltage_number_->publish_state(it[9]);
-      //       }
-      //       break;
-
-      //     case SEPLOS_REQUEST_MIN_MAX_TEMPERATURE:
-      //       if (this->max_temperature_) {
-      //         this->max_temperature_->publish_state(it[4] - SEPLOS_TEMPERATURE_OFFSET);
-      //       }
-      //       if (this->max_temperature_probe_number_) {
-      //         this->max_temperature_probe_number_->publish_state(it[5]);
-      //       }
-      //       if (this->min_temperature_) {
-      //         this->min_temperature_->publish_state(it[6] - SEPLOS_TEMPERATURE_OFFSET);
-      //       }
-      //       if (this->min_temperature_probe_number_) {
-      //         this->min_temperature_probe_number_->publish_state(it[7]);
-      //       }
-      //       break;
-
-      //     case SEPLOS_REQUEST_MOS:
-      //       if (this->status_text_sensor_ != nullptr) {
-      //         switch (it[4]) {
-      //           case 0:
-      //             this->status_text_sensor_->publish_state("Stationary");
-      //             break;
-      //           case 1:
-      //             this->status_text_sensor_->publish_state("Charging");
-      //             break;
-      //           case 2:
-      //             this->status_text_sensor_->publish_state("Discharging");
-      //             break;
-      //           default:
-      //             break;
-      //         }
-      //       }
-      //       if (this->charging_mos_enabled_) {
-      //         this->charging_mos_enabled_->publish_state(it[5]);
-      //       }
-      //       if (this->discharging_mos_enabled_) {
-      //         this->discharging_mos_enabled_->publish_state(it[6]);
-      //       }
-      //       if (this->remaining_capacity_) {
-      //         this->remaining_capacity_->publish_state((float) encode_uint32(it[8], it[9], it[10], it[11]) / 1000);
-      //       }
-      //       break;
-
-      //     case SEPLOS_REQUEST_STATUS:
-      //       if (this->cells_number_) {
-      //         this->cells_number_->publish_state(it[4]);
-      //       }
-      //       break;
-
-      //     case SEPLOS_REQUEST_TEMPERATURE:
-      //       if (it[4] == 1) {
-      //         if (this->temperature_1_sensor_) {
-      //           this->temperature_1_sensor_->publish_state(it[5] - SEPLOS_TEMPERATURE_OFFSET);
-      //         }
-      //         if (this->temperature_2_sensor_) {
-      //           this->temperature_2_sensor_->publish_state(it[6] - SEPLOS_TEMPERATURE_OFFSET);
-      //         }
-      //       }
-      //       break;
-
-      //     case SEPLOS_REQUEST_CELL_VOLTAGE:
-      //       switch (it[4]) {
-      //         case 1:
-      //           if (this->cell_1_voltage_) {
-      //             this->cell_1_voltage_->publish_state((float) encode_uint16(it[5], it[6]) / 1000);
-      //           }
-      //           if (this->cell_2_voltage_) {
-      //             this->cell_2_voltage_->publish_state((float) encode_uint16(it[7], it[8]) / 1000);
-      //           }
-      //           if (this->cell_3_voltage_) {
-      //             this->cell_3_voltage_->publish_state((float) encode_uint16(it[9], it[10]) / 1000);
-      //           }
-      //           break;
-      //         case 2:
-      //           if (this->cell_4_voltage_) {
-      //             this->cell_4_voltage_->publish_state((float) encode_uint16(it[5], it[6]) / 1000);
-      //           }
-      //           if (this->cell_5_voltage_) {
-      //             this->cell_5_voltage_->publish_state((float) encode_uint16(it[7], it[8]) / 1000);
-      //           }
-      //           if (this->cell_6_voltage_) {
-      //             this->cell_6_voltage_->publish_state((float) encode_uint16(it[9], it[10]) / 1000);
-      //           }
-      //           break;
-      //         case 3:
-      //           if (this->cell_7_voltage_) {
-      //             this->cell_7_voltage_->publish_state((float) encode_uint16(it[5], it[6]) / 1000);
-      //           }
-      //           if (this->cell_8_voltage_) {
-      //             this->cell_8_voltage_->publish_state((float) encode_uint16(it[7], it[8]) / 1000);
-      //           }
-      //           if (this->cell_9_voltage_) {
-      //             this->cell_9_voltage_->publish_state((float) encode_uint16(it[9], it[10]) / 1000);
-      //           }
-      //           break;
-      //         case 4:
-      //           if (this->cell_10_voltage_) {
-      //             this->cell_10_voltage_->publish_state((float) encode_uint16(it[5], it[6]) / 1000);
-      //           }
-      //           if (this->cell_11_voltage_) {
-      //             this->cell_11_voltage_->publish_state((float) encode_uint16(it[7], it[8]) / 1000);
-      //           }
-      //           if (this->cell_12_voltage_) {
-      //             this->cell_12_voltage_->publish_state((float) encode_uint16(it[9], it[10]) / 1000);
-      //           }
-      //           break;
-      //         case 5:
-      //           if (this->cell_13_voltage_) {
-      //             this->cell_13_voltage_->publish_state((float) encode_uint16(it[5], it[6]) / 1000);
-      //           }
-      //           if (this->cell_14_voltage_) {
-      //             this->cell_14_voltage_->publish_state((float) encode_uint16(it[7], it[8]) / 1000);
-      //           }
-      //           if (this->cell_15_voltage_) {
-      //             this->cell_15_voltage_->publish_state((float) encode_uint16(it[9], it[10]) / 1000);
-      //           }
-      //           break;
-      //         case 6:
-      //           if (this->cell_16_voltage_) {
-      //             this->cell_16_voltage_->publish_state((float) encode_uint16(it[5], it[6]) / 1000);
-      //           }
-      //           break;
-      //       }
-      //       break;
-
-      //     default:
-      //       break;
-      //   }
-      // }
-      
+      ESP_LOGD("TAG", "advance 1");
       std::advance(it, SEPLOS_FRAME_SIZE);
     } else {
+      ESP_LOGD("TAG", "advance 2");
       std::advance(it, 1);
     }
   }
+
+  
+
   ESP_LOGD("TAG", "end of decode data");
 }
 
