@@ -51,8 +51,8 @@ class Crc16 {
         uint8_t _reflectOut;
         //Crc value
         uint16_t _crc;
-        uint8_t reflect(uint8_t data);
-        uint16_t reflect(uint16_t data);
+        // uint8_t reflect(uint8_t data);
+        // uint16_t reflect(uint16_t data);
 
    public:
         inline Crc16()
@@ -109,8 +109,8 @@ void Crc16::clearCrc()
 //---------------------------------------------------
 void Crc16::updateCrc(uint8_t data)
 {
-	if (_reflectIn != 0)
-		data = (uint8_t) reflect(data);
+	// if (_reflectIn != 0)
+	// 	data = (uint8_t) reflect(data);
 
 	int j = 0x80;
 
@@ -139,8 +139,8 @@ void Crc16::updateCrc(uint8_t data)
 //---------------------------------------------------
 uint16_t Crc16::getCrc()
 {
-  if (_reflectOut != 0)
-		_crc = (unsigned int)((reflect(_crc) ^ _xorOut) & _mask);
+  // if (_reflectOut != 0)
+	// 	_crc = (unsigned int)((reflect(_crc) ^ _xorOut) & _mask);
 
 	return _crc;
 }
@@ -167,8 +167,8 @@ unsigned int Crc16::fastCrc(uint8_t data[], uint8_t start, uint16_t length, uint
 	{
 		c = data[i];
 
-		if (reflectIn != 0)
-			c = (uint8_t) reflect(c);
+		// if (reflectIn != 0)
+		// 	c = (uint8_t) reflect(c);
 
 		j = 0x80;
 
@@ -191,53 +191,53 @@ unsigned int Crc16::fastCrc(uint8_t data[], uint8_t start, uint16_t length, uint
 		}
 	}
 
-  if (reflectOut != 0)
-    crc = (unsigned int)((reflect((uint16_t) crc) ^ xorOut) & mask);
+  // if (reflectOut != 0)
+  //   crc = (unsigned int)((reflect((uint16_t) crc) ^ xorOut) & mask);
 
 	return crc;
 }
 
-//-------------------------------------------------------
-// Reflects bit in a uint8_t
-//-------------------------------------------------------
-uint8_t Crc16::reflect(uint8_t data)
-{
-  const uint8_t bits = 8;
-	unsigned long reflection = 0x00000000;
-	// Reflect the data about the center bit.
-	for (uint8_t bit = 0; bit < bits; bit++)
-	{
-		// If the LSB bit is set, set the reflection of it.
-		if ((data & 0x01) != 0)
-		{
-			reflection |= (unsigned long)(1 << ((bits - 1) - bit));
-		}
+// //-------------------------------------------------------
+// // Reflects bit in a uint8_t
+// //-------------------------------------------------------
+// uint8_t Crc16::reflect(uint8_t data)
+// {
+//   const uint8_t bits = 8;
+// 	unsigned long reflection = 0x00000000;
+// 	// Reflect the data about the center bit.
+// 	for (uint8_t bit = 0; bit < bits; bit++)
+// 	{
+// 		// If the LSB bit is set, set the reflection of it.
+// 		if ((data & 0x01) != 0)
+// 		{
+// 			reflection |= (unsigned long)(1 << ((bits - 1) - bit));
+// 		}
 
-		data = (uint8_t)(data >> 1);
-	}
+// 		data = (uint8_t)(data >> 1);
+// 	}
 
-	return reflection;
-}
-//-------------------------------------------------------
-// Reflects bit in a uint16_t
-//-------------------------------------------------------
-uint16_t Crc16::reflect(uint16_t data)
-{
-  const uint8_t bits = 16;
-  unsigned long reflection = 0x00000000;
-  // Reflect the data about the center bit.
-  for (uint8_t bit = 0; bit < bits; bit++)
-  {
-    // If the LSB bit is set, set the reflection of it.
-    if ((data & 0x01) != 0)
-    {
-      reflection |= (unsigned long)(1 << ((bits - 1) - bit));
-    }
+// 	return reflection;
+// }
+// //-------------------------------------------------------
+// // Reflects bit in a uint16_t
+// //-------------------------------------------------------
+// uint16_t Crc16::reflect(uint16_t data)
+// {
+//   const uint8_t bits = 16;
+//   unsigned long reflection = 0x00000000;
+//   // Reflect the data about the center bit.
+//   for (uint8_t bit = 0; bit < bits; bit++)
+//   {
+//     // If the LSB bit is set, set the reflection of it.
+//     if ((data & 0x01) != 0)
+//     {
+//       reflection |= (unsigned long)(1 << ((bits - 1) - bit));
+//     }
 
-    data = (uint16_t)(data >> 1);
-  }
+//     data = (uint16_t)(data >> 1);
+//   }
 
-  return reflection;
-}
+//   return reflection;
+// }
 
 #endif
