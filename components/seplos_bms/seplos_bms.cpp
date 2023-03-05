@@ -76,12 +76,13 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   //while ((it = std::find(it, data.end(), 0xA5)) != data.end()) { //0xA5 i belive to to start byte
   while ((it = std::find(it, data.end(), 0x55)) != data.end()) {
     if (data.end() - it >= SEPLOS_FRAME_SIZE && it[1] == 0xaa) { //end byte?
-      uint8_t checksum;
-      int sum = 0;
-      for (int i = 0; i < 12; i++) {
-        sum += it[i];
-      }
-      checksum = sum;
+      // uint8_t checksum;
+      // int sum = 0;
+      // for (int i = 0; i < 12; i++) {
+      //   sum += it[i];
+      // }
+      // checksum = sum;
+      ESP_LOGD("TAG", "data is %s", data);
 
       // if (checksum == it[12]) {
       //   switch (it[2]) {
@@ -246,6 +247,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
       std::advance(it, 1);
     }
   }
+  ESP_LOGD("TAG", "end of decode data");
 }
 
 }  // namespace seplos_bms
