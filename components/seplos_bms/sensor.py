@@ -165,6 +165,13 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_VOLTAGE,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
+            cv.Optional(CONF_PACK_CAPACITY): sensor.sensor_schema(
+                unit_of_measurement=UNIT_AMPERE_HOUR,
+                icon=ICON_GAUGE,
+                accuracy_decimals=1,
+                device_class=DEVICE_CLASS_VOLTAGE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
             cv.Optional(CONF_CELLS_NUMBER): sensor.sensor_schema(
                 icon=ICON_COUNTER,
                 accuracy_decimals=0,
