@@ -152,6 +152,7 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_CYCLE_COUNTER): sensor.sensor_schema(
                 icon=ICON_COUNTER,
                 accuracy_decimals=0,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_MIN_CELL_VOLTAGE): sensor.sensor_schema(
                 unit_of_measurement=UNIT_VOLT,
@@ -177,6 +178,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=1,
                 device_class=DEVICE_CLASS_VOLTAGE,
                 state_class=STATE_CLASS_MEASUREMENT,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_CELLS_NUMBER): sensor.sensor_schema(
                 icon=ICON_COUNTER,
