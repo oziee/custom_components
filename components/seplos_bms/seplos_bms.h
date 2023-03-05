@@ -66,6 +66,13 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   void set_discharging_mos_enabled_binary_sensor(binary_sensor::BinarySensor *discharging_mos_enabled) {
     discharging_mos_enabled_ = discharging_mos_enabled;
   }
+   void set_current_limiting_enabled_binary_sensor(binary_sensor::BinarySensor *current_limiting_enabled) {
+    current_limiting_enabled_ = current_limiting_enabled;
+  }
+   void set_heating_enalbed_binary_sensor(binary_sensor::BinarySensor *heating_enalbed) {
+    heating_enalbed_ = heating_enalbed;
+  }
+
 
   void setup() override;
   void dump_config() override;
@@ -117,6 +124,8 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
 
   binary_sensor::BinarySensor *charging_mos_enabled_{nullptr};
   binary_sensor::BinarySensor *discharging_mos_enabled_{nullptr};
+  binary_sensor::BinarySensor *current_limiting_enabled{nullptr};
+  binary_sensor::BinarySensor *heating_enalbed{nullptr};
 };
 
 }  // namespace seplos_bms

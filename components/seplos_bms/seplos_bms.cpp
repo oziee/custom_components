@@ -101,6 +101,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
       unsigned short value2 = crc.XModemCrc(data.data(),1,72);
       if (value1 == value2) {
         //CRC ALL GOOD!!
+        ESP_LOGD("TAG", "CRCCHeck GOOD!!");
 
         //NUMBER OF CELLS IN THE PACK
         if (this->cells_number_) {
@@ -194,7 +195,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           this->min_cell_voltage_number_->publish_state(min_voltage_cell);
         }
         
-        ESP_LOGD("TAG", "CRCCHeck GOOD!!");
+        
         if (this->status_text_sensor_ != nullptr) {
           convertDecToBin(it[62],Bin);
           if (Bin[7] == 1) {
@@ -225,7 +226,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           
       }
       else {
-        ESP_LOGD("TAG", "CRCCHeck FAILED!!!");
+        ESP_LOGD("TAG", "CRC FAILED!!!");
       }
 
 

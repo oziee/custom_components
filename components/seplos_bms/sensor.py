@@ -100,7 +100,7 @@ CELL_VOLTAGE_SCHEMA = sensor.sensor_schema(
     unit_of_measurement=UNIT_VOLT,
     device_class=DEVICE_CLASS_VOLTAGE,
     state_class=STATE_CLASS_MEASUREMENT,
-    icon=ICON_FLASH,
+    icon="mdi:car-battery",
     accuracy_decimals=3,
 )
 
@@ -131,7 +131,7 @@ CONFIG_SCHEMA = cv.All(
             ),
             cv.Optional(CONF_MAX_CELL_VOLTAGE): sensor.sensor_schema(
                 unit_of_measurement=UNIT_VOLT,
-                icon=ICON_FLASH,
+                icon="mdi:battery-high",
                 accuracy_decimals=2,
                 device_class=DEVICE_CLASS_VOLTAGE,
                 state_class=STATE_CLASS_MEASUREMENT,
@@ -142,7 +142,7 @@ CONFIG_SCHEMA = cv.All(
             ),
             cv.Optional(CONF_MIN_CELL_VOLTAGE): sensor.sensor_schema(
                 unit_of_measurement=UNIT_VOLT,
-                icon=ICON_FLASH,
+                icon="mdi:battery-low",
                 accuracy_decimals=2,
                 device_class=DEVICE_CLASS_VOLTAGE,
                 state_class=STATE_CLASS_MEASUREMENT,
