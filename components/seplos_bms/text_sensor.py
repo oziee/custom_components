@@ -1,20 +1,22 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import text_sensor
-from esphome.const import CONF_STATUS
+#from esphome.const import CONF_STATUS
 from . import SeplosBmsComponent, CONF_BMS_SEPLOS_ID
 
 ICON_CAR_BATTERY = "mdi:car-battery"
+CONF_BMS_STATUS = "bms_status"
 
 TYPES = [
-    CONF_STATUS,
+    CONF_BMS_STATUS,
 ]
+
 
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
             cv.GenerateID(CONF_BMS_SEPLOS_ID): cv.use_id(SeplosBmsComponent),
-            cv.Optional(CONF_STATUS): text_sensor.text_sensor_schema(
+            cv.Optional(CONF_BMS_STATUS): text_sensor.text_sensor_schema(
                 icon=ICON_CAR_BATTERY
             ),
         }
