@@ -221,7 +221,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //current
         if (this->current_sensor_) { 
-          this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 10);
+          this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 100);
         }
 
         //total volt of pack
