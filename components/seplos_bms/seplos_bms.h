@@ -266,7 +266,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
 
 
 
-
+};
 
 }  // namespace seplos_bms
 }  // namespace esphome
