@@ -329,7 +329,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //warning 1
-        convertDecToBin(it[63],Bin);
+        convertDecToBin(it[65],Bin);
         if (Bin[7] == 1) {
           if (this->voltage_sensor_failure_ != nullptr) 
             this->voltage_sensor_failure_->publish_state(1);
@@ -404,7 +404,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //warning 2
-        convertDecToBin(it[63],Bin);
+        convertDecToBin(it[66],Bin);
         if (Bin[7] == 1) {
           if (this->ov_cell_warning_ != nullptr) 
             this->ov_cell_warning_->publish_state(1);
@@ -479,7 +479,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //warning 3
-        convertDecToBin(it[63],Bin);
+        convertDecToBin(it[67],Bin);
         if (Bin[7] == 1) {
           if (this->ot_charge_warning_ != nullptr) 
             this->ot_charge_warning_->publish_state(1);
@@ -554,7 +554,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //warning 4
-        convertDecToBin(it[63],Bin);
+        convertDecToBin(it[68],Bin);
         if (Bin[7] == 1) {
           if (this->ot_amb_warning_ != nullptr) 
             this->ot_amb_warning_->publish_state(1);
@@ -630,7 +630,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         // }
 
         //warning 5
-        convertDecToBin(it[63],Bin);
+        convertDecToBin(it[69],Bin);
         if (Bin[7] == 1) {
           if (this->oc_charge_warning_ != nullptr) 
             this->oc_charge_warning_->publish_state(1);
@@ -705,7 +705,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //warning 6
-        convertDecToBin(it[63],Bin);
+        convertDecToBin(it[70],Bin);
         if (Bin[7] == 1) {
           if (this->ov_charge_protect_ != nullptr) 
             this->ov_charge_protect_->publish_state(1);
