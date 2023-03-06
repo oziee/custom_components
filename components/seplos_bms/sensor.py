@@ -191,6 +191,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_TEMPERATURE_2): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
@@ -198,6 +199,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_TEMPERATURE_3): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
@@ -205,6 +207,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_TEMPERATURE_4): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
@@ -212,6 +215,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_TEMPERATURE_AMB): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
@@ -226,6 +230,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_CELL_01_VOLTAGE): CELL_VOLTAGE_SCHEMA,
             cv.Optional(CONF_CELL_02_VOLTAGE): CELL_VOLTAGE_SCHEMA,
