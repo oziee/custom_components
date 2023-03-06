@@ -8,7 +8,7 @@ Example:
 external_components:
   - source:
       type: git
-      url: https://github.com/ozieecustom_components
+      url: https://github.com/oziee/custom_components
     components: [ seplos ]
 ```
 

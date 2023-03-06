@@ -21,7 +21,7 @@ bool Bin[] = {0,0,0,0,0,0,0,0};
 
 
 void SeplosBmsComponent::setup() {
-  //update();
+  update();
 }
 
 void SeplosBmsComponent::dump_config() {
@@ -30,38 +30,6 @@ void SeplosBmsComponent::dump_config() {
 }
 
 void SeplosBmsComponent::update() {
-
-  // int bytes_read = 0 ;
-  // bool be = false;
-  // uint8_t buffer[76];
-  // char tmp[16];
-
-  // ESP_LOGW(TAG, "fetching data.");
-
-  // value_.clear();
-
-  // while (bytes_read < 76)
-  // {
-  //   if (available() > 0)
-  //   {
-  //     ESP_LOGW(TAG, "reading data.");
-  //     uint8_t RXX = read();
-  //     //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
-  //     if(RXX == 0x55) {
-  //       be = true;
-  //     }
-  //     if (be==true) {
-  //       buffer[bytes_read] = RXX;
-  //       sprintf(tmp, "%.2X",buffer[bytes_read]);
-  //       value_ = value_ + tmp;
-  //       bytes_read ++;
-  //     }
-  //   }
-  // }
-
-  // get_seplos_data.push_back(0x01);
-  // auto it = get_seplos_data.begin();
-  // it = get_seplos_data.insert(it, 0x20);
 
   std::vector<uint8_t> get_seplos_data;
   int available_data = this->available();

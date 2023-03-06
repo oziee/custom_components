@@ -15,7 +15,6 @@ from esphome.const import (
     UNIT_PERCENT,
     UNIT_CELSIUS,
     ICON_FLASH,
-    ICON_PERCENT,
     ICON_COUNTER,
     ICON_THERMOMETER,
     ICON_GAUGE,
