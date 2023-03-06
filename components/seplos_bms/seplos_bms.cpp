@@ -77,18 +77,17 @@ void SeplosBmsComponent::update() {
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
 
 void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
+  //reset Bin 
+  for (int z=0; z<8; z++) {
+    Bin[z]=0;
+  }
+  //work out values
   for(int i = 7 ; i >= 0 ; i--) {
     if(pow(2, i)<=Dec) {
       Dec = Dec - pow(2, i);
       Bin[8-(i+1)] = 1;
     } else {
     }
-  }
-}
-
-void resetBin() {
-  for (int z=0; z<8; z++) {
-    Bin[z]=0;
   }
 }
 
@@ -253,8 +252,6 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         
-
-        resetBin();
         //current operation of the unit.. charging, discharging.. nothing, off etc
         ESP_LOGD("TAG", "Status dec: %d", it[62]);
         if (this->status_text_sensor_ != nullptr) {
@@ -289,7 +286,6 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //system status switches
-        resetBin();
         convertDecToBin(it[63],Bin);
         //discharging enabled
         if (Bin[7] == 1) {
@@ -331,13 +327,463 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           if (this->heating_enabled_ != nullptr) 
             this->heating_enabled_->publish_state(0);
         }
-          
+
+        //warning 1
+        convertDecToBin(it[63],Bin);
+        if (Bin[7] == 1) {
+          if (this->voltage_sensor_failure_ != nullptr) 
+            this->voltage_sensor_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->voltage_sensor_failure_ != nullptr) 
+            this->voltage_sensor_failure_->publish_state(0);
+        }
+        if (Bin[6] == 1) {
+          if (this->temp_sensor_failure_ != nullptr) 
+            this->temp_sensor_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->temp_sensor_failure_ != nullptr) 
+            this->temp_sensor_failure_->publish_state(0);
+        }
+        if (Bin[5] == 1) {
+          if (this->current_sensor_failure_ != nullptr) 
+            this->current_sensor_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->current_sensor_failure_ != nullptr) 
+            this->current_sensor_failure_->publish_state(0);
+        }
+        if (Bin[4] == 1) {
+          if (this->button_failure_ != nullptr) 
+            this->button_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->button_failure_ != nullptr) 
+            this->button_failure_->publish_state(0);
+        }
+        if (Bin[3] == 1) {
+          if (this->voltage_difference_failure_ != nullptr) 
+            this->voltage_difference_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->voltage_difference_failure_ != nullptr) 
+            this->voltage_difference_failure_->publish_state(0);
+        }
+        if (Bin[2] == 1) {
+          if (this->charge_switch_failure_ != nullptr) 
+            this->charge_switch_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->charge_switch_failure_ != nullptr) 
+            this->charge_switch_failure_->publish_state(0);
+        }
+        if (Bin[1] == 1) {
+          if (this->discharge_switch_failure_ != nullptr) 
+            this->discharge_switch_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->discharge_switch_failure_ != nullptr) 
+            this->discharge_switch_failure_->publish_state(0);
+        }
+        if (Bin[0] == 1) {
+          if (this->current_limiting_failure_ != nullptr) 
+            this->current_limiting_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->current_limiting_failure_ != nullptr) 
+            this->current_limiting_failure_->publish_state(0);
+        }
+
+        //warning 2
+        convertDecToBin(it[63],Bin);
+        if (Bin[7] == 1) {
+          if (this->ov_cell_warning_ != nullptr) 
+            this->ov_cell_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ov_cell_warning_ != nullptr) 
+            this->ov_cell_warning_->publish_state(0);
+        }
+        if (Bin[6] == 1) {
+          if (this->ov_cell_protect_ != nullptr) 
+            this->ov_cell_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ov_cell_protect_ != nullptr) 
+            this->ov_cell_protect_->publish_state(0);
+        }
+        if (Bin[5] == 1) {
+          if (this->uv_cell_warning_ != nullptr) 
+            this->uv_cell_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->uv_cell_warning_ != nullptr) 
+            this->uv_cell_warning_->publish_state(0);
+        }
+        if (Bin[4] == 1) {
+          if (this->uv_cell_protect_ != nullptr) 
+            this->uv_cell_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->uv_cell_protect_ != nullptr) 
+            this->uv_cell_protect_->publish_state(0);
+        }
+        if (Bin[3] == 1) {
+          if (this->ov_pack_warning_ != nullptr) 
+            this->ov_pack_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ov_pack_warning_ != nullptr) 
+            this->ov_pack_warning_->publish_state(0);
+        }
+        if (Bin[2] == 1) {
+          if (this->ov_pack_protect_ != nullptr) 
+            this->ov_pack_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ov_pack_protect_ != nullptr) 
+            this->ov_pack_protect_->publish_state(0);
+        }
+        if (Bin[1] == 1) {
+          if (this->uv_pack_warning_ != nullptr) 
+            this->uv_pack_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->uv_pack_warning_ != nullptr) 
+            this->uv_pack_warning_->publish_state(0);
+        }
+        if (Bin[0] == 1) {
+          if (this->uv_pack_protect_ != nullptr) 
+            this->uv_pack_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->uv_pack_protect_ != nullptr) 
+            this->uv_pack_protect_->publish_state(0);
+        }
+
+        //warning 3
+        convertDecToBin(it[63],Bin);
+        if (Bin[7] == 1) {
+          if (this->ot_charge_warning_ != nullptr) 
+            this->ot_charge_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->aaot_charge_warning_aa != nullptr) 
+            this->ot_charge_warning_->publish_state(0);
+        }
+        if (Bin[6] == 1) {
+          if (this->ot_charge_protect_ != nullptr) 
+            this->ot_charge_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ot_charge_protect_ != nullptr) 
+            this->ot_charge_protect_->publish_state(0);
+        }
+        if (Bin[5] == 1) {
+          if (this->ut_charge_warning_ != nullptr) 
+            this->ut_charge_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ut_charge_warning_ != nullptr) 
+            this->ut_charge_warning_->publish_state(0);
+        }
+        if (Bin[4] == 1) {
+          if (this->ut_charge_protect_ != nullptr) 
+            this->ut_charge_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ut_charge_protect_ != nullptr) 
+            this->ut_charge_protect_->publish_state(0);
+        }
+        if (Bin[3] == 1) {
+          if (this->ot_discharge_warning_ != nullptr) 
+            this->ot_discharge_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ot_discharge_warning_ != nullptr) 
+            this->ot_discharge_warning_->publish_state(0);
+        }
+        if (Bin[2] == 1) {
+          if (this->ot_discharge_protect_ != nullptr) 
+            this->ot_discharge_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ot_discharge_protect_ != nullptr) 
+            this->ot_discharge_protect_->publish_state(0);
+        }
+        if (Bin[1] == 1) {
+          if (this->ut_discharge_warning_ != nullptr) 
+            this->ut_discharge_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ut_discharge_warning_ != nullptr) 
+            this->ut_discharge_warning_->publish_state(0);
+        }
+        if (Bin[0] == 1) {
+          if (this->ut_discharge_protect_ != nullptr) 
+            this->ut_discharge_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ut_discharge_protect_ != nullptr) 
+            this->ut_discharge_protect_->publish_state(0);
+        }
+
+        //warning 4
+        convertDecToBin(it[63],Bin);
+        if (Bin[7] == 1) {
+          if (this->ot_amb_warning_ != nullptr) 
+            this->ot_amb_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ot_amb_warning_ != nullptr) 
+            this->ot_amb_warning_->publish_state(0);
+        }
+        if (Bin[6] == 1) {
+          if (this->ot_amb_protect_ != nullptr) 
+            this->ot_amb_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ot_amb_protect_ != nullptr) 
+            this->ot_amb_protect_->publish_state(0);
+        }
+        if (Bin[5] == 1) {
+          if (this->ut_amb_warning_ != nullptr) 
+            this->ut_amb_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ut_amb_warning_ != nullptr) 
+            this->ut_amb_warning_->publish_state(0);
+        }
+        if (Bin[4] == 1) {
+          if (this->ut_amb_protect_ != nullptr) 
+            this->ut_amb_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ut_amb_protect_ != nullptr) 
+            this->ut_amb_protect_->publish_state(0);
+        }
+        if (Bin[3] == 1) {
+          if (this->ot_bms_warning_ != nullptr) 
+            this->ot_bms_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->ot_bms_warning_ != nullptr) 
+            this->ot_bms_warning_->publish_state(0);
+        }
+        if (Bin[2] == 1) {
+          if (this->ot_bms_protect_ != nullptr) 
+            this->ot_bms_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ot_bms_protect_ != nullptr) 
+            this->ot_bms_protect_->publish_state(0);
+        }
+        if (Bin[1] == 1) {
+          if (this->ut_heating_ != nullptr) 
+            this->ut_heating_->publish_state(1);
+        }
+        else
+        {
+          if (this->ut_heating_ != nullptr) 
+            this->ut_heating_->publish_state(0);
+        }
+        //preserved
+        // if (Bin[0] == 1) { 
+        //   if (this->???? != nullptr) 
+        //     this->????->publish_state(1);
+        // }
+        // else
+        // {
+        //   if (this->???? != nullptr) 
+        //     this->????->publish_state(0);
+        // }
+
+        //warning 5
+        convertDecToBin(it[63],Bin);
+        if (Bin[7] == 1) {
+          if (this->oc_charge_warning_ != nullptr) 
+            this->oc_charge_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->oc_charge_warning_ != nullptr) 
+            this->oc_charge_warning_->publish_state(0);
+        }
+        if (Bin[6] == 1) {
+          if (this->oc_charge_protect_ != nullptr) 
+            this->oc_charge_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->oc_charge_protect_ != nullptr) 
+            this->oc_charge_protect_->publish_state(0);
+        }
+        if (Bin[5] == 1) {
+          if (this->oc_discharge_warning_ != nullptr) 
+            this->oc_discharge_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->oc_discharge_warning_ != nullptr) 
+            this->oc_discharge_warning_->publish_state(0);
+        }
+        if (Bin[4] == 1) {
+          if (this->oc_discharge_protect_ != nullptr) 
+            this->oc_discharge_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->oc_discharge_protect_ != nullptr) 
+            this->oc_discharge_protect_->publish_state(0);
+        }
+        if (Bin[3] == 1) {
+          if (this->oc_transient_protect_ != nullptr) 
+            this->oc_transient_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->oc_transient_protect_ != nullptr) 
+            this->oc_transient_protect_->publish_state(0);
+        }
+        if (Bin[2] == 1) {
+          if (this->sc_output_current_protect_ != nullptr) 
+            this->sc_output_current_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->sc_output_current_protect_ != nullptr) 
+            this->sc_output_current_protect_->publish_state(0);
+        }
+        if (Bin[1] == 1) {
+          if (this->oc_transient_lock_ != nullptr) 
+            this->oc_transient_lock_->publish_state(1);
+        }
+        else
+        {
+          if (this->oc_transient_lock_ != nullptr) 
+            this->oc_transient_lock_->publish_state(0);
+        }
+        if (Bin[0] == 1) {
+          if (this->sc_output_current_lock_ != nullptr) 
+            this->sc_output_current_lock_->publish_state(1);
+        }
+        else
+        {
+          if (this->sc_output_current_lock_ != nullptr) 
+            this->sc_output_current_lock_->publish_state(0);
+        }
+
+        //warning 6
+        convertDecToBin(it[63],Bin);
+        if (Bin[7] == 1) {
+          if (this->ov_charge_protect_ != nullptr) 
+            this->ov_charge_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->ov_charge_protect_ != nullptr) 
+            this->ov_charge_protect_->publish_state(0);
+        }
+        if (Bin[6] == 1) {
+          if (this->power_supply_waiting_ != nullptr) 
+            this->power_supply_waiting_->publish_state(1);
+        }
+        else
+        {
+          if (this->power_supply_waiting_ != nullptr) 
+            this->power_supply_waiting_->publish_state(0);
+        }
+        if (Bin[5] == 1) {
+          if (this->remaining_capacity_warning_ != nullptr) 
+            this->remaining_capacity_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->remaining_capacity_warning_ != nullptr) 
+            this->remaining_capacity_warning_->publish_state(0);
+        }
+        if (Bin[4] == 1) {
+          if (this->remaining_capacity_protect_ != nullptr) 
+            this->remaining_capacity_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->remaining_capacity_protect_ != nullptr) 
+            this->remaining_capacity_protect_->publish_state(0);
+        }
+        if (Bin[3] == 1) {
+          if (this->uv_cell_stop_charging_warning_ != nullptr) 
+            this->uv_cell_stop_charging_warning_->publish_state(1);
+        }
+        else
+        {
+          if (this->uv_cell_stop_charging_warning_ != nullptr) 
+            this->uv_cell_stop_charging_warning_->publish_state(0);
+        }
+        if (Bin[2] == 1) {
+          if (this->reverse_polarity_protect_ != nullptr) 
+            this->reverse_polarity_protect_->publish_state(1);
+        }
+        else
+        {
+          if (this->reverse_polarity_protect_ != nullptr) 
+            this->reverse_polarity_protect_->publish_state(0);
+        }
+        if (Bin[1] == 1) {
+          if (this->output_connection_failure_ != nullptr) 
+            this->output_connection_failure_->publish_state(1);
+        }
+        else
+        {
+          if (this->output_connection_failure_ != nullptr) 
+            this->output_connection_failure_->publish_state(0);
+        }
+        if (Bin[0] == 1) {
+          if (this->internal_bit_ != nullptr) 
+            this->internal_bit_->publish_state(1);
+        }
+        else
+        {
+          if (this->internal_bit_ != nullptr) 
+            this->internal_bit_->publish_state(0);
+        }
+
+        //end of sending data  
       }
       else {
         ESP_LOGD("TAG", "CRC FAILED!!!");
       }
-
-
       break;
     } 
     else 
