@@ -486,7 +486,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
         else
         {
-          if (this->aaot_charge_warning_aa != nullptr) 
+          if (this->ot_charge_warning_ != nullptr) 
             this->ot_charge_warning_->publish_state(0);
         }
         if (Bin[6] == 1) {
