@@ -62,8 +62,8 @@ void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
 
 void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
-  ESP_LOGD("TAG", "Received this data:");
-  ESP_LOGD(TAG, "%s", format_hex_pretty(data.front(), data.size()).c_str());
+  //ESP_LOGD("TAG", "Received this data:");
+  //ESP_LOGD(TAG, "%s", format_hex_pretty(&data.front(), data.size()).c_str());
   // std::string str1;
   // str1.assign(data.begin(), data.end());
   // ESP_LOGD("TAG", "%s", (char*) data.data().c_str());
