@@ -87,7 +87,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
 
         //NUMBER OF CELLS IN THE PACK
-        int8_t cells = data[3];
+        int8_t cells = it[3];
         if (this->cells_number_) {
           this->cells_number_->publish_state(cells);
         }
