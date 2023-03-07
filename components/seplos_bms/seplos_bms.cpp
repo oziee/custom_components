@@ -200,8 +200,8 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 100);
         }
         ESP_LOGD("TAG", "current: %f", (float) encode_uint16(it[49], it[50]));
-        ESP_LOGD("TAG", "current: %s", it[49]);
-        ESP_LOGD("TAG", "current: %s", it[50]);
+        ESP_LOGD("TAG", "current: %d", it[49]);
+        ESP_LOGD("TAG", "current: %d", it[50]);
 
         //total volt of pack
         if (this->voltage_sensor_) { 
