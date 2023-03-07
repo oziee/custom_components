@@ -81,9 +81,15 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         //CRC ALL GOOD!!
         ESP_LOGD("TAG", "CRCCHeck GOOD!!");
 
+        auto seplos_get_16bit = [&](size_t i) -> uint16_t {
+          return (uint16_t(data[i + 0]) << 8) | (uint16_t(data[i + 1]) << 0);
+        };
+
+
         //NUMBER OF CELLS IN THE PACK
+        int8_t cells = data[3];
         if (this->cells_number_) {
-          this->cells_number_->publish_state(it[3]);
+          this->cells_number_->publish_state(cells);
         }
 
         //Cell voltages
@@ -95,8 +101,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         
         //CELLS 8,72 
         float ivt[20];
-        for (int i = 4; i < 35; i += 2) {
-          float cell_voltage = (float) encode_uint16(it[i], it[i+1]);
+        //for (int i = 4; i < 35; i += 2) {
+        for (uint8_t i = 0; i < std::min((uint8_t) 16, cells); i++) {
+          float cell_voltage = (float) seplos_get_16bit(4 + (i * 2)) ;
+          //float cell_voltage = (float) encode_uint16(it[i], it[i+1]);
           if (cell_voltage < min_cell_voltage) {
             min_cell_voltage = cell_voltage;
             min_voltage_cell = looper+1;
@@ -105,7 +113,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
             max_cell_voltage = cell_voltage;
             max_voltage_cell = looper+1;
           }
-          ivt[looper] = cell_voltage / 1000;
+          ivt[looper] = cell_voltage * 0.001f;
           ESP_LOGV("TAG", "Cells: %d is: %f", looper+1, cell_voltage);
           looper = looper + 1;
         }
@@ -161,41 +169,68 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
           
         if (this->max_cell_voltage_) {
-          this->max_cell_voltage_->publish_state((float) max_cell_voltage / 1000);
+          this->max_cell_voltage_->publish_state((float) max_cell_voltage * 0.001f);
         }
         if (this->max_cell_voltage_number_) {
           this->max_cell_voltage_number_->publish_state(max_voltage_cell);
         }
         if (this->min_cell_voltage_) {
-          this->min_cell_voltage_->publish_state((float) min_cell_voltage / 1000);
+          this->min_cell_voltage_->publish_state((float) min_cell_voltage * 0.001f);
         }
         if (this->min_cell_voltage_number_) {
           this->min_cell_voltage_number_->publish_state(min_voltage_cell);
         }
 
         if (this->cell_deviation_) {
-          this->cell_deviation_->publish_state((float) (max_cell_voltage-min_cell_voltage) / 1000);
+          this->cell_deviation_->publish_state((float) (max_cell_voltage-min_cell_voltage) * 0.001f);
         }
+
+        uint8_t offset = 4 + (cells * 2);
 
         //temps
         if (this->temperature_1_sensor_) { 
-          this->temperature_1_sensor_->publish_state((float) (encode_uint16(it[37], it[38]) - 2731) / 10);
+          float raw_temperature = (float) seplos_get_16bit(offset + 1 + (0 * 2));
+          this->temperature_1_sensor_->publish_state((float) (raw_temperature - 2731) / 10);
         }
         if (this->temperature_2_sensor_) { 
+          float raw_temperature = (float) seplos_get_16bit(offset + 1 + (1 * 2));
           this->temperature_2_sensor_->publish_state((float) (encode_uint16(it[39], it[40]) - 2731) / 10);
         }
         if (this->temperature_3_sensor_) { 
+          float raw_temperature = (float) seplos_get_16bit(offset + 1 + (2 * 2));
           this->temperature_3_sensor_->publish_state((float) (encode_uint16(it[41], it[42]) - 2731) / 10);
         }
         if (this->temperature_4_sensor_) { 
+          float raw_temperature = (float) seplos_get_16bit(offset + 1 + (3 * 2));
           this->temperature_4_sensor_->publish_state((float) (encode_uint16(it[43], it[44]) - 2731) / 10);
         }
         if (this->temperature_amb_sensor_) { 
+          float raw_temperature = (float) seplos_get_16bit(offset + 1 + (4 * 2));
           this->temperature_amb_sensor_->publish_state((float) (encode_uint16(it[45], it[46]) - 2731) / 10);
         }
         if (this->temperature_bms_sensor_) { 
+          float raw_temperature = (float) seplos_get_16bit(offset + 1 + (5 * 2));
           this->temperature_bms_sensor_->publish_state((float) (encode_uint16(it[47], it[48]) - 2731) / 10);
         }
+        // if (this->temperature_1_sensor_) { 
+        //   float raw_temperature = (float) seplos_get_16bit(37));
+        //   this->temperature_1_sensor_->publish_state((float) (encode_uint16(it[37], it[38]) - 2731) / 10);
+        // }
+        // if (this->temperature_2_sensor_) { 
+        //   this->temperature_2_sensor_->publish_state((float) (encode_uint16(it[39], it[40]) - 2731) / 10);
+        // }
+        // if (this->temperature_3_sensor_) { 
+        //   this->temperature_3_sensor_->publish_state((float) (encode_uint16(it[41], it[42]) - 2731) / 10);
+        // }
+        // if (this->temperature_4_sensor_) { 
+        //   this->temperature_4_sensor_->publish_state((float) (encode_uint16(it[43], it[44]) - 2731) / 10);
+        // }
+        // if (this->temperature_amb_sensor_) { 
+        //   this->temperature_amb_sensor_->publish_state((float) (encode_uint16(it[45], it[46]) - 2731) / 10);
+        // }
+        // if (this->temperature_bms_sensor_) { 
+        //   this->temperature_bms_sensor_->publish_state((float) (encode_uint16(it[47], it[48]) - 2731) / 10);
+        // }
 
 
         auto seplos_get_16bit = [&](size_t i) -> uint16_t {
