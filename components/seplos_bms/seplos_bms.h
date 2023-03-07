@@ -206,9 +206,9 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   sensor::Sensor *cell_deviation_{nullptr};
   sensor::Sensor *cycle_counter_{nullptr};
   sensor::Sensor *port_voltage_{nullptr};
-  sensor::Sensor *power_sensor_;{nullptr};
-  sensor::Sensor *charging_power_sensor_;{nullptr};
-  sensor::Sensor *discharging_power_sensor_;{nullptr};
+  sensor::Sensor *power_sensor_{nullptr};
+  sensor::Sensor *charging_power_sensor_{nullptr};
+  sensor::Sensor *discharging_power_sensor_{nullptr};
 
   text_sensor::TextSensor *status_text_sensor_{nullptr};
 
