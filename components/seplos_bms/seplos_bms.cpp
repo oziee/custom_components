@@ -219,11 +219,17 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         float current = (float) ((int16_t) seplos_get_16bit(offset)) * 0.01f;
         float total_voltage = (float) seplos_get_16bit(offset + 2) * 0.01f;
         
-        // float power = total_voltage * current;
-        // this->publish_state_(this->power_sensor_, power);
-        // this->publish_state_(this->charging_power_sensor_, std::max(0.0f, power));               // 500W vs 0W -> 500W
-        // this->publish_state_(this->discharging_power_sensor_, std::abs(std::min(0.0f, power)));  // -500W vs 0W -> 500W
-        
+        float power = total_voltage * current;
+        if (this->power_sensor_) { 
+          this->power_sensor_->publish_state(power);
+        }
+        if (this->charging_power_sensor_) { 
+          this->charging_power_sensor_->publish_state(std::max(0.0f, power));
+        }
+        if (this->discharging_power_sensor_) { 
+          this->discharging_power_sensor_->publish_state(std::abs(std::min(0.0f, power))); 
+        }
+
         //current
         if (this->current_sensor_) { 
           this->current_sensor_->publish_state(current);

@@ -9,8 +9,10 @@ from esphome.const import (
     DEVICE_CLASS_CURRENT,
     DEVICE_CLASS_BATTERY,
     DEVICE_CLASS_TEMPERATURE,
+    DEVICE_CLASS_POWER,
     STATE_CLASS_MEASUREMENT,
     UNIT_VOLT,
+    UNIT_WATT,
     UNIT_AMPERE,
     UNIT_PERCENT,
     UNIT_CELSIUS,
@@ -18,6 +20,7 @@ from esphome.const import (
     ICON_COUNTER,
     ICON_THERMOMETER,
     ICON_GAUGE,
+    ICON_EMPTY,
     ENTITY_CATEGORY_DIAGNOSTIC,
     ENTITY_CATEGORY_CONFIG,
 )
@@ -33,6 +36,9 @@ CONF_PACK_CAPACITY = "pack_capacity"
 CONF_REMAINING_CAPACITY = "remaining_capacity"
 CONF_CYCLE_COUNTER = "cycle_counter"
 CONF_PORT_VOLTAGE = "port_voltage"
+CONF_CHARGING_POWER = "charging_power"
+CONF_DISCHARGING_POWER = "discharging_power"
+CONF_POWER = "power"
 
 CONF_TEMPERATURE_1 = "temperature_1"
 CONF_TEMPERATURE_2 = "temperature_2"
@@ -77,7 +83,9 @@ TYPES = [
     CONF_MAX_CELL_VOLTAGE_NUMBER,
     CONF_MIN_CELL_VOLTAGE,
     CONF_MIN_CELL_VOLTAGE_NUMBER,
-
+    CONF_POWER,
+    CONF_CHARGING_POWER,
+    CONF_DISCHARGING_POWER,
     CONF_CELLS_NUMBER,
     CONF_REMAINING_CAPACITY,
     CONF_PACK_CAPACITY,
@@ -130,6 +138,27 @@ CONFIG_SCHEMA = cv.All(
                 icon=ICON_CURRENT_DC,
                 accuracy_decimals=1,
                 device_class=DEVICE_CLASS_CURRENT,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_POWER): sensor.sensor_schema(
+                unit_of_measurement=UNIT_WATT,
+                icon=ICON_EMPTY,
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_POWER,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_CHARGING_POWER): sensor.sensor_schema(
+                unit_of_measurement=UNIT_WATT,
+                icon=ICON_EMPTY,
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_POWER,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_DISCHARGING_POWER): sensor.sensor_schema(
+                unit_of_measurement=UNIT_WATT,
+                icon=ICON_EMPTY,
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_POWER,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
             cv.Optional(CONF_BATTERY_LEVEL): sensor.sensor_schema(

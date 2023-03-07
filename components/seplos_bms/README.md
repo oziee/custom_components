@@ -64,6 +64,9 @@ The available sensors are:
 - `cells_number`
 - `pack_capacity`
 - `remaining_capacity`
+- `charging_power`
+- `discharging_power`
+- `power`
 - `cycle_counter`
 - `port_voltage`
 - `temperature_1`
