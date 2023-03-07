@@ -177,7 +177,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=1,
                 device_class=DEVICE_CLASS_VOLTAGE,
                 state_class=STATE_CLASS_MEASUREMENT,
-                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
+                entity_category=ENTITY_CATEGORY_CONFIG,
             ),
             cv.Optional(CONF_CELLS_NUMBER): sensor.sensor_schema(
                 icon=ICON_COUNTER,
@@ -222,6 +222,7 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
+                entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
             ),
             cv.Optional(CONF_TEMPERATURE_BMS): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
