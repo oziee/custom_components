@@ -101,9 +101,9 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         
         //CELLS 8,72 
         float ivt[20];
-        //for (int i = 4; i < 35; i += 2) {
-        for (uint8_t i = 0; i < std::min((uint8_t) 16, cells); i++) {
-          float cell_voltage = (float) seplos_get_16bit(4 + (i * 2)) ;
+        for (int i = 4; i < 35; i += 2) {
+          //for (uint8_t i = 0; i < std::min((uint8_t) 16, cells); i++) {
+          float cell_voltage = (float) seplos_get_16bit(i) ;
           //float cell_voltage = (float) encode_uint16(it[i], it[i+1]);
           if (cell_voltage < min_cell_voltage) {
             min_cell_voltage = cell_voltage;
