@@ -61,8 +61,11 @@ void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
 
 void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   auto it = data.begin();
+
+  char abuf[data.length()+1] = {};
+  memcpy(abuf, data.data());
   ESP_LOGD("TAG", "Received this data:");
-  ESP_LOGD("TAG", "%s",String(data.data()));
+  ESP_LOGD("TAG", "%s",String(abuf));
 
   while ((it = std::find(it, data.end(), SEPLOS_START_BYTE)) != data.end()) {
     if (data.end() - it >= SEPLOS_FRAME_SIZE && it[0] == SEPLOS_START_BYTE && it[1] == 0x46 && it[75] == SEPLOS_END_BYTE) {
