@@ -32,6 +32,7 @@ CONF_CELLS_NUMBER = "cells_number"
 CONF_PACK_CAPACITY = "pack_capacity"
 CONF_REMAINING_CAPACITY = "remaining_capacity"
 CONF_CYCLE_COUNTER = "cycle_counter"
+CONF_PORT_VOLTAGE = "port_voltage"
 
 CONF_TEMPERATURE_1 = "temperature_1"
 CONF_TEMPERATURE_2 = "temperature_2"
@@ -71,6 +72,7 @@ TYPES = [
     CONF_CURRENT,
     CONF_BATTERY_LEVEL,
     CONF_CYCLE_COUNTER,
+    CONF_PORT_VOLTAGE,
     CONF_MAX_CELL_VOLTAGE,
     CONF_MAX_CELL_VOLTAGE_NUMBER,
     CONF_MIN_CELL_VOLTAGE,
@@ -119,7 +121,7 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_VOLTAGE): sensor.sensor_schema(
                 unit_of_measurement=UNIT_VOLT,
                 icon=ICON_FLASH,
-                accuracy_decimals=1,
+                accuracy_decimals=2,
                 device_class=DEVICE_CLASS_VOLTAGE,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
@@ -135,6 +137,13 @@ CONFIG_SCHEMA = cv.All(
                 icon="mdi:battery-plus-variant",
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_BATTERY,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_PORT_VOLTAGE): sensor.sensor_schema(
+                unit_of_measurement=UNIT_VOLT,
+                icon=ICON_FLASH,
+                accuracy_decimals=2,
+                device_class=DEVICE_CLASS_VOLTAGE,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
             cv.Optional(CONF_MAX_CELL_VOLTAGE): sensor.sensor_schema(

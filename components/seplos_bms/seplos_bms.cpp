@@ -212,53 +212,36 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           float raw_temperature = (float) seplos_get_16bit(offset + 1 + (5 * 2));
           this->temperature_bms_sensor_->publish_state((float) (encode_uint16(it[47], it[48]) - 2731) / 10);
         }
-        // if (this->temperature_1_sensor_) { 
-        //   float raw_temperature = (float) seplos_get_16bit(37));
-        //   this->temperature_1_sensor_->publish_state((float) (encode_uint16(it[37], it[38]) - 2731) / 10);
-        // }
-        // if (this->temperature_2_sensor_) { 
-        //   this->temperature_2_sensor_->publish_state((float) (encode_uint16(it[39], it[40]) - 2731) / 10);
-        // }
-        // if (this->temperature_3_sensor_) { 
-        //   this->temperature_3_sensor_->publish_state((float) (encode_uint16(it[41], it[42]) - 2731) / 10);
-        // }
-        // if (this->temperature_4_sensor_) { 
-        //   this->temperature_4_sensor_->publish_state((float) (encode_uint16(it[43], it[44]) - 2731) / 10);
-        // }
-        // if (this->temperature_amb_sensor_) { 
-        //   this->temperature_amb_sensor_->publish_state((float) (encode_uint16(it[45], it[46]) - 2731) / 10);
-        // }
-        // if (this->temperature_bms_sensor_) { 
-        //   this->temperature_bms_sensor_->publish_state((float) (encode_uint16(it[47], it[48]) - 2731) / 10);
-        // }
 
-
+        // 6 is num of temp sensors
+        offset = offset + 1 + (6 * 2);
         
-        float current = (float) ((int16_t) seplos_get_16bit(49)) * 0.01f;
-        ESP_LOGD("TAG", "seplos_get_16bit current: %f", current);
+        float current = (float) ((int16_t) seplos_get_16bit(offset)) * 0.01f;
+        float total_voltage = (float) seplos_get_16bit(offset + 2) * 0.01f;
+        
+        // float power = total_voltage * current;
+        // this->publish_state_(this->power_sensor_, power);
+        // this->publish_state_(this->charging_power_sensor_, std::max(0.0f, power));               // 500W vs 0W -> 500W
+        // this->publish_state_(this->discharging_power_sensor_, std::abs(std::min(0.0f, power)));  // -500W vs 0W -> 500W
+        
         //current
         if (this->current_sensor_) { 
-          this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 100);
+          this->current_sensor_->publish_state(current);
         }
-        ESP_LOGD("TAG", "current: %f", (float) encode_uint16(it[49], it[50]));
-        ESP_LOGD("TAG", "current: %d", it[49]);
-        ESP_LOGD("TAG", "current: %d", it[50]);
-
-        
 
         //total volt of pack
         if (this->voltage_sensor_) { 
-          this->voltage_sensor_->publish_state((float) encode_uint16(it[51], it[52])  / 100);
+          this->voltage_sensor_->publish_state(total_voltage);
         }
 
          //remaining pack capacity
-        float rc = (float) encode_uint16(it[53], it[54])  / 100;
+        float rc = (float) seplos_get_16bit(offset + 4) * 0.01f;
         if (this->remaining_capacity_) { 
           this->remaining_capacity_->publish_state(rc);
         }
 
         //total pack capacity
-        float tc = (float) encode_uint16(it[56], it[57])  / 100;
+        float tc = (float) seplos_get_16bit(offset + 7) * 0.01f;
         if (this->pack_capacity_) { 
           this->pack_capacity_->publish_state(tc);
         }
@@ -270,10 +253,14 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         // pack charge cycle counter
         if (this->cycle_counter_) { 
-          this->cycle_counter_->publish_state((float) encode_uint16(it[58], it[59]));
+          this->cycle_counter_->publish_state((float) seplos_get_16bit(offset + 9));
+        }
+        
+        //voltage of incoming port (from inverter)
+        if (this->port_voltage_) { 
+          this->port_voltage_->publish_state((float) seplos_get_16bit(offset + 11) * 0.01f);
         }
 
-        
         //current operation of the unit.. charging, discharging.. nothing, off etc
         ESP_LOGD("TAG", "Status dec: %d", it[62]);
         if (this->status_text_sensor_ != nullptr) {
