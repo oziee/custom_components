@@ -65,6 +65,7 @@ The available sensors are:
 - `pack_capacity`
 - `remaining_capacity`
 - `cycle_counter`
+- `port_voltage`
 - `temperature_1`
 - `temperature_2`
 - `temperature_3`
