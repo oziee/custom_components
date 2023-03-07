@@ -65,7 +65,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
   // char abuf[data.data().length()+1] = {};
   // memcpy(abuf, data.data());
   ESP_LOGD("TAG", "Received this data:");
-  ESP_LOGD("TAG", "%s",data.data().c_str());
+  ESP_LOGD("TAG", "%s",data.c_str());
 
   while ((it = std::find(it, data.end(), SEPLOS_START_BYTE)) != data.end()) {
     if (data.end() - it >= SEPLOS_FRAME_SIZE && it[0] == SEPLOS_START_BYTE && it[1] == 0x46 && it[75] == SEPLOS_END_BYTE) {
