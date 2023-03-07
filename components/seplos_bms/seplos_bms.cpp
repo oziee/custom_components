@@ -1,5 +1,6 @@
 #include "seplos_bms.h"
 #include "esphome/core/log.h"
+#include "esphome/core/helpers.h"
 #include <vector>
 #include "Crc16.h"
 
@@ -61,10 +62,11 @@ void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
 
 void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
-  // ESP_LOGD("TAG", "Received this data:");
+  ESP_LOGD("TAG", "Received this data:");
+  ESP_LOGD(TAG, "%s", format_hex_pretty(data.front(), data.size()).c_str());
   // std::string str1;
   // str1.assign(data.begin(), data.end());
-  // ESP_LOGD("TAG", "%s", str1);
+  // ESP_LOGD("TAG", "%s", (char*) data.data().c_str());
 
 
   auto it = data.begin();
@@ -195,6 +197,12 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           this->temperature_bms_sensor_->publish_state((float) (encode_uint16(it[47], it[48]) - 2731) / 10);
         }
 
+
+        auto seplos_get_16bit = [&](size_t i) -> uint16_t {
+          return (uint16_t(data[i + 0]) << 8) | (uint16_t(data[i + 1]) << 0);
+        };
+        float current = (float) ((int16_t) seplos_get_16bit(49)) * 0.01f;
+        ESP_LOGD("TAG", "seplos_get_16bit current: %f", current;
         //current
         if (this->current_sensor_) { 
           this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 100);
@@ -202,6 +210,8 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         ESP_LOGD("TAG", "current: %f", (float) encode_uint16(it[49], it[50]));
         ESP_LOGD("TAG", "current: %d", it[49]);
         ESP_LOGD("TAG", "current: %d", it[50]);
+
+        
 
         //total volt of pack
         if (this->voltage_sensor_) { 
