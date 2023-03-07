@@ -202,7 +202,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
           return (uint16_t(data[i + 0]) << 8) | (uint16_t(data[i + 1]) << 0);
         };
         float current = (float) ((int16_t) seplos_get_16bit(49)) * 0.01f;
-        ESP_LOGD("TAG", "seplos_get_16bit current: %f", current;
+        ESP_LOGD("TAG", "seplos_get_16bit current: %f", current);
         //current
         if (this->current_sensor_) { 
           this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 100);
