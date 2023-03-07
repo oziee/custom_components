@@ -82,7 +82,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         ESP_LOGD("TAG", "CRCCHeck GOOD!!");
 
         auto seplos_get_16bit = [&](size_t i) -> uint16_t {
-          return (uint16_t(data[i + 0]) << 8) | (uint16_t(data[i + 1]) << 0);
+          return (uint16_t(it[i + 0]) << 8) | (uint16_t(it[i + 1]) << 0);
         };
 
 
