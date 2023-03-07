@@ -61,10 +61,10 @@ void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
 
 void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
-  ESP_LOGD("TAG", "Received this data:");
-  std::string str1;
-  str1.assign(data.begin(), data.end());
-  ESP_LOGD("TAG", "%s", str1);
+  // ESP_LOGD("TAG", "Received this data:");
+  // std::string str1;
+  // str1.assign(data.begin(), data.end());
+  // ESP_LOGD("TAG", "%s", str1);
 
 
   auto it = data.begin();
@@ -199,6 +199,9 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         if (this->current_sensor_) { 
           this->current_sensor_->publish_state((float) encode_uint16(it[49], it[50])  / 100);
         }
+        ESP_LOGD("TAG", "current: %f", (float) encode_uint16(it[49], it[50]));
+        ESP_LOGD("TAG", "current: %s", it[49]);
+        ESP_LOGD("TAG", "current: %s", it[50]);
 
         //total volt of pack
         if (this->voltage_sensor_) { 
