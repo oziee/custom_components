@@ -879,6 +879,8 @@ bool SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
       break;
     }
   }
+
+  return false;
 }
 
 }  // namespace seplos_bms
