@@ -71,7 +71,7 @@ void SeplosBmsComponent::update() {
       }
     }
 
-    worked = this->decode_data_(get_seplos_data);
+    worked = decode_data_(get_seplos_data);
     trycount = trycount + 1;
     if (trycount>2) {
       //3 trys so bail out
