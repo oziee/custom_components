@@ -143,7 +143,7 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
             max_voltage_cell = looper+1;
           }
           ivt[looper] = cell_voltage * 0.001f;
-          ESP_LOGV("TAG", "Cells: %d is: %f", looper+1, cell_voltage);
+          //ESP_LOGV("TAG", "Cells: %d is: %f", looper+1, cell_voltage);
           looper = looper + 1;
         }
           
@@ -297,12 +297,12 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //current operation of the unit.. charging, discharging.. nothing, off etc
-        ESP_LOGD("TAG", "Status dec: %d", it[62]);
+        // ESP_LOGD("TAG", "Status dec: %d", it[62]);
         if (this->status_text_sensor_ != nullptr) {
           convertDecToBin(it[62],Bin);
-          for (int z=0; z<8; z++) {
-            ESP_LOGD("TAG", "Status Bin: %d - %d", z, Bin[z]);
-          }
+          // for (int z=0; z<8; z++) {
+          //   ESP_LOGD("TAG", "Status Bin: %d - %d", z, Bin[z]);
+          // }
           if (Bin[7] == 1) {
             this->status_text_sensor_->publish_state("Discharging");
           }
@@ -331,10 +331,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //system status switches
         convertDecToBin(it[63],Bin);
-        ESP_LOGD("TAG", "Status Switches dec: %d", it[63]);
-        for (int z=0; z<8; z++) {
-          ESP_LOGD("TAG", "Status switch Bin: %d - %d", z, Bin[z]);
-        }
+        // ESP_LOGD("TAG", "Status Switches dec: %d", it[63]);
+        // for (int z=0; z<8; z++) {
+        //   ESP_LOGD("TAG", "Status switch Bin: %d - %d", z, Bin[z]);
+        // }
         //discharging enabled
         if (Bin[7] == 1) {
           if (this->discharging_mos_enabled_ != nullptr) 
@@ -378,10 +378,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //warning 1
         convertDecToBin(it[65],Bin);
-        ESP_LOGD("TAG", "Warning 1 dec: %d", it[65]);
-        for (int z=0; z<8; z++) {
-          ESP_LOGD("TAG", "Warning 1 Bin: %d - %d", z, Bin[z]);
-        }
+        // ESP_LOGD("TAG", "Warning 1 dec: %d", it[65]);
+        // for (int z=0; z<8; z++) {
+        //   ESP_LOGD("TAG", "Warning 1 Bin: %d - %d", z, Bin[z]);
+        // }
         if (Bin[7] == 1) {
           if (this->voltage_sensor_failure_ != nullptr) 
             this->voltage_sensor_failure_->publish_state(1);
@@ -457,10 +457,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //warning 2
         convertDecToBin(it[66],Bin);
-        ESP_LOGD("TAG", "Warning 2 dec: %d", it[66]);
-        for (int z=0; z<8; z++) {
-          ESP_LOGD("TAG", "Warning 2 Bin: %d - %d", z, Bin[z]);
-        }
+        // ESP_LOGD("TAG", "Warning 2 dec: %d", it[66]);
+        // for (int z=0; z<8; z++) {
+        //   ESP_LOGD("TAG", "Warning 2 Bin: %d - %d", z, Bin[z]);
+        // }
         if (Bin[7] == 1) {
           if (this->ov_cell_warning_ != nullptr) 
             this->ov_cell_warning_->publish_state(1);
@@ -536,10 +536,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //warning 3
         convertDecToBin(it[67],Bin);
-        ESP_LOGD("TAG", "Warning 3 dec: %d", it[67]);
-        for (int z=0; z<8; z++) {
-          ESP_LOGD("TAG", "Warning 3 Bin: %d - %d", z, Bin[z]);
-        }
+        // ESP_LOGD("TAG", "Warning 3 dec: %d", it[67]);
+        // for (int z=0; z<8; z++) {
+        //   ESP_LOGD("TAG", "Warning 3 Bin: %d - %d", z, Bin[z]);
+        // }
         if (Bin[7] == 1) {
           if (this->ot_charge_warning_ != nullptr) 
             this->ot_charge_warning_->publish_state(1);
@@ -615,10 +615,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //warning 4
         convertDecToBin(it[68],Bin);
-        ESP_LOGD("TAG", "Warning 4 dec: %d", it[68]);
-        for (int z=0; z<8; z++) {
-          ESP_LOGD("TAG", "Warning 4 Bin: %d - %d", z, Bin[z]);
-        }
+        // ESP_LOGD("TAG", "Warning 4 dec: %d", it[68]);
+        // for (int z=0; z<8; z++) {
+        //   ESP_LOGD("TAG", "Warning 4 Bin: %d - %d", z, Bin[z]);
+        // }
         if (Bin[7] == 1) {
           if (this->ot_amb_warning_ != nullptr) 
             this->ot_amb_warning_->publish_state(1);
@@ -695,10 +695,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //warning 5
         convertDecToBin(it[69],Bin);
-        ESP_LOGD("TAG", "Warning 5 dec: %d", it[69]);
-        for (int z=0; z<8; z++) {
-          ESP_LOGD("TAG", "Warning 5 Bin: %d - %d", z, Bin[z]);
-        }
+        // ESP_LOGD("TAG", "Warning 5 dec: %d", it[69]);
+        // for (int z=0; z<8; z++) {
+        //   ESP_LOGD("TAG", "Warning 5 Bin: %d - %d", z, Bin[z]);
+        // }
         if (Bin[7] == 1) {
           if (this->oc_charge_warning_ != nullptr) 
             this->oc_charge_warning_->publish_state(1);
@@ -774,10 +774,10 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
         //warning 6
         convertDecToBin(it[70],Bin);
-        ESP_LOGD("TAG", "Warning 6 dec: %d", it[70]);
-        for (int z=0; z<8; z++) {
-          ESP_LOGD("TAG", "Warning 6 Bin: %d - %d", z, Bin[z]);
-        }
+        // ESP_LOGD("TAG", "Warning 6 dec: %d", it[70]);
+        // for (int z=0; z<8; z++) {
+        //   ESP_LOGD("TAG", "Warning 6 Bin: %d - %d", z, Bin[z]);
+        // }
         if (Bin[7] == 1) {
           if (this->ov_charge_protect_ != nullptr) 
             this->ov_charge_protect_->publish_state(1);
