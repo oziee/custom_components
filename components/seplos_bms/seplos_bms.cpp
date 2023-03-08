@@ -47,7 +47,7 @@ void SeplosBmsComponent::update() {
   //char tmp[16];
 
   std::vector<uint8_t> get_seplos_data;
-  get_seplos_data.resize(76);
+  get_seplos_data.resize(75);
 
 
   while (bytes_read < 76)
