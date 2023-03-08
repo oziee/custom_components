@@ -66,7 +66,7 @@ void SeplosBmsComponent::update() {
         be = true;
       }
       if (be==true) {
-        this->get_seplos_data.push_back(RXX);
+        get_seplos_data.push_back(RXX);
         //buffer[bytes_read] = RXX;
         //sprintf(tmp, "%.2X",buffer[bytes_read]);
         //value_ = value_ + tmp;
