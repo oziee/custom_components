@@ -41,33 +41,45 @@ void SeplosBmsComponent::update() {
   //   this->decode_data_(get_seplos_data);
   // }
 
-  ESP_LOGW(TAG, "Reading seplos data");
+  
 
   int bytes_read = 0 ;
   bool be = false;
+  int trycount = 0;
 
   std::vector<uint8_t> get_seplos_data;
 
-  
-  while (bytes_read < 76)
+  bool worked = false;
+  while (worked == false) 
   {
-    if (available() > 0)
+    ESP_LOGW(TAG, "Reading seplos data");
+    while (bytes_read < 76)
     {
-      uint8_t RXX;
-      this->read_byte(&RXX);
-      
-      //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
-      if(RXX == 0x55) {
-        be = true;
-      }
-      if (be==true) {
-        get_seplos_data.push_back(RXX);
-        bytes_read ++;
+      if (available() > 0)
+      {
+        uint8_t RXX;
+        this->read_byte(&RXX);
+        
+        //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
+        if(RXX == 0x55) {
+          be = true;
+        }
+        if (be==true) {
+          get_seplos_data.push_back(RXX);
+          bytes_read ++;
+        }
       }
     }
-  }
 
-  this->decode_data_(get_seplos_data);
+    worked = this->decode_data_(get_seplos_data);
+    trycount = trycount + 1;
+    if (trycount>2) {
+      //3 trys so bail out
+      worked = true;
+    }
+  }
+  
+  
 
 }
 
@@ -88,7 +100,7 @@ void SeplosBmsComponent::convertDecToBin(int Dec, bool Bin[]) {
   }
 }
 
-void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
+bool SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
 
   //ESP_LOGD("TAG", "Received this data:");
   //ESP_LOGD(TAG, "%s", format_hex_pretty(&data.front(), data.size()).c_str());
@@ -852,15 +864,18 @@ void SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
         }
 
         //end of sending data  
+        return true;
       }
       else {
         ESP_LOGD("TAG", "CRC FAILED!!!");
+        return false;
       }
       break;
     } 
     else 
     {
       ESP_LOGD("TAG", "Data is not valid.. no 55 46 ..... 170");
+      return false;
       break;
     }
   }
