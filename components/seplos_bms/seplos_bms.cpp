@@ -47,9 +47,9 @@ void SeplosBmsComponent::update() {
   //char tmp[16];
 
   std::vector<uint8_t> get_seplos_data;
-  get_seplos_data.resize(75);
+  //get_seplos_data.resize(75);
 
-
+  
   while (bytes_read < 76)
   {
     if (available() > 0)
@@ -58,15 +58,15 @@ void SeplosBmsComponent::update() {
       
       //uint8_t RXX = read_byte(1) ;//read();
       //uint8_t RXX = this->read_byte();
-      uint8_t RXX(this->read_byte());
-      //this->read_byte(&RXX);
+      uint8_t RXX;
+      this->read_byte(&RXX);
       ESP_LOGW(TAG, "reading data %d", RXX);
       //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
       if(RXX == 0x55) {
         be = true;
       }
       if (be==true) {
-        get_seplos_data.push_back(RXX);
+        this->get_seplos_data.push_back(RXX);
         //buffer[bytes_read] = RXX;
         //sprintf(tmp, "%.2X",buffer[bytes_read]);
         //value_ = value_ + tmp;
