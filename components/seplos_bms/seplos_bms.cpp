@@ -54,9 +54,10 @@ void SeplosBmsComponent::update() {
   {
     if (available() > 0)
     {
-      ESP_LOGW(TAG, "reading data.");
+      
       
       uint8_t RXX = read();
+      ESP_LOGW(TAG, "reading data %d", RXX);
       //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
       if(RXX == 0x55) {
         be = true;
