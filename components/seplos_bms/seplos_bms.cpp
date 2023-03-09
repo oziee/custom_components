@@ -22,7 +22,7 @@ bool Bin[] = {0,0,0,0,0,0,0,0};
 
 
 void SeplosBmsComponent::setup() {
-  update();
+  //update();
 }
 
 void SeplosBmsComponent::dump_config() {
@@ -875,7 +875,10 @@ bool SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
     else 
     {
       ESP_LOGD("TAG", "Data is not valid.. no 55 46 ..... 170");
-      ESP_LOGD("TAG"," %d %d %d",it[0], it[1], it[75]);
+      for(int p=0; p<76; p++)
+      {
+        ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+      }
       return false;
       break;
     }
