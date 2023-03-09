@@ -78,7 +78,7 @@ void SeplosBmsComponent::update() {
       worked = true;
     }
     else {
-      get_seplos_data.clear()
+      get_seplos_data.clear();
     }
   }
   
