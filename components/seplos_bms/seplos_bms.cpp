@@ -32,52 +32,52 @@ void SeplosBmsComponent::dump_config() {
 
 void SeplosBmsComponent::update() {
 
-  std::vector<uint8_t> get_seplos_data;
-  int available_data = this->available();
-  ESP_LOGW(TAG, "reading avalible size: %d", available_data);
-  if (available_data >= SEPLOS_FRAME_SIZE) {
-    get_seplos_data.resize(available_data);
-    this->read_array(get_seplos_data.data(), available_data);
-    this->decode_data_(get_seplos_data);
-  }
+  // std::vector<uint8_t> get_seplos_data;
+  // int available_data = this->available();
+  // ESP_LOGW(TAG, "reading avalible size: %d", available_data);
+  // if (available_data >= SEPLOS_FRAME_SIZE) {
+  //   get_seplos_data.resize(available_data);
+  //   this->read_array(get_seplos_data.data(), available_data);
+  //   this->decode_data_(get_seplos_data);
+  // }
 
   
 
-  // int bytes_read = 0 ;
-  // bool be = false;
-  // int trycount = 0;
+  int bytes_read = 0 ;
+  bool be = false;
+  int trycount = 0;
 
-  // std::vector<uint8_t> get_seplos_data;
+  std::vector<uint8_t> get_seplos_data;
 
-  // bool worked = false;
-  // while (worked == false) 
-  // {
-  //   ESP_LOGW(TAG, "Reading seplos data");
-  //   while (bytes_read < 76)
-  //   {
-  //     if (available() > 0)
-  //     {
-  //       uint8_t RXX;
-  //       this->read_byte(&RXX);
+  bool worked = false;
+  while (worked == false) 
+  {
+    ESP_LOGW(TAG, "Reading seplos data");
+    while (bytes_read < 76)
+    {
+      if (available() > 0)
+      {
+        uint8_t RXX;
+        this->read_byte(&RXX);
         
-  //       //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
-  //       if(RXX == 0x55) {
-  //         be = true;
-  //       }
-  //       if (be==true) {
-  //         get_seplos_data.push_back(RXX);
-  //         bytes_read ++;
-  //       }
-  //     }
-  //   }
+        //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
+        if(RXX == 0x55) {
+          be = true;
+        }
+        if (be==true) {
+          get_seplos_data.push_back(RXX);
+          bytes_read ++;
+        }
+      }
+    }
 
-  //   worked = this->decode_data_(get_seplos_data);
-  //   trycount = trycount + 1;
-  //   if (trycount>2) {
-  //     //3 trys so bail out
-  //     worked = true;
-  //   }
-  // }
+    worked = this->decode_data_(get_seplos_data);
+    trycount = trycount + 1;
+    if (trycount>2) {
+      //3 trys so bail out
+      worked = true;
+    }
+  }
   
   
 
@@ -875,10 +875,10 @@ bool SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
     else 
     {
       ESP_LOGD("TAG", "Data is not valid.. no 55 46 ..... 170");
-      for(int p=0; p<76; p++)
-      {
-        ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
-      }
+      // for(int p=0; p<76; p++)
+      // {
+      //   ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+      // }
       return false;
       break;
     }
