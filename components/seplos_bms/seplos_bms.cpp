@@ -41,36 +41,41 @@ void SeplosBmsComponent::update() {
   //   this->decode_data_(get_seplos_data);
   // }
 
-  ESP_LOGW(TAG, "Reading seplos data");
-
   int bytes_read = 0 ;
   bool be = false;
+  //uint8_t buffer[76];
+  //char tmp[16];
 
   std::vector<uint8_t> get_seplos_data;
+  get_seplos_data.resize(75);
 
   
   while (bytes_read < 76)
   {
     if (available() > 0)
     {
+      
+      
+      //uint8_t RXX = read_byte(1) ;//read();
+      //uint8_t RXX = this->read_byte();
       uint8_t RXX;
       this->read_byte(&RXX);
-      ESP_LOGW(TAG, "data byte %d", RXX);
-      
+      ESP_LOGW(TAG, "reading data %d", RXX);
       //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
       if(RXX == 0x55) {
-        ESP_LOGW(TAG, "found data byte 55");
         be = true;
       }
       if (be==true) {
         get_seplos_data.push_back(RXX);
+        //buffer[bytes_read] = RXX;
+        //sprintf(tmp, "%.2X",buffer[bytes_read]);
+        //value_ = value_ + tmp;
         bytes_read ++;
       }
     }
   }
 
   this->decode_data_(get_seplos_data);
-  
 
 }
 
