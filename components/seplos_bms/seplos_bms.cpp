@@ -875,10 +875,10 @@ bool SeplosBmsComponent::decode_data_(std::vector<uint8_t> data) {
     else 
     {
       ESP_LOGD("TAG", "Data is not valid.. no 55 46 ..... 170");
-      // for(int p=0; p<76; p++)
-      // {
-      //   ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
-      // }
+      for(int p=0; p<76; p++)
+      {
+        ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+      }
       return false;
       break;
     }
