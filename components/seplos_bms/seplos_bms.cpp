@@ -9,7 +9,7 @@ namespace seplos_bms {
 
 static const char *const TAG = "seplos_bms";
 
-static const uint8_t SEPLOS_FRAME_SIZE = 240; //0-75 76 bytes
+static const uint8_t SEPLOS_FRAME_SIZE = 76; //0-75 76 bytes
 static const uint8_t SEPLOS_START_BYTE = 0x55;
 static const uint8_t SEPLOS_END_BYTE = 0xaa;
 
