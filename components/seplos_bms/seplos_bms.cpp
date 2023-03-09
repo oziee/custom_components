@@ -77,6 +77,9 @@ void SeplosBmsComponent::update() {
       //3 trys so bail out
       worked = true;
     }
+    else {
+      get_seplos_data.clear()
+    }
   }
   
   
