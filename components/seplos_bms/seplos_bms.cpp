@@ -40,15 +40,15 @@ void SeplosBmsComponent::update() {
   //get_seplos_data.resize(SEPLOS_FRAME_SIZE);
   uint8_t data[76]={};
 
-  do{
-    for(int i=0;i<76;i++)
-    {
-      data[i]=this->read();
-      //get_seplos_data.push_back(data[i]);
-    }
-  }while(this->read()==0x55);
+  // do{
+  //   for(int i=0;i<76;i++)
+  //   {
+  //     data[i]=this->read();
+  //     //get_seplos_data.push_back(data[i]);
+  //   }
+  // }while(this->read()==0x55);
 
-  this->flush();
+  // this->flush();
 
   // if(data[0]==0x55)
   // {
