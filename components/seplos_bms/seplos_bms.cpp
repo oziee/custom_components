@@ -8,16 +8,6 @@
 namespace esphome {
 namespace seplos_bms {
 
-static const char *const TAG = "seplos_bms";
-
-static const uint8_t SEPLOS_FRAME_SIZE = 76; //0-75 76 bytes
-static const uint8_t SEPLOS_START_BYTE = 0x55;
-static const uint8_t SEPLOS_END_BYTE = 0xaa;
-
-static const uint8_t SEPLOS_TEMPERATURE_OFFSET = 40;
-static const uint16_t SEPLOS_CURRENT_OFFSET = 30000;
-
-
 
 Crc16 crc;
 
@@ -41,7 +31,7 @@ void SeplosBmsComponent::loop() {
   if (this->state_ == STATE_IDLE) {
     this->empty_uart_buffer_();
     if (millis() - this->last_poll_ > this->update_interval_) {
-      ESP_LOGD(TAG, "need to poll");
+      ESP_LOGD(TAG, "polling seplos data");
       this->state_ = STATE_POLL;
       this->command_start_millis_ = millis();
       this->empty_uart_buffer_();
@@ -51,7 +41,7 @@ void SeplosBmsComponent::loop() {
   }
   
   if (this->state_ == STATE_POLL) {
-    ESP_LOGD(TAG, "polling...");
+   // ESP_LOGD(TAG, "polling...");
     while (this->available()) {
       uint8_t byte;
       this->read_byte(&byte);
@@ -64,7 +54,7 @@ void SeplosBmsComponent::loop() {
       this->read_pos_++;
 
       // end of answer
-      if (byte == 0xaa) {
+      if (byte == SEPLOS_END_BYTE) {
         this->read_buffer_[this->read_pos_] = 0;
         this->empty_uart_buffer_();
         if (this->state_ == STATE_POLL) {
@@ -77,11 +67,6 @@ void SeplosBmsComponent::loop() {
 
   if (this->state_ == STATE_POLL_COMPLETE) {
     ESP_LOGD(TAG, "poll complete");
-    bool enabled = true;
-    std::string fc;
-    char tmp[SEPLOS_READ_BUFFER_LENGTH];
-    sprintf(tmp, "%s", this->read_buffer_);
-    ESP_LOGD(TAG, "reading avalible size: %s", tmp);
     this->decode_data_(this->read_buffer_);
     this->state_ = STATE_IDLE;
   }
@@ -115,91 +100,6 @@ void SeplosBmsComponent::update() {
   //this->command_start_millis_ = millis();
   this->empty_uart_buffer_();
   this->read_pos_ = 0;
-  
-  // std::vector<uint8_t> get_seplos_data;
-  // get_seplos_data.resize(SEPLOS_FRAME_SIZE);
-  // //uint8_t data[76]={};
-
-  // do{
-  //   for(int i=0;i<76;i++)
-  //   {
-  //     //data[i]=read();
-  //     uint8_t data;
-  //     read_byte(&data),
-  //     get_seplos_data.push_back(data);
-  //   }
-  // }while(this->read()==0x55);
-
-  // this->flush();
-
-  // if(data[0]==0x55)
-  // {
-  //   this->decode_data_(data);
-  // }
-
-    
-
-
-
-
-
-  // std::vector<uint8_t> get_seplos_data;
-  // int available_data = this->available();
-  // ESP_LOGW(TAG, "reading avalible size: %d", available_data);
-  // if (available_data >= SEPLOS_FRAME_SIZE) {
-  //   get_seplos_data.resize(available_data);
-  //   this->read_array(get_seplos_data.data(), available_data);
-  //   this->decode_data_(get_seplos_data);
-  // }
-
-  // std::vector<uint8_t> get_seplos_data;
-  // int available_data = this->available();
-  // ESP_LOGW(TAG, "reading avalible size: %d", available_data);
-  // if (available_data >= SEPLOS_FRAME_SIZE) {
-  //   get_seplos_data.resize(available_data);
-  //   this->read_array(get_seplos_data.data(), available_data);
-  //   this->decode_data_(get_seplos_data);
-  // }
-
-  
-
-  // int bytes_read = 0 ;
-  // bool be = false;
-  // int trycount = 0;
-
-  // std::vector<uint8_t> get_seplos_data;
-
-  // bool worked = false;
-  // while (worked == false) 
-  // {
-  //   ESP_LOGW(TAG, "Reading seplos data");
-  //   while (bytes_read < 76)
-  //   {
-  //     if (available() > 0)
-  //     {
-  //       uint8_t RXX;
-  //       this->read_byte(&RXX);
-        
-  //       //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
-  //       if(RXX == 0x55) {
-  //         be = true;
-  //       }
-  //       if (be==true) {
-  //         get_seplos_data.push_back(RXX);
-  //         bytes_read ++;
-  //       }
-  //     }
-  //   }
-
-  //   worked = this->decode_data_(get_seplos_data);
-  //   trycount = trycount + 1;
-  //   if (trycount>2) {
-  //     //3 trys so bail out
-  //     worked = true;
-  //   }
-  // }
-  
-  
 
 }
 
