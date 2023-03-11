@@ -82,9 +82,11 @@ void SeplosBmsComponent::loop() {
     char tmp[SEPLOS_READ_BUFFER_LENGTH];
     sprintf(tmp, "%s", this->read_buffer_);
     ESP_LOGD(TAG, "reading avalible size: %s", tmp);
+    this->decode_data_(this->read_buffer_);
     this->state_ = STATE_IDLE;
   }
 
+  //if its been too long to get the data timeout
   if (this->state_ == STATE_POLL) {
     if (millis() - this->command_start_millis_ > COMMAND_TIMEOUT) {
       // command timeout
