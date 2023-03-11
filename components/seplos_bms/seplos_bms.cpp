@@ -44,7 +44,7 @@ void SeplosBmsComponent::update() {
     for(int i=0;i<76;i++)
     {
       //data[i]=read();
-      get_seplos_data.push_back(read());
+      get_seplos_data.push_back(read_byte());
     }
   }while(this->read()==0x55);
 
