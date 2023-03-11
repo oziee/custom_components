@@ -40,26 +40,22 @@ void SeplosBmsComponent::update() {
   get_seplos_data.resize(SEPLOS_FRAME_SIZE);
 
   do{
-      for(int i=0;i<SEPLOS_FRAME_SIZE;i++)
-      {
-        data[i]=this->read();
-        get_seplos_data.push_back(data[i]);
-      }
-    }while(this->read()==0x55);
-
-    this->flush();
-
-    if(data[0]==0x55)
+    for(int i=0;i<SEPLOS_FRAME_SIZE;i++)
     {
-      this->decode_data_(get_seplos_data);
+      data[i]=this->read();
+      get_seplos_data.push_back(data[i]);
     }
-    //  if(value != lastPublished) 
-    // {
-       // publish_state(distance);
-      // lastPublished = value;
-    // }
+  }while(this->read()==0x55);
+
+  this->flush();
+
+  if(data[0]==0x55)
+  {
+    this->decode_data_(get_seplos_data);
+  }
+
     
-}
+
 
 
 
