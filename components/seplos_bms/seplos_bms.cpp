@@ -36,15 +36,15 @@ void SeplosBmsComponent::dump_config() {
 
 void SeplosBmsComponent::update() {
   
-  std::vector<uint8_t> get_seplos_data;
-  get_seplos_data.resize(SEPLOS_FRAME_SIZE);
-  unsigned char data[76]={};
+  //std::vector<uint8_t> get_seplos_data;
+  //get_seplos_data.resize(SEPLOS_FRAME_SIZE);
+  uint8_t data[76]={};
 
   do{
     for(int i=0;i<SEPLOS_FRAME_SIZE;i++)
     {
       data[i]=this->read();
-      get_seplos_data.push_back(data[i]);
+      //get_seplos_data.push_back(data[i]);
     }
   }while(this->read()==0x55);
 
@@ -52,7 +52,7 @@ void SeplosBmsComponent::update() {
 
   if(data[0]==0x55)
   {
-    this->decode_data_(get_seplos_data);
+    this->decode_data_(data);
   }
 
     
