@@ -4,6 +4,8 @@
 #include <vector>
 #include "Crc16.h"
 
+#define SERIAL_SIZE_RX  1024
+
 namespace esphome {
 namespace seplos_bms {
 
@@ -15,6 +17,8 @@ static const uint8_t SEPLOS_END_BYTE = 0xaa;
 
 static const uint8_t SEPLOS_TEMPERATURE_OFFSET = 40;
 static const uint16_t SEPLOS_CURRENT_OFFSET = 30000;
+
+
 
 Crc16 crc;
 
@@ -28,6 +32,7 @@ void SeplosBmsComponent::setup() {
 void SeplosBmsComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "Seplos BMS:");
   this->check_uart_settings(9600);
+  setRxBufferSize(SERIAL_SIZE_RX);
 }
 
 void SeplosBmsComponent::update() {
