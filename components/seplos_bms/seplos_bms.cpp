@@ -74,22 +74,23 @@ void SeplosBmsComponent::loop() {
     }  // available
   }
 
-  if (this->state_ == STATE_POLL) {
-    if (millis() - this->command_start_millis_ > COMMAND_TIMEOUT) {
-      // command timeout
-      ESP_LOGD(TAG, "timeout command to poll");
-      this->state_ = STATE_IDLE;
-    }
-  }
 
   if (this->state_ == STATE_POLL_COMPLETE) {
-    ESP_LOGD(TAG, "rpoll complete");
+    ESP_LOGD(TAG, "poll complete");
     bool enabled = true;
     std::string fc;
     char tmp[SEPLOS_READ_BUFFER_LENGTH];
     sprintf(tmp, "%s", this->read_buffer_);
     ESP_LOGD(TAG, "reading avalible size: %s", tmp);
     this->state_ = STATE_IDLE;
+  }
+
+  if (this->state_ == STATE_POLL) {
+    if (millis() - this->command_start_millis_ > COMMAND_TIMEOUT) {
+      // command timeout
+      ESP_LOGD(TAG, "timeout command to poll");
+      this->state_ = STATE_IDLE;
+    }
   }
 }
 
