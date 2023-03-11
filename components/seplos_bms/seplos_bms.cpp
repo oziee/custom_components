@@ -41,7 +41,7 @@ void SeplosBmsComponent::update() {
   uint8_t data[76]={};
 
   do{
-    for(int i=0;i<SEPLOS_FRAME_SIZE;i++)
+    for(int i=0;i<76;i++)
     {
       data[i]=this->read();
       //get_seplos_data.push_back(data[i]);
@@ -50,10 +50,10 @@ void SeplosBmsComponent::update() {
 
   this->flush();
 
-  if(data[0]==0x55)
-  {
-    this->decode_data_(data);
-  }
+  // if(data[0]==0x55)
+  // {
+  //   this->decode_data_(data);
+  // }
 
     
 
