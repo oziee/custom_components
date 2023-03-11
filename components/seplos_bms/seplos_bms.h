@@ -162,12 +162,27 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   void set_address(uint8_t address) { this->addr_ = address; }
 
  protected:
+  static const size_t SEPLOS_READ_BUFFER_LENGTH = 76;  // maximum supported answer length
   void request_data_(uint8_t data_id);
   //bool decode_data_(std::vector<uint8_t> data);
   bool decode_data_(uint8_t data[]);
   void convertDecToBin(int Dec, bool Bin[]);
 
+  void empty_uart_buffer_();
+  uint8_t check_incoming_length_(uint8_t length);
+
   uint8_t addr_;
+
+  uint8_t state_;
+  enum State {
+    STATE_IDLE = 0,
+    STATE_POLL = 1,
+    STATE_POLL_COMPLETE = 2,
+  };
+  uint8_t read_buffer_[SEPLOS_READ_BUFFER_LENGTH];
+  size_t read_pos_{0};
+  uint32_t last_poll_ = 0;
+  uint32_t command_start_millis_ = 0;
 
   sensor::Sensor *voltage_sensor_{nullptr};
   sensor::Sensor *current_sensor_{nullptr};

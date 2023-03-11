@@ -26,6 +26,7 @@ bool Bin[] = {0,0,0,0,0,0,0,0};
 
 void SeplosBmsComponent::setup() {
   //update();
+  this->state_ = STATE_IDLE;
 }
 
 void SeplosBmsComponent::dump_config() {
@@ -36,9 +37,70 @@ void SeplosBmsComponent::dump_config() {
 
 void SeplosBmsComponent::loop() {
   ESP_LOGD(TAG, "response length for command OK");
+
+  if (this->state_ == STATE_IDLE) {
+    this->empty_uart_buffer_();
+    if (millis() - this->last_poll_ > this->update_interval_) {
+      this->state_ = STATE_POLL;
+      this->command_start_millis_ = millis();
+      this->empty_uart_buffer_();
+      this->read_pos_ = 0;
+      this->last_poll_ = millis();
+    }
+  }
+  
+  if (this->state_ == STATE_POLL) {
+    while (this->available()) {
+      uint8_t byte;
+      this->read_byte(&byte);
+
+      if (this->read_pos_ == SEPLOS_READ_BUFFER_LENGTH) {
+        this->read_pos_ = 0;
+        this->empty_uart_buffer_();
+      }
+      this->read_buffer_[this->read_pos_] = byte;
+      this->read_pos_++;
+
+      // end of answer
+      if (byte == 0xaa) {
+        this->read_buffer_[this->read_pos_] = 0;
+        this->empty_uart_buffer_();
+        if (this->state_ == STATE_POLL) {
+          this->state_ = STATE_POLL_COMPLETE;
+        }
+      }
+    }  // available
+  }
+
+  if (this->state_ == STATE_POLL_COMPLETE) {
+    bool enabled = true;
+    std::string fc;
+    char tmp[SEPLOS_READ_BUFFER_LENGTH];
+    sprintf(tmp, "%s", this->read_buffer_);
+    SP_LOGW(TAG, "reading avalible size: %s", tmp);
+    this->state_ = STATE_IDLE;
+  }
+}
+
+uint8_t SeplosBmsComponent::check_incoming_length_(uint8_t length) {
+  if (this->read_pos_ == length) {
+    return 1;
+  }
+  return 0;
+}
+
+void SeplosBmsComponent::empty_uart_buffer_() {
+  uint8_t byte;
+  while (this->available()) {
+    this->read_byte(&byte);
+  }
 }
 
 void SeplosBmsComponent::update() {
+  this->state_ = STATE_POLL;
+  //this->command_start_millis_ = millis();
+  this->empty_uart_buffer_();
+  this->read_pos_ = 0;
   
   // std::vector<uint8_t> get_seplos_data;
   // get_seplos_data.resize(SEPLOS_FRAME_SIZE);
