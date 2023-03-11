@@ -8,6 +8,7 @@
 namespace esphome {
 namespace seplos_bms {
 
+static const char *const TAG = "seplos_bms";
 
 Crc16 crc;
 

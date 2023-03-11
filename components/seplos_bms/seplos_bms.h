@@ -166,8 +166,8 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   static const size_t COMMAND_TIMEOUT = 5000;
   static const uint8_t SEPLOS_START_BYTE = 0x55;
   static const uint8_t SEPLOS_END_BYTE = 0xaa;
-  static const char *const TAG = "seplos_bms";
-  
+ 
+
   void request_data_(uint8_t data_id);
   //bool decode_data_(std::vector<uint8_t> data);
   bool decode_data_(uint8_t data[]);
