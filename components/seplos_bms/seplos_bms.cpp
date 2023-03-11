@@ -27,7 +27,6 @@ bool Bin[] = {0,0,0,0,0,0,0,0};
 
 void SeplosBmsComponent::setup() {
   //update();
-  setRxBufferSize(SERIAL_SIZE_RX);
 }
 
 void SeplosBmsComponent::dump_config() {
