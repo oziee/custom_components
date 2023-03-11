@@ -27,12 +27,13 @@ bool Bin[] = {0,0,0,0,0,0,0,0};
 
 void SeplosBmsComponent::setup() {
   //update();
+  this->setRxBufferSize(SERIAL_SIZE_RX);
 }
 
 void SeplosBmsComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "Seplos BMS:");
   this->check_uart_settings(9600);
-  this->setRxBufferSize(SERIAL_SIZE_RX);
+  
 }
 
 void SeplosBmsComponent::update() {
