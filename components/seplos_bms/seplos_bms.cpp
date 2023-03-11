@@ -77,7 +77,7 @@ void SeplosBmsComponent::loop() {
   if (this->state_ == STATE_POLL) {
     if (millis() - this->command_start_millis_ > COMMAND_TIMEOUT) {
       // command timeout
-      ESP_LOGD(TAG, "timeout command to poll: %s", this->used_polling_commands_[this->last_polling_command_].command);
+      ESP_LOGD(TAG, "timeout command to poll");
       this->state_ = STATE_IDLE;
     }
   }
