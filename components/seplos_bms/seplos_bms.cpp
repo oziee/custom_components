@@ -77,7 +77,7 @@ void SeplosBmsComponent::loop() {
     std::string fc;
     char tmp[SEPLOS_READ_BUFFER_LENGTH];
     sprintf(tmp, "%s", this->read_buffer_);
-    SP_LOGW(TAG, "reading avalible size: %s", tmp);
+    ESP_LOGD(TAG, "reading avalible size: %s", tmp);
     this->state_ = STATE_IDLE;
   }
 }
