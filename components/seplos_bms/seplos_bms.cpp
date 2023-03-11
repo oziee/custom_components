@@ -35,6 +35,45 @@ void SeplosBmsComponent::dump_config() {
 }
 
 void SeplosBmsComponent::update() {
+  
+  std::vector<uint8_t> get_seplos_data;
+  get_seplos_data.resize(SEPLOS_FRAME_SIZE);
+
+  do{
+      for(int i=0;i<SEPLOS_FRAME_SIZE;i++)
+      {
+        data[i]=this->read();
+        get_seplos_data.push_back(data[i]);
+      }
+    }while(this->read()==0x55);
+
+    this->flush();
+
+    if(data[0]==0x55)
+    {
+      this->decode_data_(get_seplos_data);
+    }
+    //  if(value != lastPublished) 
+    // {
+       // publish_state(distance);
+      // lastPublished = value;
+    // }
+    
+
+    
+  };
+
+
+
+
+  // std::vector<uint8_t> get_seplos_data;
+  // int available_data = this->available();
+  // ESP_LOGW(TAG, "reading avalible size: %d", available_data);
+  // if (available_data >= SEPLOS_FRAME_SIZE) {
+  //   get_seplos_data.resize(available_data);
+  //   this->read_array(get_seplos_data.data(), available_data);
+  //   this->decode_data_(get_seplos_data);
+  // }
 
   // std::vector<uint8_t> get_seplos_data;
   // int available_data = this->available();
