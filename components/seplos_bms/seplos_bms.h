@@ -153,6 +153,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
   void set_internal_bit_binary_sensor(binary_sensor::BinarySensor *internal_bit) {internal_bit_ = internal_bit;} //dont know??
 
 
+  void loop() override;
   void setup() override;
   void dump_config() override;
   void update() override;
