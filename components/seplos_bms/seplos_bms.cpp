@@ -32,7 +32,7 @@ void SeplosBmsComponent::setup() {
 void SeplosBmsComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "Seplos BMS:");
   this->check_uart_settings(9600);
-  setRxBufferSize(SERIAL_SIZE_RX);
+  this->setRxBufferSize(SERIAL_SIZE_RX);
 }
 
 void SeplosBmsComponent::update() {
