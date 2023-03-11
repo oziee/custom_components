@@ -163,6 +163,7 @@ class SeplosBmsComponent : public PollingComponent, public uart::UARTDevice {
 
  protected:
   static const size_t SEPLOS_READ_BUFFER_LENGTH = 76;  // maximum supported answer length
+  static const size_t COMMAND_TIMEOUT = 5000;
   void request_data_(uint8_t data_id);
   //bool decode_data_(std::vector<uint8_t> data);
   bool decode_data_(uint8_t data[]);
