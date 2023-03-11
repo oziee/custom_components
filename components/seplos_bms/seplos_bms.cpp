@@ -47,41 +47,41 @@ void SeplosBmsComponent::update() {
 
   
 
-  int bytes_read = 0 ;
-  bool be = false;
-  int trycount = 0;
+  // int bytes_read = 0 ;
+  // bool be = false;
+  // int trycount = 0;
 
-  std::vector<uint8_t> get_seplos_data;
+  // std::vector<uint8_t> get_seplos_data;
 
-  bool worked = false;
-  while (worked == false) 
-  {
-    ESP_LOGW(TAG, "Reading seplos data");
-    while (bytes_read < 76)
-    {
-      if (available() > 0)
-      {
-        uint8_t RXX;
-        this->read_byte(&RXX);
+  // bool worked = false;
+  // while (worked == false) 
+  // {
+  //   ESP_LOGW(TAG, "Reading seplos data");
+  //   while (bytes_read < 76)
+  //   {
+  //     if (available() > 0)
+  //     {
+  //       uint8_t RXX;
+  //       this->read_byte(&RXX);
         
-        //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
-        if(RXX == 0x55) {
-          be = true;
-        }
-        if (be==true) {
-          get_seplos_data.push_back(RXX);
-          bytes_read ++;
-        }
-      }
-    }
+  //       //wait for the starting byte to come in which is \xUFF (x55 x46 x46)
+  //       if(RXX == 0x55) {
+  //         be = true;
+  //       }
+  //       if (be==true) {
+  //         get_seplos_data.push_back(RXX);
+  //         bytes_read ++;
+  //       }
+  //     }
+  //   }
 
-    worked = this->decode_data_(get_seplos_data);
-    trycount = trycount + 1;
-    if (trycount>2) {
-      //3 trys so bail out
-      worked = true;
-    }
-  }
+  //   worked = this->decode_data_(get_seplos_data);
+  //   trycount = trycount + 1;
+  //   if (trycount>2) {
+  //     //3 trys so bail out
+  //     worked = true;
+  //   }
+  // }
   
   
 
