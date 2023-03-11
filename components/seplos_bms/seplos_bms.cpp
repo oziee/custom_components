@@ -4,7 +4,6 @@
 #include <vector>
 #include "Crc16.h"
 
-#define SERIAL_SIZE_RX  1024
 
 namespace esphome {
 namespace seplos_bms {
