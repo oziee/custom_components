@@ -36,11 +36,12 @@ void SeplosBmsComponent::dump_config() {
 }
 
 void SeplosBmsComponent::loop() {
-  ESP_LOGD(TAG, "response length for command OK");
+  
 
   if (this->state_ == STATE_IDLE) {
     this->empty_uart_buffer_();
     if (millis() - this->last_poll_ > this->update_interval_) {
+      ESP_LOGD(TAG, "need to poll");
       this->state_ = STATE_POLL;
       this->command_start_millis_ = millis();
       this->empty_uart_buffer_();
@@ -50,6 +51,7 @@ void SeplosBmsComponent::loop() {
   }
   
   if (this->state_ == STATE_POLL) {
+    ESP_LOGD(TAG, "polling...");
     while (this->available()) {
       uint8_t byte;
       this->read_byte(&byte);
@@ -73,6 +75,7 @@ void SeplosBmsComponent::loop() {
   }
 
   if (this->state_ == STATE_POLL_COMPLETE) {
+    ESP_LOGD(TAG, "rpoll complete");
     bool enabled = true;
     std::string fc;
     char tmp[SEPLOS_READ_BUFFER_LENGTH];
