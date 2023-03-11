@@ -59,9 +59,7 @@ void SeplosBmsComponent::update() {
       // lastPublished = value;
     // }
     
-
-    
-  };
+}
 
 
 
