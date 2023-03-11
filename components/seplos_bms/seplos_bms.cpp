@@ -914,7 +914,7 @@ bool SeplosBmsComponent::decode_data_(uint8_t data[]) {
         ESP_LOGD("TAG", "CRC FAILED!!!");
         return false;
       }
-      break;
+      //break;
     } 
     else 
     {
@@ -924,7 +924,7 @@ bool SeplosBmsComponent::decode_data_(uint8_t data[]) {
         ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
       }
       return false;
-      break;
+      //break;
     }
   //}
 
