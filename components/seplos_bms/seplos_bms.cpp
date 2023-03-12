@@ -60,6 +60,7 @@ void SeplosBmsComponent::loop() {
       if (byte == SEPLOS_END_BYTE) {
         //this->read_buffer_[this->read_pos_] = 0;
         //this->empty_uart_buffer_();
+        ESP_LOGD("TAG", "length of read %d",this->read_pos_);
         this->state_ = STATE_POLL_COMPLETE;
         break;
       }
