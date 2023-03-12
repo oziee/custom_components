@@ -32,12 +32,12 @@ void SeplosBmsComponent::loop() {
     this->empty_uart_buffer_();
     if (millis() - this->last_poll_ > this->update_interval_) {
       ESP_LOGD(TAG, "polling seplos data");
-      this->state_ = STATE_POLL;
       this->read_buffer_[75] = 0x00;
       this->command_start_millis_ = millis();
       this->empty_uart_buffer_();
       this->read_pos_ = 0;
       this->last_poll_ = millis();
+      this->state_ = STATE_POLL;
     }
   }
 
@@ -64,10 +64,10 @@ void SeplosBmsComponent::loop() {
   if (this->state_ == STATE_POLL_COMPLETE) {
     ESP_LOGD(TAG, "poll complete");
     if (this->read_pos_ == 76) {
-      for(int p=0; p<76; p++)
-      {
-        ESP_LOGD("TAG"," byte: %d data: %d",p,this->read_buffer_[p]);
-      }
+      // for(int p=0; p<76; p++)
+      // {
+      //   ESP_LOGD("TAG"," byte: %d data: %d",p,this->read_buffer_[p]);
+      // }
       this->decode_data_(this->read_buffer_);
     }
     else {
