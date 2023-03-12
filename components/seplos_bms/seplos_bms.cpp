@@ -35,7 +35,7 @@ void SeplosBmsComponent::loop() {
       ESP_LOGD(TAG, "polling seplos data");
       this->state_ = STATE_POLL;
       this->command_start_millis_ = millis();
-      //this->empty_uart_buffer_();
+      this->empty_uart_buffer_();
       this->read_pos_ = 0;
       this->last_poll_ = millis();
     }
@@ -55,12 +55,13 @@ void SeplosBmsComponent::loop() {
     while (this->read_pos_ < SEPLOS_READ_BUFFER_LENGTH) {
       this->read_buffer_[this->read_pos_] = byte;
       this->read_pos_++;
+      ESP_LOGD("TAG", "length of read %d",this->read_pos_);
 
       // end of answer
       if (byte == SEPLOS_END_BYTE) {
         //this->read_buffer_[this->read_pos_] = 0;
         //this->empty_uart_buffer_();
-        ESP_LOGD("TAG", "length of read %d",this->read_pos_);
+        ESP_LOGD("TAG", "End byte 0xaa found");
         this->state_ = STATE_POLL_COMPLETE;
         break;
       }
