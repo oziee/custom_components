@@ -29,83 +29,53 @@ void SeplosBmsComponent::dump_config() {
 void SeplosBmsComponent::loop() {
   
 
-  if (this->state_ == STATE_IDLE) {
-    this->empty_uart_buffer_();
-    if (millis() - this->last_poll_ > this->update_interval_) {
-      ESP_LOGD(TAG, "polling seplos data");
-      this->state_ = STATE_POLL;
-      this->command_start_millis_ = millis();
-      this->empty_uart_buffer_();
-      this->read_pos_ = 0;
-      this->last_poll_ = millis();
-    }
-  }
+  // if (this->state_ == STATE_IDLE) {
+  //   this->empty_uart_buffer_();
+  //   if (millis() - this->last_poll_ > this->update_interval_) {
+  //     ESP_LOGD(TAG, "polling seplos data");
+  //     this->state_ = STATE_POLL;
+  //     this->command_start_millis_ = millis();
+  //     this->empty_uart_buffer_();
+  //     this->read_pos_ = 0;
+  //     this->last_poll_ = millis();
+  //   }
+  // }
 
-  // stop here one or two more back i think
-  
+  // if (this->state_ == STATE_POLL) {
+  //   uint8_t byte;
+  //   while (byte != SEPLOS_START_BYTE) {
+  //     if(this->available())
+  //       this->read_byte(&byte);
+  //   }
+  //   while (this->read_pos_ < SEPLOS_READ_BUFFER_LENGTH) {
+  //     this->read_buffer_[this->read_pos_] = byte;
+  //     this->read_pos_++;
 
-  if (this->state_ == STATE_POLL) {
-   // ESP_LOGD(TAG, "polling...");
-    uint8_t byte;
-    //this->read_byte(&byte);
-    while (byte != SEPLOS_START_BYTE) {
-      if(this->available())
-        this->read_byte(&byte);
-    }
-    while (this->read_pos_ < SEPLOS_READ_BUFFER_LENGTH) {
-      this->read_buffer_[this->read_pos_] = byte;
-      this->read_pos_++;
-      ESP_LOGD("TAG", "length of read %d",this->read_pos_);
+  //     // end of answer
+  //     if (byte == SEPLOS_END_BYTE) {
+  //       this->state_ = STATE_POLL_COMPLETE;
+  //       break;
+  //     }
+  //     if(this->available())
+  //       this->read_byte(&byte);
+  //   }
+  // }
 
-      // end of answer
-      if (byte == SEPLOS_END_BYTE) {
-        //this->read_buffer_[this->read_pos_] = 0;
-        //this->empty_uart_buffer_();
-        ESP_LOGD("TAG", "End byte 0xaa found");
-        this->state_ = STATE_POLL_COMPLETE;
-        break;
-      }
-      if(this->available())
-        this->read_byte(&byte);
-    }
-    // while (this->available()) {
-    //   uint8_t byte;
-    //   this->read_byte(&byte);
-    //   if (byte == SEPLOS_START_BYTE) {
-    //     if (this->read_pos_ == SEPLOS_READ_BUFFER_LENGTH) {
-    //       this->read_pos_ = 0;
-    //       this->empty_uart_buffer_();
-    //     }
-    //     this->read_buffer_[this->read_pos_] = byte;
-    //     this->read_pos_++;
+  // if (this->state_ == STATE_POLL_COMPLETE) {
+  //   ESP_LOGD(TAG, "poll complete");
+  //   this->decode_data_(this->read_buffer_);
+  //   this->state_ = STATE_IDLE;
+  // }
 
-    //     // end of answer
-    //     if (byte == SEPLOS_END_BYTE) {
-    //       this->read_buffer_[this->read_pos_] = 0;
-    //       this->empty_uart_buffer_();
-    //       if (this->state_ == STATE_POLL) {
-    //         this->state_ = STATE_POLL_COMPLETE;
-    //       }
-    //     }
-    //   }
-    // }  // available
-  }
+  // //if its been too long to get the data timeout
+  // if (this->state_ == STATE_POLL) {
+  //   if (millis() - this->command_start_millis_ > COMMAND_TIMEOUT) {
+  //     // command timeout
+  //     ESP_LOGD(TAG, "timeout command to poll");
+  //     this->state_ = STATE_IDLE;
+  //   }
+  // }
 
-
-  if (this->state_ == STATE_POLL_COMPLETE) {
-    ESP_LOGD(TAG, "poll complete");
-    this->decode_data_(this->read_buffer_);
-    this->state_ = STATE_IDLE;
-  }
-
-  //if its been too long to get the data timeout
-  if (this->state_ == STATE_POLL) {
-    if (millis() - this->command_start_millis_ > COMMAND_TIMEOUT) {
-      // command timeout
-      ESP_LOGD(TAG, "timeout command to poll");
-      this->state_ = STATE_IDLE;
-    }
-  }
 }
 
 uint8_t SeplosBmsComponent::check_incoming_length_(uint8_t length) {
@@ -123,11 +93,52 @@ void SeplosBmsComponent::empty_uart_buffer_() {
 }
 
 void SeplosBmsComponent::update() {
-  // this->state_ = STATE_POLL;
-  // //this->command_start_millis_ = millis();
-  // this->empty_uart_buffer_();
-  // this->read_pos_ = 0;
+  if (this->state_ == STATE_IDLE) {
+    this->empty_uart_buffer_();
+    if (millis() - this->last_poll_ > this->update_interval_) {
+      ESP_LOGD(TAG, "polling seplos data");
+      this->state_ = STATE_POLL;
+      this->command_start_millis_ = millis();
+      this->empty_uart_buffer_();
+      this->read_pos_ = 0;
+      this->last_poll_ = millis();
+    }
+  }
 
+  if (this->state_ == STATE_POLL) {
+    uint8_t byte;
+    while (byte != SEPLOS_START_BYTE) {
+      if(this->available())
+        this->read_byte(&byte);
+    }
+    while (this->read_pos_ < SEPLOS_READ_BUFFER_LENGTH) {
+      this->read_buffer_[this->read_pos_] = byte;
+      this->read_pos_++;
+
+      // end of answer
+      if (byte == SEPLOS_END_BYTE) {
+        this->state_ = STATE_POLL_COMPLETE;
+        break;
+      }
+      if(this->available())
+        this->read_byte(&byte);
+    }
+  }
+
+  if (this->state_ == STATE_POLL_COMPLETE) {
+    ESP_LOGD(TAG, "poll complete");
+    this->decode_data_(this->read_buffer_);
+    this->state_ = STATE_IDLE;
+  }
+
+  //if its been too long to get the data timeout
+  if (this->state_ == STATE_POLL) {
+    if (millis() - this->command_start_millis_ > COMMAND_TIMEOUT) {
+      // command timeout
+      ESP_LOGD(TAG, "timeout command to poll");
+      this->state_ = STATE_IDLE;
+    }
+  }
 }
 
 float SeplosBmsComponent::get_setup_priority() const { return setup_priority::DATA; }
