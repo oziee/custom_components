@@ -169,11 +169,11 @@ bool SeplosBmsComponent::decode_data_(uint8_t data[]) {
     //   ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
     // }
 
-    ESP_LOGD("TAG", "Ddata received");
-    for(int p=0; p<76; p++)
-    {
-      ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
-    }
+    // ESP_LOGD("TAG", "Ddata received");
+    // for(int p=0; p<76; p++)
+    // {
+    //   ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+    // }
 
     if (value1 == value2) {
       //CRC ALL GOOD!!
