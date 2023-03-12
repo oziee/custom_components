@@ -28,8 +28,6 @@ void SeplosBmsComponent::dump_config() {
 }
 
 void SeplosBmsComponent::loop() {
-  
-
   if (this->state_ == STATE_IDLE) {
     this->empty_uart_buffer_();
     if (millis() - this->last_poll_ > this->update_interval_) {
@@ -42,26 +40,25 @@ void SeplosBmsComponent::loop() {
     }
   }
   
-
   if (this->state_ == STATE_POLL) {
    // ESP_LOGD(TAG, "polling...");
     while (this->available()) {
       uint8_t byte;
       this->read_byte(&byte);
-      if (byte == SEPLOS_START_BYTE) {
-        while (this->read_pos_ < SEPLOS_READ_BUFFER_LENGTH) {
-          this->read_buffer_[this->read_pos_] = byte;
-          this->read_pos_++;
 
-          // end of answer
-          if (byte == SEPLOS_END_BYTE) {
-            //this->read_buffer_[this->read_pos_] = 0;
-            //this->empty_uart_buffer_();
-            this->state_ = STATE_POLL_COMPLETE;
-            return;
-          }
+      if (this->read_pos_ == SEPLOS_READ_BUFFER_LENGTH) {
+        this->read_pos_ = 0;
+        this->empty_uart_buffer_();
+      }
+      this->read_buffer_[this->read_pos_] = byte;
+      this->read_pos_++;
 
-          this->read_byte(&byte);
+      // end of answer
+      if (byte == SEPLOS_END_BYTE) {
+        this->read_buffer_[this->read_pos_] = 0;
+        this->empty_uart_buffer_();
+        if (this->state_ == STATE_POLL) {
+          this->state_ = STATE_POLL_COMPLETE;
         }
       }
     }  // available
@@ -82,6 +79,7 @@ void SeplosBmsComponent::loop() {
       this->state_ = STATE_IDLE;
     }
   }
+  
 }
 
 uint8_t SeplosBmsComponent::check_incoming_length_(uint8_t length) {
