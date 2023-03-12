@@ -14,6 +14,8 @@ Crc16 crc;
 
 bool Bin[] = {0,0,0,0,0,0,0,0};
 
+bool canStart = false;
+
 
 void SeplosBmsComponent::setup() {
   //update();
@@ -32,6 +34,7 @@ void SeplosBmsComponent::loop() {
     this->empty_uart_buffer_();
     if (millis() - this->last_poll_ > this->update_interval_) {
       ESP_LOGD(TAG, "polling seplos data");
+      canStart = false;
       this->state_ = STATE_POLL;
       this->command_start_millis_ = millis();
       this->empty_uart_buffer_();
@@ -45,21 +48,26 @@ void SeplosBmsComponent::loop() {
     while (this->available()) {
       uint8_t byte;
       this->read_byte(&byte);
-
-      if (this->read_pos_ == SEPLOS_READ_BUFFER_LENGTH) {
-        this->read_pos_ = 0;
-        this->empty_uart_buffer_();
+      while(!canStart); {
+        if (byte == SEPLOS_START_BYTE) {
+          canStart = true;
+        }
+        else {
+          this->read_byte(&byte);
+        }
       }
+
+      // if (this->read_pos_ == SEPLOS_READ_BUFFER_LENGTH) {
+      //   this->read_pos_ = 0;
+      //   this->empty_uart_buffer_();
+      // }
       this->read_buffer_[this->read_pos_] = byte;
       this->read_pos_++;
 
       // end of answer
       if (byte == SEPLOS_END_BYTE) {
-        this->read_buffer_[this->read_pos_] = 0;
-        this->empty_uart_buffer_();
-        if (this->state_ == STATE_POLL) {
-          this->state_ = STATE_POLL_COMPLETE;
-        }
+        this->state_ = STATE_POLL_COMPLETE;
+        return;
       }
     }  // available
   }
@@ -67,7 +75,14 @@ void SeplosBmsComponent::loop() {
 
   if (this->state_ == STATE_POLL_COMPLETE) {
     ESP_LOGD(TAG, "poll complete");
-    this->decode_data_(this->read_buffer_);
+    if (check_incoming_length_(75)) {
+      ESP_LOGD(TAG, "Data length is correct");
+      this->decode_data_(this->read_buffer_);
+    }
+    else {
+      ESP_LOGD(TAG, "Data length NOT is correct");
+    }
+    
     this->state_ = STATE_IDLE;
   }
 
@@ -79,7 +94,7 @@ void SeplosBmsComponent::loop() {
       this->state_ = STATE_IDLE;
     }
   }
-  
+
 }
 
 uint8_t SeplosBmsComponent::check_incoming_length_(uint8_t length) {
