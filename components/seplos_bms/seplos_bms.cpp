@@ -64,6 +64,10 @@ void SeplosBmsComponent::loop() {
   if (this->state_ == STATE_POLL_COMPLETE) {
     ESP_LOGD(TAG, "poll complete");
     if (this->read_pos_ == 76) {
+      for(int p=0; p<76; p++)
+      {
+        ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+      }
       this->decode_data_(this->read_buffer_);
     }
     else {
