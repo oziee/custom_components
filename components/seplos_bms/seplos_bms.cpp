@@ -29,17 +29,17 @@ void SeplosBmsComponent::dump_config() {
 void SeplosBmsComponent::loop() {
   
 
-  // if (this->state_ == STATE_IDLE) {
-  //   this->empty_uart_buffer_();
-  //   if (millis() - this->last_poll_ > this->update_interval_) {
-  //     ESP_LOGD(TAG, "polling seplos data");
-  //     this->state_ = STATE_POLL;
-  //     this->command_start_millis_ = millis();
-  //     this->empty_uart_buffer_();
-  //     this->read_pos_ = 0;
-  //     this->last_poll_ = millis();
-  //   }
-  // }
+  if (this->state_ == STATE_IDLE) {
+    this->empty_uart_buffer_();
+    // if (millis() - this->last_poll_ > this->update_interval_) {
+    //   ESP_LOGD(TAG, "polling seplos data");
+    //   this->state_ = STATE_POLL;
+    //   this->command_start_millis_ = millis();
+    //   this->empty_uart_buffer_();
+    //   this->read_pos_ = 0;
+    //   this->last_poll_ = millis();
+    // }
+  }
   
   if (this->state_ == STATE_POLL) {
    // ESP_LOGD(TAG, "polling...");
@@ -59,20 +59,18 @@ void SeplosBmsComponent::loop() {
         this->read_buffer_[this->read_pos_] = 0;
         this->empty_uart_buffer_();
         if (this->state_ == STATE_POLL) {
-          this->state_ = STATE_IDLE;
-          this->decode_data_(this->read_buffer_);
-          //this->state_ = STATE_POLL_COMPLETE;
+          this->state_ = STATE_POLL_COMPLETE;
         }
       }
     }  // available
   }
 
 
-  // if (this->state_ == STATE_POLL_COMPLETE) {
-  //   ESP_LOGD(TAG, "poll complete");
-  //   this->decode_data_(this->read_buffer_);
-  //   this->state_ = STATE_IDLE;
-  // }
+  if (this->state_ == STATE_POLL_COMPLETE) {
+    ESP_LOGD(TAG, "poll complete");
+    this->decode_data_(this->read_buffer_);
+    this->state_ = STATE_IDLE;
+  }
 
   //if its been too long to get the data timeout
   if (this->state_ == STATE_POLL) {
@@ -103,11 +101,6 @@ void SeplosBmsComponent::update() {
   this->command_start_millis_ = millis();
   this->empty_uart_buffer_();
   this->read_pos_ = 0;
-  this->last_poll_ = millis();
-  // this->state_ = STATE_POLL;
-  // //this->command_start_millis_ = millis();
-  // this->empty_uart_buffer_();
-  // this->read_pos_ = 0;
 
 }
 
