@@ -66,7 +66,7 @@ void SeplosBmsComponent::loop() {
     if (this->read_pos_ == 76) {
       for(int p=0; p<76; p++)
       {
-        ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+        ESP_LOGD("TAG"," byte: %d data: %d",p,this->read_buffer_[p]);
       }
       this->decode_data_(this->read_buffer_);
     }
