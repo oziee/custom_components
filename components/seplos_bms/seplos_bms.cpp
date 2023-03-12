@@ -168,6 +168,12 @@ bool SeplosBmsComponent::decode_data_(uint8_t data[]) {
       //   ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
       // }
 
+      ESP_LOGD("TAG", "Ddata received");
+      for(int p=0; p<76; p++)
+      {
+        ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+      }
+
       if (value1 == value2) {
         //CRC ALL GOOD!!
         ESP_LOGD("TAG", "CRCCHeck GOOD!!");
@@ -925,10 +931,10 @@ bool SeplosBmsComponent::decode_data_(uint8_t data[]) {
     else 
     {
       ESP_LOGD("TAG", "Data is not valid.. no 55 46 ..... 170");
-      for(int p=0; p<76; p++)
-      {
-        ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
-      }
+      // for(int p=0; p<76; p++)
+      // {
+      //   ESP_LOGD("TAG"," byte: %d data: %d",p,it[p]);
+      // }
       return false;
       //break;
     }
