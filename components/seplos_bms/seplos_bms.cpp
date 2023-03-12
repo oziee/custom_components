@@ -29,17 +29,17 @@ void SeplosBmsComponent::dump_config() {
 void SeplosBmsComponent::loop() {
   
 
-  if (this->state_ == STATE_IDLE) {
-    this->empty_uart_buffer_();
-    if (millis() - this->last_poll_ > this->update_interval_) {
-      ESP_LOGD(TAG, "polling seplos data");
-      this->state_ = STATE_POLL;
-      this->command_start_millis_ = millis();
-      this->empty_uart_buffer_();
-      this->read_pos_ = 0;
-      this->last_poll_ = millis();
-    }
-  }
+  // if (this->state_ == STATE_IDLE) {
+  //   this->empty_uart_buffer_();
+  //   if (millis() - this->last_poll_ > this->update_interval_) {
+  //     ESP_LOGD(TAG, "polling seplos data");
+  //     this->state_ = STATE_POLL;
+  //     this->command_start_millis_ = millis();
+  //     this->empty_uart_buffer_();
+  //     this->read_pos_ = 0;
+  //     this->last_poll_ = millis();
+  //   }
+  // }
   
   if (this->state_ == STATE_POLL) {
    // ESP_LOGD(TAG, "polling...");
@@ -99,6 +99,11 @@ void SeplosBmsComponent::empty_uart_buffer_() {
 }
 
 void SeplosBmsComponent::update() {
+  this->state_ = STATE_POLL;
+  this->command_start_millis_ = millis();
+  this->empty_uart_buffer_();
+  this->read_pos_ = 0;
+  this->last_poll_ = millis();
   // this->state_ = STATE_POLL;
   // //this->command_start_millis_ = millis();
   // this->empty_uart_buffer_();
