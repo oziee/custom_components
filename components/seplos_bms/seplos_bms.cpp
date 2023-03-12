@@ -98,7 +98,7 @@ void SeplosBmsComponent::empty_uart_buffer_() {
 
 void SeplosBmsComponent::update() {
   this->state_ = STATE_POLL;
-  this->command_start_millis_ = millis();
+  //this->command_start_millis_ = millis();
   this->empty_uart_buffer_();
   this->read_pos_ = 0;
 
