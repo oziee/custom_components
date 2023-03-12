@@ -40,31 +40,52 @@ void SeplosBmsComponent::loop() {
       this->last_poll_ = millis();
     }
   }
+
+  // stop here one or two more back i think
   
 
   if (this->state_ == STATE_POLL) {
    // ESP_LOGD(TAG, "polling...");
-    while (this->available()) {
-      uint8_t byte;
-      this->read_byte(&byte);
-      if (byte == SEPLOS_START_BYTE) {
-        if (this->read_pos_ == SEPLOS_READ_BUFFER_LENGTH) {
-          this->read_pos_ = 0;
-          this->empty_uart_buffer_();
-        }
-        this->read_buffer_[this->read_pos_] = byte;
-        this->read_pos_++;
+    uint8_t byte;
+    //this->read_byte(&byte);
+    while (byte != SEPLOS_START_BYTE) {
+      if(this->available())
+        this->read_byte(&byte);
+    }
+    while (this->read_pos_ < SEPLOS_READ_BUFFER_LENGTH) {
+      this->read_buffer_[this->read_pos_] = byte;
+      this->read_pos_++;
 
-        // end of answer
-        if (byte == SEPLOS_END_BYTE) {
-          this->read_buffer_[this->read_pos_] = 0;
-          this->empty_uart_buffer_();
-          if (this->state_ == STATE_POLL) {
-            this->state_ = STATE_POLL_COMPLETE;
-          }
-        }
+      // end of answer
+      if (byte == SEPLOS_END_BYTE) {
+        this->read_buffer_[this->read_pos_] = 0;
+        this->empty_uart_buffer_();
+        this->state_ = STATE_POLL_COMPLETE;
       }
-    }  // available
+      if(this->available())
+        this->read_byte(&byte);
+    }
+    // while (this->available()) {
+    //   uint8_t byte;
+    //   this->read_byte(&byte);
+    //   if (byte == SEPLOS_START_BYTE) {
+    //     if (this->read_pos_ == SEPLOS_READ_BUFFER_LENGTH) {
+    //       this->read_pos_ = 0;
+    //       this->empty_uart_buffer_();
+    //     }
+    //     this->read_buffer_[this->read_pos_] = byte;
+    //     this->read_pos_++;
+
+    //     // end of answer
+    //     if (byte == SEPLOS_END_BYTE) {
+    //       this->read_buffer_[this->read_pos_] = 0;
+    //       this->empty_uart_buffer_();
+    //       if (this->state_ == STATE_POLL) {
+    //         this->state_ = STATE_POLL_COMPLETE;
+    //       }
+    //     }
+    //   }
+    // }  // available
   }
 
 
