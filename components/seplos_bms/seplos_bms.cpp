@@ -41,6 +41,7 @@ void SeplosBmsComponent::loop() {
     }
   }
   
+  
   if (this->state_ == STATE_POLL) {
    // ESP_LOGD(TAG, "polling...");
     while (this->available()) {
